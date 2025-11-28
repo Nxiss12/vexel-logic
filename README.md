@@ -20,17 +20,32 @@ This repository contains a **complete, production-ready SaaS business**:
 
 ## 🎯 QUICK START
 
-### 1. **View the Website**
-```bash
-# Open in your browser
-open index.html
+### 1. **Run Locally (Recommended)**
+
+**Option A: Python HTTP Server (Best)**
+```powershell
+# Navigate to project folder
+cd "C:\Users\Nxiss\OneDrive\Desktop\Vexel project"
+
+# Start server
+python -m http.server 8000
+
+# Open browser to: http://localhost:8000
 ```
 
+**Option B: VS Code Live Server**
+- Install "Live Server" extension in VS Code
+- Right-click `index.html` → "Open with Live Server"
+
+**Option C: Quick View**
+- Double-click `index.html` (some features may not work)
+
+**📖 Full guide:** See [LOCAL_DEVELOPMENT.md](LOCAL_DEVELOPMENT.md)
+
 ### 2. **Browse Tools**
-```bash
-cd tools
-open index.html
-```
+Once server is running:
+- Tools: `http://localhost:8000/tools/index.html`
+- Marketing Tools: `http://localhost:8000/tools/marketing_tools/index.html`
 
 ### 3. **Generate New Tools**
 ```bash
