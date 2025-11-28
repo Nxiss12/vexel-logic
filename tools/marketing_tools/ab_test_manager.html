@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A/B Test Manager | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-flask text-brand-accent"></i>A/B Test Manager</h1>
+                <button onclick="createTest()" class="bg-brand-accent text-black px-6 py-3 rounded-lg font-bold"><i class="fa-solid fa-plus mr-2"></i>New Test</button>
+            </div>
+        </div>
+        <div class="glass-panel rounded-xl p-6 mb-6">
+            <h3 class="text-white font-bold mb-4">Active Tests</h3>
+            <div class="space-y-3">
+                <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-3">
+                        <div><div class="text-white font-bold">Homepage Headline Test</div><div class="text-gray-400 text-xs">Running for 7 days • 2,847 visitors</div></div>
+                        <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs">Active</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gray-900 rounded p-3">
+                            <div class="text-gray-400 text-xs mb-1">Variant A (Control)</div>
+                            <div class="text-white font-medium text-sm mb-2">"We Build Software"</div>
+                            <div class="text-brand-accent font-bold">12.3% conversion</div>
+                        </div>
+                        <div class="bg-gray-900 rounded p-3 border-2 border-green-500">
+                            <div class="text-gray-400 text-xs mb-1">Variant B (Winner)</div>
+                            <div class="text-white font-medium text-sm mb-2">"Stop Losing Revenue"</div>
+                            <div class="text-green-400 font-bold">18.7% conversion <i class="fa-solid fa-arrow-up text-xs"></i></div>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-center"><button class="text-brand-accent text-sm hover:underline">Declare Winner & Deploy</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>function createTest(){alert('Create new A/B test\n\nTest types:\n• Headlines\n• CTA buttons\n• Landing pages\n• Email subject lines\n• Ad copy');}</script>
+</body>
+</html>

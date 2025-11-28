@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Push Notification System | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-5xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6"><h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-bell text-brand-accent"></i>Push Notification System</h1></div>
+        <div class="grid lg:grid-cols-2 gap-6">
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Send Notification</h3>
+                <div class="space-y-3">
+                    <input type="text" placeholder="Notification Title" maxlength="50" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                    <textarea rows="3" placeholder="Message (120 char recommended)" maxlength="200" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white"></textarea>
+                    <input type="url" placeholder="Click URL (optional)" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                    <select class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                        <option>All Subscribers (5,892)</option>
+                        <option>Active Users (3,234)</option>
+                        <option>Inactive (2,658)</option>
+                    </select>
+                    <button class="w-full bg-brand-accent text-black font-bold py-3 rounded-lg"><i class="fa-solid fa-rocket mr-2"></i>Send Now</button>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <div class="glass-panel rounded-xl p-6">
+                    <h3 class="text-white font-bold text-sm mb-3">Preview</h3>
+                    <div class="bg-gray-800 rounded-lg p-3 border-l-4 border-blue-500">
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white text-sm">🔔</div>
+                            <div><div class="text-white font-bold text-sm">Your Title Here</div><div class="text-gray-300 text-xs mt-1">Your message text...</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-panel rounded-xl p-6">
+                    <h3 class="text-white font-bold text-sm mb-3">Stats</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span class="text-gray-400">Subscribers</span><span class="text-white">5,892</span></div>
+                        <div class="flex justify-between"><span class="text-gray-400">Avg Click Rate</span><span class="text-brand-accent">12.3%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

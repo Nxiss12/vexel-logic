@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashtag Generator | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brand: { dark: '#020305', navy: '#0b0f19', accent: '#FBC02D' } } } } }
+    </script>
+    <style>
+        body { background: #020305; color: #e2e8f0; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .hashtag { cursor: pointer; transition: all 0.2s; }
+        .hashtag:hover { background: rgba(251, 192, 45, 0.2); }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-4xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <h1 class="text-2xl font-bold text-white flex items-center gap-3">
+                <i class="fa-solid fa-hashtag text-brand-accent"></i>
+                Hashtag Generator
+            </h1>
+        </div>
+
+        <div class="glass-panel rounded-xl p-6 mb-6">
+            <h3 class="text-white font-bold mb-3">Your Post Content</h3>
+            <textarea id="post-text" rows="4" placeholder="Paste your post content here..." class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:border-brand-accent focus:outline-none mb-3"></textarea>
+            <button onclick="generateHashtags()" class="w-full bg-brand-accent text-black font-bold py-3 rounded-lg hover:bg-yellow-300">
+                <i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Generate Hashtags
+            </button>
+        </div>
+
+        <!-- Results -->
+        <div id="results" class="hidden space-y-6">
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-3">Recommended Hashtags (Click to copy)</h3>
+                <div id="hashtags-list" class="flex flex-wrap gap-2"></div>
+                <button onclick="copyAll()" class="w-full bg-white/10 text-white py-2 rounded-lg mt-4 text-sm hover:bg-white/20">
+                    <i class="fa-solid fa-copy mr-2"></i>Copy All
+                </button>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="glass-panel rounded-xl p-4 text-center">
+                    <div class="text-brand-accent font-bold text-2xl mb-1">High Volume</div>
+                    <div class="text-gray-400 text-xs">1M+ posts</div>
+                </div>
+                <div class="glass-panel rounded-xl p-4 text-center">
+                    <div class="text-green-500 font-bold text-2xl mb-1">Medium</div>
+                    <div class="text-gray-400 text-xs">100k-1M posts</div>
+                </div>
+                <div class="glass-panel rounded-xl p-4 text-center">
+                    <div class="text-blue-500 font-bold text-2xl mb-1">Niche</div>
+                    <div class="text-gray-400 text-xs">&lt;100k posts</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hashtagDatabase = {
+            business: ['#SmallBusiness', '#Entrepreneur', '#BusinessGrowth', '#StartupLife', '#BusinessOwner', '#UKBusiness', '#BusinessTips', '#SmallBiz'],
+            tech: ['#Tech', '#Technology', '#Innovation', '#Digital', '#Automation', '#SaaS', '#TechNews', '#FutureTech'],
+            marketing: ['#Marketing', '#DigitalMarketing', '#ContentMarketing', '#SocialMedia', '#SEO', '#MarketingTips', '#GrowthHacking'],
+            productivity: ['#Productivity', '#TimeManagement', '#WorkSmart', '#Efficiency', '#WorkLifeBalance', '#ProductivityHacks']
+        };
+
+        function generateHashtags() {
+            const text = document.getElementById('post-text').value.toLowerCase();
+            if (!text) {
+                alert('Please enter some content first');
+                return;
+            }
+
+            // Simple keyword matching
+            let suggested = [];
+            if (text.includes('business') || text.includes('company')) suggested.push(...hashtagDatabase.business);
+            if (text.includes('tech') || text.includes('automation') || text.includes('software')) suggested.push(...hashtagDatabase.tech);
+            if (text.includes('marketing') || text.includes('content') || text.includes('social')) suggested.push(...hashtagDatabase.marketing);
+            if (text.includes('productivity') || text.includes('time') || text.includes('efficient')) suggested.push(...hashtagDatabase.productivity);
+
+            // Remove duplicates
+            suggested = [...new Set(suggested)];
+
+            // If no matches, show popular
+            if (suggested.length === 0) {
+                suggested = ['#Business', '#Marketing', '#Growth', '#Success', '#Entrepreneur', '#UKBusiness', '#SmallBiz', '#BusinessTips'];
+            }
+
+            // Display
+            const container = document.getElementById('hashtags-list');
+            container.innerHTML = suggested.map(tag => `
+                <span class="hashtag bg-brand-accent/10 text-brand-accent px-3 py-2 rounded-lg text-sm font-medium border border-brand-accent/30 hover:bg-brand-accent/20" onclick="copyHashtag('${tag}')">
+                    ${tag}
+                </span>
+            `).join('');
+
+            document.getElementById('results').classList.remove('hidden');
+        }
+
+        function copyHashtag(tag) {
+            navigator.clipboard.writeText(tag);
+            alert(`✓ Copied: ${tag}`);
+        }
+
+        function copyAll() {
+            const hashtags = Array.from(document.querySelectorAll('.hashtag')).map(el => el.textContent.trim()).join(' ');
+            navigator.clipboard.writeText(hashtags);
+            alert('✓ All hashtags copied to clipboard!');
+        }
+    </script>
+</body>
+</html>

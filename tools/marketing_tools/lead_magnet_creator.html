@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Magnet Creator | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-5xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6"><h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-magnet text-brand-accent"></i>Lead Magnet Creator</h1></div>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div onclick="selectType('checklist')" class="glass-panel rounded-xl p-6 text-center cursor-pointer hover:border-brand-accent/50">
+                <i class="fa-solid fa-list-check text-4xl text-brand-accent mb-3"></i>
+                <h3 class="text-white font-bold">Checklist</h3>
+                <p class="text-gray-400 text-xs mt-2">Step-by-step guide</p>
+            </div>
+            <div onclick="selectType('ebook')" class="glass-panel rounded-xl p-6 text-center cursor-pointer hover:border-brand-accent/50">
+                <i class="fa-solid fa-book text-4xl text-brand-accent mb-3"></i>
+                <h3 class="text-white font-bold">eBook</h3>
+                <p class="text-gray-400 text-xs mt-2">Comprehensive guide</p>
+            </div>
+            <div onclick="selectType('template')" class="glass-panel rounded-xl p-6 text-center cursor-pointer hover:border-brand-accent/50">
+                <i class="fa-solid fa-file-lines text-4xl text-brand-accent mb-3"></i>
+                <h3 class="text-white font-bold">Template</h3>
+                <p class="text-gray-400 text-xs mt-2">Ready-to-use resource</p>
+            </div>
+        </div>
+        <div class="glass-panel rounded-xl p-6">
+            <h3 class="text-white font-bold mb-4">Popular Lead Magnets</h3>
+            <div class="grid md:grid-cols-2 gap-3">
+                <div class="bg-gray-900/50 rounded-lg p-3"><div class="text-white font-medium text-sm">The Ultimate [Industry] Checklist</div><div class="text-gray-400 text-xs">347 downloads</div></div>
+                <div class="bg-gray-900/50 rounded-lg p-3"><div class="text-white font-medium text-sm">10 [Topic] Templates</div><div class="text-gray-400 text-xs">289 downloads</div></div>
+                <div class="bg-gray-900/50 rounded-lg p-3"><div class="text-white font-medium text-sm">[Industry] ROI Calculator</div><div class="text-gray-400 text-xs">456 downloads</div></div>
+                <div class="bg-gray-900/50 rounded-lg p-3"><div class="text-white font-medium text-sm">Free [Service] Audit</div><div class="text-gray-400 text-xs">234 downloads</div></div>
+            </div>
+        </div>
+    </div>
+    <script>function selectType(type){alert(`Creating ${type} lead magnet\n\nIncludes:\n• Professional design template\n• Landing page\n• Email delivery automation\n• Download tracking`);}</script>
+</body>
+</html>

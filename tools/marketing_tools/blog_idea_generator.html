@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Idea Generator | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-4xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6"><h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-lightbulb text-brand-accent"></i>Blog Idea Generator</h1></div>
+        <div class="glass-panel rounded-xl p-6 mb-6">
+            <div class="space-y-3">
+                <input type="text" id="industry" placeholder="Your industry (e.g., fitness, tech, finance)" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                <input type="text" id="keyword" placeholder="Target keyword (e.g., productivity)" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                <button onclick="generateIdeas()" class="w-full bg-brand-accent text-black font-bold py-3 rounded-lg"><i class="fa-solid fa-magic-wand-sparkles mr-2"></i>Generate 20 Ideas</button>
+            </div>
+        </div>
+        <div id="ideas-container" class="hidden glass-panel rounded-xl p-6">
+            <h3 class="text-white font-bold mb-4">Blog Post Ideas</h3>
+            <div id="ideas-list" class="space-y-2"></div>
+        </div>
+    </div>
+    <script>
+        function generateIdeas(){
+            const industry=document.getElementById('industry').value;
+            const keyword=document.getElementById('keyword').value;
+            if(!industry){alert('Please enter your industry');return;}
+            const ideas=[
+                `The Complete Guide to ${keyword||'Success'} in ${industry}`,
+                `10 ${industry} Trends to Watch in 2024`,
+                `How ${industry} Businesses Can ${keyword||'Grow'} Faster`,
+                `Case Study: How We Helped a ${industry} Company`,
+                `${keyword||'Best Practices'} Every ${industry} Professional Should Know`,
+                `Common ${industry} Mistakes (And How to Avoid Them)`,
+                `The Future of ${industry}: Expert Predictions`,
+                `${industry} vs ${industry}: Which is Right for You?`,
+                `5-Minute ${keyword||'Tips'} for Busy ${industry} Professionals`,
+                `Behind the Scenes: A Day in ${industry}`,
+                `${industry} Tools We Can't Live Without`,
+                `How to Get Started in ${industry} (Beginner's Guide)`,
+                `The ROI of ${keyword||'Investing'} in ${industry}`,
+                `Interview: Top ${industry} Leader Shares Insights`,
+                `${industry} Checklist: Don't Launch Without These`,
+                `Debunking ${industry} Myths`,
+                `${industry} Resources Every Professional Needs`,
+                `Why ${industry} Businesses Need ${keyword||'Automation'}`,
+                `Before & After: ${industry} Transformation Stories`,
+                `${industry} FAQ: Your Top 20 Questions Answered`
+            ];
+            const list=document.getElementById('ideas-list');
+            list.innerHTML=ideas.map((idea,i)=>`<div class="bg-gray-900/50 border border-gray-800 rounded-lg p-3 flex justify-between items-center"><span class="text-white text-sm">${i+1}. ${idea}</span><button onclick="navigator.clipboard.writeText('${idea}');alert('✓ Copied!')" class="text-brand-accent hover:underline text-xs">Copy</button></div>`).join('');
+            document.getElementById('ideas-container').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
