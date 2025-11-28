@@ -43,6 +43,31 @@ python vexel_architect.py
 
 ---
 
+## 🌐 FREE HOSTING & DEPLOYMENT
+
+### **🚀 GitHub Pages (Recommended - 100% Free)**
+
+Your site is already configured for GitHub Pages! Just enable it:
+
+1. Go to: [github.com/Nxiss12/vexel-logic/settings/pages](https://github.com/Nxiss12/vexel-logic/settings/pages)
+2. Under **Source**, select:
+   - **Branch:** `main`
+   - **Folder:** `/ (root)`
+3. Click **Save**
+4. Wait 2-3 minutes
+5. Your site is live at: `https://nxiss12.github.io/vexel-logic/`
+
+**✅ Auto-deploys on every git push - no manual steps needed!**
+
+**📖 Full guide:** See [FREE_HOSTING_SETUP.md](FREE_HOSTING_SETUP.md) for:
+- GitHub Pages setup (detailed)
+- Vercel alternative (also free)
+- Cloudflare Pages option
+- Custom domain setup
+- Troubleshooting
+
+---
+
 ## 📁 PROJECT STRUCTURE
 
 ```
