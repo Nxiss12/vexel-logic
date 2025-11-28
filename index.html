@@ -82,16 +82,33 @@
         .bento-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; }
         @media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, auto); } .bento-large { grid-column: span 2; grid-row: span 2; } .bento-wide { grid-column: span 2; } }
         
-        .tool-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
-        .tool-card:hover { transform: translateY(-4px); border-color: rgba(251, 192, 45, 0.4); box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5); }
+        .tool-card { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            position: relative; 
+            overflow: hidden;
+            background: rgba(17, 22, 37, 0.8);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        .tool-card:hover { 
+            transform: translateY(-6px) scale(1.02); 
+            border-color: rgba(251, 192, 45, 0.6); 
+            background: rgba(17, 22, 37, 1);
+            box-shadow: 0 20px 40px -15px rgba(251, 192, 45, 0.3), 0 0 20px rgba(251, 192, 45, 0.15); 
+        }
         .tool-card.selected { 
-            border-color: rgba(16, 185, 129, 0.6) !important; 
-            background: rgba(16, 185, 129, 0.05) !important; 
-            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2), 0 10px 40px -10px rgba(16, 185, 129, 0.3) !important;
+            border-color: rgba(16, 185, 129, 0.8) !important; 
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(17, 22, 37, 0.9) 100%) !important; 
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3), 0 15px 40px -10px rgba(16, 185, 129, 0.4) !important;
+            animation: pulse-green 2s infinite;
         }
         .tool-card.selected:hover { 
-            border-color: rgba(16, 185, 129, 0.8) !important; 
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3), 0 10px 40px -10px rgba(16, 185, 129, 0.4) !important;
+            border-color: rgba(16, 185, 129, 1) !important; 
+            transform: translateY(-4px);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.4), 0 20px 50px -10px rgba(16, 185, 129, 0.5) !important;
+        }
+        @keyframes pulse-green {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3), 0 15px 40px -10px rgba(16, 185, 129, 0.4); }
+            50% { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.2), 0 15px 40px -10px rgba(16, 185, 129, 0.5); }
         }
         
         .iphone-mockup { border: 12px solid #1a1a1a; border-radius: 40px; overflow: hidden; position: relative; background: #000; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9); }
@@ -982,25 +999,95 @@
             filtered.forEach(tool => {
                 const isSelected = cart.some(c => c.id === tool.id);
                 const price = isAnnual ? Math.floor(tool.price * 0.8) : tool.price;
+                const toolFile = getToolFile(tool);
                 const el = document.createElement('div');
-                el.className = `tool-card ${isSelected ? 'selected' : ''} border p-6 rounded-xl cursor-pointer transition-all group`;
+                el.className = `tool-card ${isSelected ? 'selected' : ''} border p-6 rounded-xl cursor-pointer transition-all group flex flex-col`;
                 el.setAttribute('data-tool-id', tool.id);
                 el.innerHTML = `
                     <div class="flex justify-between items-start mb-4 pointer-events-none">
                         <span class="text-[10px] font-bold px-2 py-1 rounded ${isSelected ? 'bg-brand-success/20 text-brand-success' : 'text-brand-dim bg-white/5'}">${tool.cat}</span>
-                        ${isSelected ? '<i class="fa-solid fa-circle-check text-brand-success text-xl"></i>' : '<i class="fa-regular fa-circle text-brand-dim group-hover:text-brand-accent text-xl"></i>'}
+                        ${isSelected ? '<i class="fa-solid fa-circle-check text-brand-success text-2xl animate-bounce"></i>' : '<i class="fa-regular fa-circle text-brand-dim/50 group-hover:text-brand-accent text-2xl transition-all group-hover:scale-110"></i>'}
                     </div>
-                    <h4 class="text-white font-bold text-xl mb-2 pointer-events-none">${tool.name}</h4>
-                    <p class="text-brand-dim text-sm mb-6 line-clamp-2 pointer-events-none">${tool.desc}</p>
-                    <div class="flex items-center justify-between mt-auto border-t border-white/5 pt-4">
-                        <span class="text-brand-accent font-mono font-bold">£${price}<span class="text-xs text-brand-dim">/mo</span></span>
-                        <button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent transition-colors">Specs <i class="fa-solid fa-arrow-right"></i></button>
+                    <h4 class="text-white font-bold text-xl mb-2 pointer-events-none group-hover:text-brand-accent transition-colors">${tool.name}</h4>
+                    <p class="text-brand-dim text-sm mb-4 line-clamp-2 pointer-events-none flex-grow">${tool.desc}</p>
+                    <div class="flex items-center justify-between border-t border-white/5 pt-4 mb-3">
+                        <span class="text-brand-accent font-mono font-bold text-lg">£${price}<span class="text-xs text-brand-dim">/mo</span></span>
+                        <button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent transition-colors font-medium">Specs <i class="fa-solid fa-arrow-right"></i></button>
                     </div>
-                    ${isSelected ? '<div class="mt-3 text-center text-xs text-brand-success font-bold pointer-events-none bg-brand-success/10 py-2 rounded"><i class="fa-solid fa-check-circle mr-1"></i>SELECTED • Click to remove</div>' : '<div class="mt-3 text-center text-xs text-brand-dim group-hover:text-brand-accent pointer-events-none py-2">Click to add to your stack</div>'}`;
-                el.onclick = () => toggleTool(tool.id);
+                    ${toolFile ? `<button onclick="event.stopPropagation(); launchTool('${toolFile}')" class="w-full bg-brand-accent/20 hover:bg-brand-accent text-brand-accent hover:text-brand-dark font-bold py-2 rounded-lg text-sm transition-all group-hover:bg-brand-accent group-hover:text-brand-dark"><i class="fa-solid fa-rocket mr-2"></i>Try This Tool</button>` : ''}
+                    ${isSelected ? '<div class="mt-2 text-center text-xs text-brand-success font-bold pointer-events-none bg-brand-success/10 py-2 rounded"><i class="fa-solid fa-check-circle mr-1"></i>SELECTED • Click to remove</div>' : '<div class="mt-2 text-center text-xs text-brand-dim group-hover:text-white pointer-events-none py-1 opacity-60 group-hover:opacity-100 transition-opacity">Click card to add to stack</div>'}`;
+                el.onclick = (e) => { if(e.target.tagName !== 'BUTTON') toggleTool(tool.id); };
                 fragment.appendChild(el);
             });
             grid.appendChild(fragment);
+        }
+        
+        // Map tool IDs to actual file paths
+        function getToolFile(tool) {
+            const toolFileMap = {
+                // Automation tools
+                'auto-1': 'tools/missed_call_bot.html',
+                'auto-2': 'tools/review_engine.html',
+                'auto-16': 'tools/social_media_scheduler.html',
+                // Marketing tools (30 built!)
+                'mkt-1': 'tools/marketing_tools/social_media_scheduler.html',
+                'mkt-2': 'tools/marketing_tools/email_campaign_builder.html',
+                'mkt-3': 'tools/marketing_tools/landing_page_builder.html',
+                'mkt-4': 'tools/marketing_tools/seo_analyzer.html',
+                'mkt-5': 'tools/marketing_tools/content_calendar.html',
+                'mkt-6': 'tools/marketing_tools/hashtag_generator.html',
+                'mkt-7': 'tools/marketing_tools/ad_performance_dashboard.html',
+                'mkt-8': 'tools/marketing_tools/competitor_tracker.html',
+                'mkt-9': 'tools/marketing_tools/referral_program_manager.html',
+                'mkt-10': 'tools/marketing_tools/influencer_outreach_tool.html',
+                'mkt-11': 'tools/marketing_tools/brand_monitoring.html',
+                'mkt-12': 'tools/marketing_tools/google_my_business_manager.html',
+                'mkt-13': 'tools/marketing_tools/local_seo_tool.html',
+                'mkt-14': 'tools/marketing_tools/press_release_builder.html',
+                'mkt-15': 'tools/marketing_tools/qr_code_generator.html',
+                'mkt-16': 'tools/marketing_tools/email_signature_generator.html',
+                'mkt-17': 'tools/marketing_tools/ab_test_manager.html',
+                'mkt-18': 'tools/marketing_tools/webinar_funnel_builder.html',
+                'mkt-19': 'tools/marketing_tools/retargeting_pixel_manager.html',
+                'mkt-20': 'tools/marketing_tools/video_marketing_suite.html',
+                'mkt-21': 'tools/marketing_tools/customer_survey_tool.html',
+                'mkt-22': 'tools/marketing_tools/affiliate_dashboard.html',
+                'mkt-23': 'tools/marketing_tools/sms_marketing.html',
+                'mkt-24': 'tools/marketing_tools/push_notification_system.html',
+                'mkt-25': 'tools/marketing_tools/chatbot_builder.html',
+                'mkt-26': 'tools/marketing_tools/popup_creator.html',
+                'mkt-27': 'tools/marketing_tools/content_repurposer.html',
+                'mkt-28': 'tools/marketing_tools/utm_link_builder.html',
+                'mkt-29': 'tools/marketing_tools/social_proof_widget.html',
+                'mkt-30': 'tools/marketing_tools/review_aggregator.html',
+                // Sales tools
+                'sales-1': 'tools/ai_receptionist.html',
+                'sales-2': 'tools/database_reactivator.html',
+                'sales-3': 'tools/lead_scoring_dashboard.html',
+                'sales-6': 'tools/contract_generator.html',
+                // Operations tools
+                'ops-1': 'tools/unified_inbox.html',
+                'ops-2': 'tools/project_tracker.html',
+                'ops-3': 'tools/time_tracker.html',
+                'ops-29': 'tools/client_portal.html',
+                // Finance tools
+                'fin-1': 'tools/invoice_generator.html',
+                'fin-2': 'tools/expense_tracker.html',
+                'fin-3': 'tools/quote_calculator.html',
+                // Productivity tools
+                'prod-1': 'tools/appointment_scheduler.html',
+                'prod-7': 'tools/feedback_collector.html',
+                // Additional Marketing tools from root tools folder
+                'prod-16': 'tools/email_signature_generator.html',
+                'prod-17': 'tools/qr_code_generator.html',
+                'prod-18': 'tools/seo_analyzer.html',
+                'prod-19': 'tools/email_campaign_builder.html'
+            };
+            return toolFileMap[tool.id] || null;
+        }
+        
+        function launchTool(path) {
+            window.open(path, '_blank');
         }
 
         // --- FILTER FIX ---
@@ -1043,22 +1130,24 @@
                 filtered.forEach(tool => {
                     const isSelected = cart.some(c => c.id === tool.id);
                     const price = isAnnual ? Math.floor(tool.price * 0.8) : tool.price;
+                    const toolFile = getToolFile(tool);
                     const el = document.createElement('div');
-                    el.className = `tool-card ${isSelected ? 'selected' : ''} border p-6 rounded-xl cursor-pointer transition-all group`;
+                    el.className = `tool-card ${isSelected ? 'selected' : ''} border p-6 rounded-xl cursor-pointer transition-all group flex flex-col`;
                     el.setAttribute('data-tool-id', tool.id);
                     el.innerHTML = `
                     <div class="flex justify-between items-start mb-4 pointer-events-none">
                         <span class="text-[10px] font-bold px-2 py-1 rounded ${isSelected ? 'bg-brand-success/20 text-brand-success' : 'text-brand-dim bg-white/5'}">${tool.cat}</span>
-                        ${isSelected ? '<i class="fa-solid fa-circle-check text-brand-success text-xl"></i>' : '<i class="fa-regular fa-circle text-brand-dim group-hover:text-brand-accent text-xl"></i>'}
+                        ${isSelected ? '<i class="fa-solid fa-circle-check text-brand-success text-2xl animate-bounce"></i>' : '<i class="fa-regular fa-circle text-brand-dim/50 group-hover:text-brand-accent text-2xl transition-all group-hover:scale-110"></i>'}
                     </div>
-                    <h4 class="text-white font-bold text-xl mb-2 pointer-events-none">${tool.name}</h4>
-                    <p class="text-brand-dim text-sm mb-6 line-clamp-2 pointer-events-none">${tool.desc}</p>
-                    <div class="flex items-center justify-between mt-auto border-t border-white/5 pt-4">
-                        <span class="text-brand-accent font-mono font-bold">£${price}<span class="text-xs text-brand-dim">/mo</span></span>
-                        <button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent transition-colors">Specs <i class="fa-solid fa-arrow-right"></i></button>
+                    <h4 class="text-white font-bold text-xl mb-2 pointer-events-none group-hover:text-brand-accent transition-colors">${tool.name}</h4>
+                    <p class="text-brand-dim text-sm mb-4 line-clamp-2 pointer-events-none flex-grow">${tool.desc}</p>
+                    <div class="flex items-center justify-between border-t border-white/5 pt-4 mb-3">
+                        <span class="text-brand-accent font-mono font-bold text-lg">£${price}<span class="text-xs text-brand-dim">/mo</span></span>
+                        <button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent transition-colors font-medium">Specs <i class="fa-solid fa-arrow-right"></i></button>
                     </div>
-                    ${isSelected ? '<div class="mt-3 text-center text-xs text-brand-success font-bold pointer-events-none bg-brand-success/10 py-2 rounded"><i class="fa-solid fa-check-circle mr-1"></i>SELECTED • Click to remove</div>' : '<div class="mt-3 text-center text-xs text-brand-dim group-hover:text-brand-accent pointer-events-none py-2">Click to add to your stack</div>'}`;
-                    el.onclick = () => toggleTool(tool.id);
+                    ${toolFile ? `<button onclick="event.stopPropagation(); launchTool('${toolFile}')" class="w-full bg-brand-accent/20 hover:bg-brand-accent text-brand-accent hover:text-brand-dark font-bold py-2 rounded-lg text-sm transition-all group-hover:bg-brand-accent group-hover:text-brand-dark"><i class="fa-solid fa-rocket mr-2"></i>Try This Tool</button>` : ''}
+                    ${isSelected ? '<div class="mt-2 text-center text-xs text-brand-success font-bold pointer-events-none bg-brand-success/10 py-2 rounded"><i class="fa-solid fa-check-circle mr-1"></i>SELECTED • Click to remove</div>' : '<div class="mt-2 text-center text-xs text-brand-dim group-hover:text-white pointer-events-none py-1 opacity-60 group-hover:opacity-100 transition-opacity">Click card to add to stack</div>'}`;
+                    el.onclick = (e) => { if(e.target.tagName !== 'BUTTON') toggleTool(tool.id); };
                     fragment.appendChild(el);
                 });
                 grid.appendChild(fragment);
@@ -1107,6 +1196,7 @@
         function openToolModal(id, e) {
             if(e) e.stopPropagation();
             const tool = toolsDB.find(t => t.id === id);
+            const toolFile = getToolFile(tool);
             document.getElementById('tm-title').innerText = tool.name;
             document.getElementById('tm-cat').innerText = tool.cat;
             document.getElementById('tm-desc').innerText = tool.fullDesc;
@@ -1117,10 +1207,21 @@
             btn.innerHTML = isSelected ? '<i class="fa-solid fa-xmark mr-2"></i>Remove from Stack' : '<i class="fa-solid fa-plus mr-2"></i>Add to Stack';
             btn.className = isSelected ? 'bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-bold transition-colors' : 'bg-brand-accent hover:bg-yellow-300 text-brand-dark px-6 py-3 rounded-lg font-bold transition-colors';
             btn.onclick = () => { toggleTool(id); closeToolModal(); };
-            document.getElementById('tm-request-only').onclick = () => { 
-                window.open('https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit?prefill_custom_1=' + encodeURIComponent(tool.name), '_blank'); 
-                closeToolModal(); 
-            };
+            
+            // Update request only button - now shows "Try Tool" if available
+            const reqBtn = document.getElementById('tm-request-only');
+            if (toolFile) {
+                reqBtn.innerHTML = '<i class="fa-solid fa-rocket mr-2"></i>Try Tool Live';
+                reqBtn.className = 'bg-green-600 hover:bg-green-500 text-white px-5 py-3 rounded-lg font-bold transition-colors text-sm';
+                reqBtn.onclick = () => { window.open(toolFile, '_blank'); };
+            } else {
+                reqBtn.innerHTML = 'Request Demo';
+                reqBtn.className = 'bg-white/10 text-white px-5 py-3 rounded-lg font-bold hover:bg-white/20 transition-colors text-sm border border-white/10';
+                reqBtn.onclick = () => { 
+                    window.open('https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit?prefill_custom_1=' + encodeURIComponent(tool.name), '_blank'); 
+                    closeToolModal(); 
+                };
+            }
             document.getElementById('tool-modal').classList.remove('hidden');
         }
         function closeToolModal() { document.getElementById('tool-modal').classList.add('hidden'); }
