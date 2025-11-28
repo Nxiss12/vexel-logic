@@ -1185,7 +1185,7 @@ class VexelGrowthAgent:
         
         # Save to file
         export_path = Path(__file__).parent / f"daily_tasks_{datetime.date.today().isoformat()}.md"
-        with open(export_path, 'w') as f:
+        with open(export_path, 'w', encoding='utf-8') as f:
             f.write('\n'.join(output))
         
         print(f"\n✅ Tasks exported to: {export_path}")

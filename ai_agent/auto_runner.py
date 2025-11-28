@@ -285,7 +285,7 @@ def generate_email_campaign(num_emails: int = 5):
     # Export to file
     export_path = Path(__file__).parent / "email_campaign.md"
     
-    with open(export_path, 'w') as f:
+    with open(export_path, 'w', encoding='utf-8') as f:
         f.write("# Cold Email Campaign\n\n")
         for i, email in enumerate(emails, 1):
             f.write(f"## Email {i}\n\n")
@@ -359,7 +359,7 @@ Want to see what we can do for YOUR business?
     # Export
     export_path = Path(__file__).parent / "testimonial_posts.md"
     
-    with open(export_path, 'w') as f:
+    with open(export_path, 'w', encoding='utf-8') as f:
         f.write("# Testimonial Posts\n\n")
         for i, post in enumerate(posts, 1):
             f.write(f"## Post {i}\n\n```\n{post}\n```\n\n---\n\n")
