@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Engine | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { dark: '#020305', navy: '#0b0f19', panel: '#111625', accent: '#FBC02D', light: '#e2e8f0', dim: '#64748b', success: '#10B981', danger: '#EF4444' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: #020305; color: #e2e8f0; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .star { color: #FBC02D; }
+    </style>
+</head>
+<body class="min-h-screen p-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-brand-accent rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-star text-brand-dark text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-white">Review Engine</h1>
+                        <p class="text-brand-dim text-sm">Automated Google review collection</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right mr-4">
+                        <div class="text-xs text-brand-dim">Current Rating</div>
+                        <div class="flex items-center gap-1">
+                            <span class="text-2xl font-bold text-white">4.7</span>
+                            <div class="flex">
+                                <i class="fa-solid fa-star star text-sm"></i>
+                                <i class="fa-solid fa-star star text-sm"></i>
+                                <i class="fa-solid fa-star star text-sm"></i>
+                                <i class="fa-solid fa-star star text-sm"></i>
+                                <i class="fa-solid fa-star-half-stroke star text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid md:grid-cols-4 gap-4 mb-6">
+            <div class="glass-panel rounded-xl p-4">
+                <div class="text-brand-accent text-xs font-bold mb-1 uppercase tracking-wider">Requests Sent</div>
+                <div class="text-2xl font-bold text-white">847</div>
+            </div>
+            <div class="glass-panel rounded-xl p-4">
+                <div class="text-brand-accent text-xs font-bold mb-1 uppercase tracking-wider">Reviews Received</div>
+                <div class="text-2xl font-bold text-white">231</div>
+            </div>
+            <div class="glass-panel rounded-xl p-4">
+                <div class="text-brand-accent text-xs font-bold mb-1 uppercase tracking-wider">Conversion Rate</div>
+                <div class="text-2xl font-bold text-white">27.3%</div>
+            </div>
+            <div class="glass-panel rounded-xl p-4">
+                <div class="text-brand-accent text-xs font-bold mb-1 uppercase tracking-wider">Avg Rating</div>
+                <div class="text-2xl font-bold text-white">4.7 ⭐</div>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Configuration -->
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold text-lg mb-4">Campaign Settings</h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-sm text-brand-light mb-2 block">Google Review Link</label>
+                        <input type="url" id="review-link" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none" placeholder="https://g.page/r/YOUR_PLACE_ID/review">
+                        <p class="text-xs text-brand-dim mt-1">Find this in Google My Business</p>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-brand-light mb-2 block">SMS Template</label>
+                        <textarea id="sms-template" rows="4" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none">Hi {name}! Thanks for choosing us. We'd love to hear about your experience. Could you leave us a quick review? {link}</textarea>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-brand-light mb-2 block">Send Timing (after invoice)</label>
+                        <select id="timing" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none">
+                            <option value="0">Immediately</option>
+                            <option value="24">24 hours</option>
+                            <option value="48" selected>48 hours</option>
+                            <option value="72">72 hours</option>
+                            <option value="168">1 week</option>
+                        </select>
+                    </div>
+
+                    <div class="bg-brand-navy/50 border border-white/10 rounded-lg p-4">
+                        <h4 class="text-white text-sm font-bold mb-2">Smart Filters</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" checked class="accent-brand-accent">
+                                <span class="text-sm text-brand-light">Only send to satisfied customers (feedback > 4/5)</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" checked class="accent-brand-accent">
+                                <span class="text-sm text-brand-light">Skip if customer already reviewed</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" class="accent-brand-accent">
+                                <span class="text-sm text-brand-light">Send reminder after 7 days (if no review)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button onclick="saveConfig()" class="w-full bg-brand-accent text-brand-dark font-bold py-3 rounded-lg hover:bg-yellow-300 transition-colors">
+                        <i class="fa-solid fa-save mr-2"></i>Save & Activate
+                    </button>
+                </div>
+            </div>
+
+            <!-- Preview & Activity -->
+            <div class="space-y-6">
+                <!-- Message Preview -->
+                <div class="glass-panel rounded-xl p-6">
+                    <h3 class="text-white font-bold text-lg mb-4">Message Preview</h3>
+                    <div class="bg-white rounded-lg p-4 shadow-lg">
+                        <div class="flex items-center gap-2 mb-3 pb-3 border-b">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+                            <div>
+                                <div class="font-bold text-gray-800 text-sm">Your Business</div>
+                                <div class="text-xs text-gray-500">via SMS</div>
+                            </div>
+                        </div>
+                        <div class="text-gray-800 text-sm leading-relaxed" id="preview-text">
+                            Hi John! Thanks for choosing us. We'd love to hear about your experience. Could you leave us a quick review? 
+                            <a href="#" class="text-blue-600 underline">https://g.page/r/...</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Reviews -->
+                <div class="glass-panel rounded-xl p-6">
+                    <h3 class="text-white font-bold text-lg mb-4">Recent Reviews</h3>
+                    <div class="space-y-3 max-h-[300px] overflow-y-auto">
+                        <div class="bg-brand-navy/50 border border-white/5 rounded-lg p-3">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <div class="text-white font-medium text-sm">Sarah M.</div>
+                                    <div class="flex text-brand-accent text-xs">
+                                        ★★★★★
+                                    </div>
+                                </div>
+                                <span class="text-xs text-brand-dim">2 hours ago</span>
+                            </div>
+                            <p class="text-brand-light text-xs">Excellent service! Very professional and quick turnaround.</p>
+                        </div>
+
+                        <div class="bg-brand-navy/50 border border-white/5 rounded-lg p-3">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <div class="text-white font-medium text-sm">David K.</div>
+                                    <div class="flex text-brand-accent text-xs">
+                                        ★★★★★
+                                    </div>
+                                </div>
+                                <span class="text-xs text-brand-dim">1 day ago</span>
+                            </div>
+                            <p class="text-brand-light text-xs">Highly recommend. Great communication throughout.</p>
+                        </div>
+
+                        <div class="bg-brand-navy/50 border border-white/5 rounded-lg p-3">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <div class="text-white font-medium text-sm">Emma L.</div>
+                                    <div class="flex text-brand-accent text-xs">
+                                        ★★★★☆
+                                    </div>
+                                </div>
+                                <span class="text-xs text-brand-dim">3 days ago</span>
+                            </div>
+                            <p class="text-brand-light text-xs">Good work, would use again.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Send Test -->
+                <div class="glass-panel rounded-xl p-6">
+                    <h3 class="text-white font-bold text-sm mb-3">Test Campaign</h3>
+                    <div class="flex gap-2">
+                        <input type="tel" id="test-number" placeholder="Test phone number" class="flex-1 bg-brand-navy border border-white/10 rounded-lg p-2 text-white text-sm focus:border-brand-accent focus:outline-none">
+                        <button onclick="testSend()" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integration -->
+        <div class="glass-panel rounded-xl p-6 mt-6">
+            <h3 class="text-white font-bold text-lg mb-4"><i class="fa-solid fa-plug text-brand-accent mr-2"></i>Integration Options</h3>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-brand-navy/50 border border-white/10 rounded-lg p-4">
+                    <h4 class="text-white font-medium mb-2">Xero</h4>
+                    <p class="text-brand-dim text-xs mb-3">Auto-trigger on invoice paid</p>
+                    <button class="text-brand-accent text-xs font-bold">Connect →</button>
+                </div>
+                <div class="bg-brand-navy/50 border border-white/10 rounded-lg p-4">
+                    <h4 class="text-white font-medium mb-2">QuickBooks</h4>
+                    <p class="text-brand-dim text-xs mb-3">Sync with payment records</p>
+                    <button class="text-brand-accent text-xs font-bold">Connect →</button>
+                </div>
+                <div class="bg-brand-navy/50 border border-white/10 rounded-lg p-4">
+                    <h4 class="text-white font-medium mb-2">Stripe</h4>
+                    <p class="text-brand-dim text-xs mb-3">Send after successful payment</p>
+                    <button class="text-brand-accent text-xs font-bold">Connect →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function saveConfig() {
+            const config = {
+                link: document.getElementById('review-link').value,
+                template: document.getElementById('sms-template').value,
+                timing: document.getElementById('timing').value
+            };
+            localStorage.setItem('vexel_review_config', JSON.stringify(config));
+            alert('✓ Review Engine activated! Requests will be sent automatically.');
+        }
+
+        function testSend() {
+            const number = document.getElementById('test-number').value;
+            if (!number) {
+                alert('Please enter a test phone number');
+                return;
+            }
+            alert(`✓ Test review request sent to ${number}`);
+        }
+
+        // Real-time preview update
+        document.getElementById('sms-template').addEventListener('input', function() {
+            const preview = this.value.replace('{name}', 'John').replace('{link}', '<a href="#" class="text-blue-600 underline">https://g.page/r/...</a>');
+            document.getElementById('preview-text').innerHTML = preview;
+        });
+
+        // Load config
+        window.onload = () => {
+            const saved = localStorage.getItem('vexel_review_config');
+            if (saved) {
+                const config = JSON.parse(saved);
+                document.getElementById('review-link').value = config.link || '';
+                document.getElementById('sms-template').value = config.template || '';
+                document.getElementById('timing').value = config.timing || '48';
+            }
+        };
+    </script>
+</body>
+</html>

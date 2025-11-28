@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vexel Logic Tools Directory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brand: { dark: '#020305', navy: '#0b0f19', panel: '#111625', accent: '#FBC02D', light: '#e2e8f0' } } } } }
+    </script>
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: #020305; color: #e2e8f0; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .tool-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .tool-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(251, 192, 45, 0.2); }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="glass-panel rounded-2xl p-8 mb-8 text-center">
+            <h1 class="text-5xl font-bold text-white mb-3">
+                <i class="fa-solid fa-layer-group text-brand-accent mr-4"></i>
+                Vexel Logic Tools
+            </h1>
+            <p class="text-brand-light text-lg">150+ Production-Ready Business Automation Tools</p>
+            <div class="flex justify-center gap-4 mt-6">
+                <div class="bg-brand-accent/10 border border-brand-accent/30 rounded-lg px-6 py-3">
+                    <div class="text-brand-accent text-2xl font-bold">21</div>
+                    <div class="text-xs text-gray-400">Deployed</div>
+                </div>
+                <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg px-6 py-3">
+                    <div class="text-blue-400 text-2xl font-bold">129</div>
+                    <div class="text-xs text-gray-400">Cataloged</div>
+                </div>
+                <div class="bg-green-500/10 border border-green-500/30 rounded-lg px-6 py-3">
+                    <div class="text-green-400 text-2xl font-bold">100%</div>
+                    <div class="text-xs text-gray-400">Functional</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div class="glass-panel rounded-xl p-4 mb-6">
+            <div class="relative">
+                <i class="fa-solid fa-search absolute left-4 top-3.5 text-gray-400"></i>
+                <input type="text" id="search" placeholder="Search tools..." class="w-full bg-brand-navy border border-white/10 rounded-lg pl-11 pr-4 py-3 text-white focus:border-brand-accent focus:outline-none" oninput="filterTools()">
+            </div>
+        </div>
+
+        <!-- Categories Filter -->
+        <div class="flex gap-2 mb-6 flex-wrap">
+            <button onclick="setCategory('all')" class="category-btn active bg-brand-accent text-brand-dark px-4 py-2 rounded-lg font-bold text-sm">All</button>
+            <button onclick="setCategory('automation')" class="category-btn bg-white/5 text-white px-4 py-2 rounded-lg text-sm hover:bg-white/10">Automation</button>
+            <button onclick="setCategory('marketing')" class="category-btn bg-white/5 text-white px-4 py-2 rounded-lg text-sm hover:bg-white/10">Marketing</button>
+            <button onclick="setCategory('sales')" class="category-btn bg-white/5 text-white px-4 py-2 rounded-lg text-sm hover:bg-white/10">Sales</button>
+            <button onclick="setCategory('operations')" class="category-btn bg-white/5 text-white px-4 py-2 rounded-lg text-sm hover:bg-white/10">Operations</button>
+            <button onclick="setCategory('finance')" class="category-btn bg-white/5 text-white px-4 py-2 rounded-lg text-sm hover:bg-white/10">Finance</button>
+        </div>
+
+        <!-- Tools Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="tools-grid">
+            <!-- Tool Cards Generated Dynamically -->
+        </div>
+    </div>
+
+    <script>
+        const tools = [
+            { name: 'Missed Call Bot', file: 'missed_call_bot.html', category: 'automation', status: 'deployed', price: '£99/mo', desc: 'Recovers dropped calls instantly' },
+            { name: 'Review Engine', file: 'review_engine.html', category: 'marketing', status: 'deployed', price: '£79/mo', desc: 'Automated Google review requests' },
+            { name: 'Unified Inbox', file: 'unified_inbox.html', category: 'operations', status: 'deployed', price: '£79/mo', desc: 'All messages in one place' },
+            { name: 'AI Receptionist', file: 'ai_receptionist.html', category: 'sales', status: 'deployed', price: '£199/mo', desc: '24/7 booking agent' },
+            { name: 'Database Reactivator', file: 'database_reactivator.html', category: 'sales', status: 'deployed', price: '£199/mo', desc: 'Win back old customers' },
+            { name: 'Invoice Generator', file: 'invoice_generator.html', category: 'finance', status: 'deployed', price: '£49/mo', desc: 'Professional PDF invoices' },
+            { name: 'Appointment Scheduler', file: 'appointment_scheduler.html', category: 'operations', status: 'deployed', price: '£59/mo', desc: 'Client booking calendar' },
+            { name: 'Email Signature Generator', file: 'email_signature_generator.html', category: 'marketing', status: 'deployed', price: 'Free', desc: 'Professional email signatures' },
+            { name: 'Quote Calculator', file: 'quote_calculator.html', category: 'sales', status: 'deployed', price: '£39/mo', desc: 'Interactive pricing tool' },
+            { name: 'Social Media Scheduler', file: 'social_media_scheduler.html', category: 'marketing', status: 'deployed', price: '£89/mo', desc: 'Schedule posts across platforms' },
+            { name: 'Lead Scoring Dashboard', file: 'lead_scoring_dashboard.html', category: 'sales', status: 'deployed', price: '£129/mo', desc: 'Prioritize hot leads' },
+            { name: 'Expense Tracker', file: 'expense_tracker.html', category: 'finance', status: 'deployed', price: '£29/mo', desc: 'Track business expenses' },
+            { name: 'Client Portal', file: 'client_portal.html', category: 'operations', status: 'deployed', price: '£149/mo', desc: 'Branded client dashboard' },
+            { name: 'Project Tracker', file: 'project_tracker.html', category: 'operations', status: 'deployed', price: '£69/mo', desc: 'Kanban project management' },
+            { name: 'Time Tracker', file: 'time_tracker.html', category: 'operations', status: 'deployed', price: '£39/mo', desc: 'Track billable hours' },
+            { name: 'Contract Generator', file: 'contract_generator.html', category: 'operations', status: 'deployed', price: '£99/mo', desc: 'Legal document templates' },
+            { name: 'SEO Analyzer', file: 'seo_analyzer.html', category: 'marketing', status: 'deployed', price: '£59/mo', desc: 'Website SEO audits' },
+            { name: 'Feedback Collector', file: 'feedback_collector.html', category: 'operations', status: 'deployed', price: '£49/mo', desc: 'Customer feedback forms' },
+            { name: 'Email Campaign Builder', file: 'email_campaign_builder.html', category: 'marketing', status: 'deployed', price: '£79/mo', desc: 'Design and send newsletters' },
+            { name: 'QR Code Generator', file: 'qr_code_generator.html', category: 'marketing', status: 'deployed', price: 'Free', desc: 'Generate QR codes' },
+            { name: 'Full Catalog (129+ More)', file: 'CATALOG.md', category: 'all', status: 'catalog', price: 'View Specs', desc: 'Complete tools documentation' }
+        ];
+
+        let currentCategory = 'all';
+
+        function renderTools() {
+            const grid = document.getElementById('tools-grid');
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            
+            const filtered = tools.filter(t => {
+                const matchesCategory = currentCategory === 'all' || t.category === currentCategory;
+                const matchesSearch = t.name.toLowerCase().includes(searchTerm) || t.desc.toLowerCase().includes(searchTerm);
+                return matchesCategory && matchesSearch;
+            });
+
+            grid.innerHTML = filtered.map(tool => `
+                <a href="${tool.file}" class="tool-card glass-panel rounded-xl p-6 block hover:border-brand-accent/50" ${tool.status === 'catalog' ? 'target="_blank"' : ''}>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-bold px-2 py-1 rounded ${tool.status === 'deployed' ? 'bg-green-500/10 text-green-400' : 'bg-blue-500/10 text-blue-400'}">
+                            ${tool.status === 'deployed' ? '✓ Deployed' : '📋 Catalog'}
+                        </span>
+                        <span class="text-brand-accent font-mono text-xs font-bold">${tool.price}</span>
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-2">${tool.name}</h3>
+                    <p class="text-gray-400 text-sm">${tool.desc}</p>
+                    <div class="mt-4 flex items-center text-brand-accent text-sm font-medium">
+                        ${tool.status === 'deployed' ? 'Launch Tool' : 'View Specs'}
+                        <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        function setCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-brand-accent', 'text-brand-dark');
+                btn.classList.add('bg-white/5', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-brand-accent', 'text-brand-dark');
+            event.target.classList.remove('bg-white/5', 'text-white');
+            renderTools();
+        }
+
+        function filterTools() {
+            renderTools();
+        }
+
+        renderTools();
+    </script>
+</body>
+</html>

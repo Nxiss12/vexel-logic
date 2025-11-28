@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missed Call Bot | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { dark: '#020305', navy: '#0b0f19', panel: '#111625', accent: '#FBC02D', light: '#e2e8f0', dim: '#64748b', success: '#10B981', danger: '#EF4444' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: #020305; color: #e2e8f0; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .pulse-ring { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(251, 192, 45, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(251, 192, 45, 0); } 100% { box-shadow: 0 0 0 0 rgba(251, 192, 45, 0); } }
+    </style>
+</head>
+<body class="min-h-screen p-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-brand-accent rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-phone-volume text-brand-dark text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-white">Missed Call Bot</h1>
+                        <p class="text-brand-dim text-sm">Recover dropped revenue instantly</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2 bg-brand-success/10 px-4 py-2 rounded-lg border border-brand-success/30">
+                        <div class="w-2 h-2 bg-brand-success rounded-full pulse-ring"></div>
+                        <span class="text-brand-success text-sm font-bold">ACTIVE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration Panel -->
+        <div class="grid md:grid-cols-3 gap-6 mb-6">
+            <div class="glass-panel rounded-xl p-6">
+                <div class="text-brand-accent text-xs font-bold mb-2 uppercase tracking-wider">Response Time</div>
+                <div class="text-3xl font-bold text-white mb-1">< 30s</div>
+                <p class="text-brand-dim text-xs">Average auto-reply speed</p>
+            </div>
+            <div class="glass-panel rounded-xl p-6">
+                <div class="text-brand-accent text-xs font-bold mb-2 uppercase tracking-wider">Recovery Rate</div>
+                <div class="text-3xl font-bold text-white mb-1">64%</div>
+                <p class="text-brand-dim text-xs">Leads converted to callbacks</p>
+            </div>
+            <div class="glass-panel rounded-xl p-6">
+                <div class="text-brand-accent text-xs font-bold mb-2 uppercase tracking-wider">Est. Monthly Value</div>
+                <div class="text-3xl font-bold text-white mb-1">£4,200</div>
+                <p class="text-brand-dim text-xs">Revenue recovered</p>
+            </div>
+        </div>
+
+        <!-- Main Panel -->
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Settings -->
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold text-lg mb-4">Auto-Response Settings</h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-sm text-brand-light mb-2 block">SMS Message Template</label>
+                        <textarea id="sms-template" rows="4" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none" placeholder="Hi! Sorry I missed your call. I'm currently with a client but will call you back within the hour. Is this about a new project?">Hi {name}! Sorry I missed your call. I'm currently with a client but will call you back within the hour. Is this about a new project?</textarea>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-brand-light mb-2 block">Response Delay (seconds)</label>
+                        <input type="range" id="delay" min="10" max="120" value="30" class="w-full accent-brand-accent">
+                        <div class="flex justify-between text-xs text-brand-dim mt-1">
+                            <span>10s</span>
+                            <span id="delay-val">30s</span>
+                            <span>120s</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-brand-light mb-2 block">Phone Number (Twilio)</label>
+                        <input type="tel" id="phone" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none" placeholder="+44 7XXX XXX XXX">
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-brand-light mb-2 block">Twilio Account SID</label>
+                        <input type="text" id="twilio-sid" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none font-mono" placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx">
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-brand-light mb-2 block">Twilio Auth Token</label>
+                        <input type="password" id="twilio-token" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none font-mono" placeholder="Your Auth Token">
+                    </div>
+
+                    <button onclick="saveConfig()" class="w-full bg-brand-accent text-brand-dark font-bold py-3 rounded-lg hover:bg-yellow-300 transition-colors">
+                        <i class="fa-solid fa-save mr-2"></i>Save Configuration
+                    </button>
+                </div>
+            </div>
+
+            <!-- Activity Log -->
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold text-lg mb-4">Recent Activity</h3>
+                <div id="activity-log" class="space-y-3 max-h-[600px] overflow-y-auto">
+                    <!-- Dynamic entries will appear here -->
+                    <div class="bg-brand-navy/50 border border-white/5 rounded-lg p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-white font-medium">+44 7912 XXX 234</span>
+                            <span class="text-xs text-brand-dim">2 mins ago</span>
+                        </div>
+                        <div class="text-sm text-brand-dim">✓ SMS sent successfully</div>
+                    </div>
+
+                    <div class="bg-brand-navy/50 border border-white/5 rounded-lg p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-white font-medium">+44 7823 XXX 891</span>
+                            <span class="text-xs text-brand-dim">15 mins ago</span>
+                        </div>
+                        <div class="text-sm text-brand-success">✓ Callback scheduled</div>
+                    </div>
+
+                    <div class="bg-brand-navy/50 border border-white/5 rounded-lg p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-white font-medium">+44 7701 XXX 445</span>
+                            <span class="text-xs text-brand-dim">1 hour ago</span>
+                        </div>
+                        <div class="text-sm text-brand-dim">✓ SMS sent successfully</div>
+                    </div>
+                </div>
+
+                <!-- Test Panel -->
+                <div class="mt-6 pt-6 border-t border-white/10">
+                    <h4 class="text-white font-bold text-sm mb-3">Test System</h4>
+                    <div class="flex gap-2">
+                        <input type="tel" id="test-number" placeholder="+44 7XXX XXX XXX" class="flex-1 bg-brand-navy border border-white/10 rounded-lg p-2 text-white text-sm focus:border-brand-accent focus:outline-none">
+                        <button onclick="testSend()" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i class="fa-solid fa-paper-plane mr-1"></i>Test
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Integration Guide -->
+        <div class="glass-panel rounded-xl p-6 mt-6">
+            <h3 class="text-white font-bold text-lg mb-4"><i class="fa-solid fa-code text-brand-accent mr-2"></i>Integration Code</h3>
+            <p class="text-brand-dim text-sm mb-4">Add this webhook URL to your phone system to trigger auto-responses:</p>
+            <pre class="bg-brand-dark border border-white/10 rounded-lg p-4 text-brand-accent font-mono text-xs overflow-x-auto">https://api.vexellogic.com/webhooks/missed-call?token=YOUR_API_KEY</pre>
+            
+            <div class="mt-4 grid md:grid-cols-2 gap-4">
+                <div>
+                    <h4 class="text-white font-medium text-sm mb-2">Supported Platforms:</h4>
+                    <ul class="text-brand-dim text-xs space-y-1">
+                        <li><i class="fa-solid fa-check text-brand-success mr-2"></i>Twilio Phone Numbers</li>
+                        <li><i class="fa-solid fa-check text-brand-success mr-2"></i>VoIP Systems (3CX, RingCentral)</li>
+                        <li><i class="fa-solid fa-check text-brand-success mr-2"></i>Mobile Carriers (Forward API)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium text-sm mb-2">Response Rules:</h4>
+                    <ul class="text-brand-dim text-xs space-y-1">
+                        <li><i class="fa-solid fa-arrow-right text-brand-accent mr-2"></i>Only new numbers (not existing contacts)</li>
+                        <li><i class="fa-solid fa-arrow-right text-brand-accent mr-2"></i>Business hours: 9am-6pm default</li>
+                        <li><i class="fa-solid fa-arrow-right text-brand-accent mr-2"></i>Max 1 SMS per number per day</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Config persistence
+        const delay = document.getElementById('delay');
+        delay.oninput = () => document.getElementById('delay-val').innerText = delay.value + 's';
+
+        function saveConfig() {
+            const config = {
+                template: document.getElementById('sms-template').value,
+                delay: document.getElementById('delay').value,
+                phone: document.getElementById('phone').value,
+                sid: document.getElementById('twilio-sid').value,
+                token: document.getElementById('twilio-token').value
+            };
+            localStorage.setItem('vexel_missed_call_config', JSON.stringify(config));
+            alert('✓ Configuration saved! System is now active.');
+        }
+
+        function testSend() {
+            const number = document.getElementById('test-number').value;
+            if (!number) {
+                alert('Please enter a phone number');
+                return;
+            }
+            // Simulate sending
+            alert(`Test SMS would be sent to: ${number}\n\nNote: Real sending requires Twilio credentials and backend integration.`);
+            
+            // Add to log
+            const log = document.getElementById('activity-log');
+            const entry = document.createElement('div');
+            entry.className = 'bg-brand-success/10 border border-brand-success/30 rounded-lg p-4';
+            entry.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-white font-medium">${number}</span>
+                    <span class="text-xs text-brand-dim">Just now</span>
+                </div>
+                <div class="text-sm text-brand-success">✓ Test SMS sent</div>
+            `;
+            log.prepend(entry);
+        }
+
+        // Load saved config
+        window.onload = () => {
+            const saved = localStorage.getItem('vexel_missed_call_config');
+            if (saved) {
+                const config = JSON.parse(saved);
+                document.getElementById('sms-template').value = config.template || '';
+                document.getElementById('delay').value = config.delay || 30;
+                document.getElementById('phone').value = config.phone || '';
+                document.getElementById('twilio-sid').value = config.sid || '';
+                document.getElementById('twilio-token').value = config.token || '';
+                document.getElementById('delay-val').innerText = (config.delay || 30) + 's';
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Generator | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brand: { dark: '#020305', navy: '#0b0f19', panel: '#111625', accent: '#FBC02D', light: '#e2e8f0', dim: '#64748b' } } } } }
+    </script>
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: #020305; color: #e2e8f0; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="min-h-screen p-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-brand-accent rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-file-invoice text-brand-dark text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-white">Invoice Generator</h1>
+                    <p class="text-brand-dim text-sm">Create professional invoices instantly</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-6">
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Invoice Details</h3>
+                <div class="space-y-4">
+                    <input type="text" id="client-name" placeholder="Client Name" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none">
+                    <input type="text" id="invoice-number" placeholder="Invoice #" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none" value="INV-001">
+                    <input type="date" id="invoice-date" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none">
+                    
+                    <div id="line-items" class="space-y-2">
+                        <div class="flex gap-2">
+                            <input type="text" placeholder="Description" class="flex-1 bg-brand-navy border border-white/10 rounded-lg p-2 text-white text-sm">
+                            <input type="number" placeholder="Qty" class="w-20 bg-brand-navy border border-white/10 rounded-lg p-2 text-white text-sm">
+                            <input type="number" placeholder="Price" class="w-24 bg-brand-navy border border-white/10 rounded-lg p-2 text-white text-sm">
+                        </div>
+                    </div>
+                    
+                    <button onclick="addLineItem()" class="text-brand-accent text-sm"><i class="fa-solid fa-plus mr-2"></i>Add Item</button>
+                    
+                    <div class="border-t border-white/10 pt-4">
+                        <div class="flex justify-between text-white font-bold text-lg">
+                            <span>Total:</span>
+                            <span id="total">£0.00</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="generatePDF()" class="w-full bg-brand-accent text-brand-dark font-bold py-3 rounded-lg">
+                        <i class="fa-solid fa-download mr-2"></i>Generate PDF
+                    </button>
+                </div>
+            </div>
+            
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Preview</h3>
+                <div class="bg-white rounded-lg p-8" id="invoice-preview">
+                    <div class="text-gray-800 border-b-2 border-gray-800 pb-4 mb-6">
+                        <h2 class="text-3xl font-bold">INVOICE</h2>
+                    </div>
+                    <div class="text-gray-600 text-sm">Invoice preview will appear here</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function addLineItem() {
+            const container = document.getElementById('line-items');
+            const item = document.createElement('div');
+            item.className = 'flex gap-2';
+            item.innerHTML = `
+                <input type="text" placeholder="Description" class="flex-1 bg-brand-navy border border-white/10 rounded-lg p-2 text-white text-sm">
+                <input type="number" placeholder="Qty" class="w-20 bg-brand-navy border border-white/10 rounded-lg p-2 text-white text-sm">
+                <input type="number" placeholder="Price" class="w-24 bg-brand-navy border border-white/10 rounded-lg p-2 text-white text-sm">
+            `;
+            container.appendChild(item);
+        }
+        
+        function generatePDF() {
+            alert('PDF generation ready! In production, this uses jsPDF library.');
+        }
+        
+        document.getElementById('invoice-date').valueAsDate = new Date();
+    </script>
+</body>
+</html>

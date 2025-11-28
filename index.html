@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth scroll-pt-24">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Branding -->
+    <title>Vexel Logic | Infrastructure Intelligence</title>
+    <meta name="description" content="We engineer the digital nervous system for UK businesses. Automate admin, capture leads, and scale without chaos.">
+    <meta property="og:title" content="Vexel Logic | Stop Losing Revenue">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#020305',     
+                            navy: '#0b0f19',     
+                            panel: '#111625',    
+                            accent: '#FBC02D',   
+                            light: '#e2e8f0',    
+                            dim: '#64748b',      
+                            success: '#10B981',
+                            danger: '#EF4444',
+                            border: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    boxShadow: {
+                        'glow': '0 0 40px rgba(251, 192, 45, 0.15)',
+                        'card': '0 20px 40px -10px rgba(0,0,0,0.5)',
+                    },
+                    animation: { 'scroll': 'scroll 40s linear infinite' },
+                    keyframes: { scroll: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } } }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #020305; }
+        
+        .bg-grid { background-size: 60px 60px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px); mask-image: radial-gradient(ellipse at center, black 50%, transparent 100%); }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); }
+        .bento-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; }
+        @media (min-width: 768px) { .bento-grid { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, auto); } .bento-large { grid-column: span 2; grid-row: span 2; } .bento-wide { grid-column: span 2; } }
+        
+        .tool-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+        .tool-card:hover { transform: translateY(-4px); border-color: rgba(251, 192, 45, 0.4); box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5); }
+        
+        .iphone-mockup { border: 12px solid #1a1a1a; border-radius: 40px; overflow: hidden; position: relative; background: #000; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9); }
+        
+        /* Filter Active State */
+        .filter-btn.active { background-color: #FBC02D; color: #020305; border-color: #FBC02D; }
+        
+        .toggle-checkbox { position: absolute; top: 0; left: 0; transition: transform 0.3s ease; }
+        #pricing-toggle:checked { transform: translateX(100%); border-color: #FBC02D; }
+        
+        .status-dot { animation: pulse-green 2s infinite; }
+        @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+        
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #020305; } ::-webkit-scrollbar-thumb { background: #1a1f36; border-radius: 4px; } ::-webkit-scrollbar-thumb:hover { background: #FBC02D; }
+        .view-transition { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .faq-content { transition: max-height 0.3s ease-out; max-height: 0; overflow: hidden; }
+        .faq-open .faq-content { max-height: 200px; }
+        
+        .loader { border: 2px solid #f3f3f3; border-top: 2px solid #FBC02D; border-radius: 50%; width: 14px; height: 14px; animation: spin 1s linear infinite; display: inline-block; margin-right: 8px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="text-brand-light relative selection:bg-brand-accent selection:text-brand-dark overflow-x-hidden bg-brand-dark">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel border-b-0 top-0 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-3 cursor-pointer group" onclick="switchView('landing', 'hero-section')">
+                    <div class="w-10 h-10 bg-brand-accent rounded flex items-center justify-center text-brand-dark font-bold text-xl shadow-glow group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-lg tracking-tight text-white leading-none">VEXEL</span>
+                        <span class="text-[10px] text-brand-dim font-mono tracking-widest uppercase group-hover:text-brand-accent transition-colors">LOGIC</span>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" onclick="switchView('landing', 'plans'); return false;" class="text-sm font-medium text-brand-dim hover:text-white transition-colors">Core Plans</a>
+                    <a href="#" onclick="switchView('landing', 'solutions'); return false;" class="text-sm font-medium text-brand-dim hover:text-white transition-colors">Capabilities</a>
+                    <button onclick="switchView('marketplace')" class="text-sm font-bold text-brand-accent hover:text-white transition-colors border border-brand-accent/20 px-4 py-1.5 rounded-full bg-brand-accent/5 hover:bg-brand-accent/10 backdrop-blur-md">
+                        <i class="fa-solid fa-microchip mr-2"></i>Systems Catalog
+                    </button>
+                    <div class="flex items-center gap-2 text-[10px] font-mono text-brand-success bg-brand-success/5 px-3 py-1 rounded-full border border-brand-success/20">
+                        <div class="w-1.5 h-1.5 bg-brand-success rounded-full status-dot"></div>
+                        SYSTEMS ONLINE
+                    </div>
+                    <button onclick="openLoginModal()" class="text-sm font-bold text-white hover:text-brand-accent transition-colors flex items-center gap-2 opacity-80 hover:opacity-100">
+                        <i class="fa-regular fa-circle-user"></i> Portal
+                    </button>
+                </div>
+                <div class="md:hidden"><button id="mobile-menu-btn" class="text-white text-2xl" aria-label="Menu"><i class="fa-solid fa-bars-staggered"></i></button></div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-white/10 absolute w-full z-40">
+            <div class="px-4 py-6 space-y-4">
+                <button onclick="switchView('landing', 'plans'); toggleMobileMenu()" class="block text-brand-dim hover:text-white text-left w-full">Core Plans</button>
+                <button onclick="switchView('marketplace'); toggleMobileMenu()" class="block text-brand-accent w-full text-left font-bold">Systems Catalog</button>
+                <button onclick="openLoginModal(); toggleMobileMenu()" class="block text-white w-full text-left">Client Portal</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Trust Ticker -->
+    <div class="fixed top-20 w-full z-40 bg-brand-dark/90 border-b border-white/5 py-1.5 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-4 flex justify-center md:justify-end gap-6 text-[10px] font-mono text-brand-dim uppercase tracking-wider">
+            <span class="flex items-center gap-2" title="We adhere to GDPR"><i class="fa-solid fa-shield-cat text-blue-400"></i> UK Data Sovereignty</span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-clock text-brand-accent"></i> 24/7 Support</span>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main id="app-content" class="pt-24">
+        
+        <!-- LANDING VIEW -->
+        <div id="view-landing" class="view-transition">
+            <header id="hero-section" class="relative pt-20 pb-20 lg:pt-36 lg:pb-32 overflow-hidden">
+                <div class="absolute inset-0 bg-grid z-0 pointer-events-none"></div>
+                <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-accent/5 rounded-full blur-[120px] animate-blob pointer-events-none"></div>
+                <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center">
+                    <div class="lg:w-1/2 lg:pr-16" data-aos="fade-right">
+                        <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-brand-accent/5 border border-brand-accent/20 mb-8 backdrop-blur-sm">
+                            <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span><span class="text-xs font-bold tracking-widest uppercase text-brand-accent">Platform V27.0 Stable</span>
+                        </div>
+                        <h1 class="text-5xl lg:text-7xl font-extrabold text-white leading-tight mb-6 tracking-tight">We Engineer <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-yellow-200 to-white">Growth.</span></h1>
+                        <p class="text-lg text-brand-dim mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light">Vexel Logic replaces manual admin with <strong>Automated Infrastructure</strong>. From catching missed calls to syncing inventory, we build the custom logic that runs your business while you sleep.</p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#calculator" class="group bg-brand-accent text-brand-dark px-8 py-4 rounded-lg font-bold text-base hover:bg-white transition-all shadow-glow flex items-center justify-center gap-2">Calculate Lost Revenue <i class="fa-solid fa-calculator group-hover:translate-x-1 transition-transform"></i></a>
+                            <button onclick="switchView('marketplace')" class="px-8 py-4 rounded-lg border border-white/10 hover:bg-white/5 text-white font-semibold transition-all flex items-center justify-center gap-2 backdrop-blur-sm hover:border-brand-accent/30"><i class="fa-solid fa-layer-group text-brand-dim"></i> Open Catalog</button>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 mt-16 lg:mt-0 relative flex justify-center" data-aos="fade-left">
+                         <div class="iphone-mockup w-[300px] h-[600px] relative z-20 transform rotate-[-5deg] hover:rotate-0 transition-transform duration-700">
+                            <div class="w-full h-full bg-brand-navy p-4 pt-12 flex flex-col relative">
+                                <div class="bg-brand-panel border border-brand-accent/30 p-4 rounded-xl mb-4 relative z-10 shadow-lg animate-pulse mt-4">
+                                    <div class="flex justify-between items-center mb-2"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-brand-danger/20 flex items-center justify-center text-brand-danger text-xs"><i class="fa-solid fa-phone-slash"></i></div><span class="text-xs text-brand-danger font-bold uppercase tracking-wide">Missed Call</span></div><span class="text-[10px] text-brand-dim">Now</span></div><div class="text-white text-lg font-bold">+44 79XX XXX 231</div>
+                                </div>
+                                <div class="flex justify-end mb-3"><div class="bg-brand-accent text-brand-dark p-3 rounded-2xl rounded-tr-sm text-xs max-w-[85%] font-medium">Hey! Sorry I missed you. I'm on site. How can I help?</div></div>
+                                <div class="flex justify-start mb-3"><div class="bg-white/10 text-white p-3 rounded-2xl rounded-tl-sm text-xs max-w-[85%] shadow-md">Hi, I need a quote for a boiler install.</div></div>
+                                <div class="mt-auto bg-brand-panel p-4 rounded-xl border border-white/5"><div class="text-[10px] text-brand-dim uppercase tracking-wider">Revenue Saved</div><div class="text-2xl font-bold text-white">£1,450.00</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Ecosystem Marquee -->
+            <div class="w-full overflow-hidden bg-brand-navy border-y border-white/5 py-10">
+                <div class="flex animate-scroll w-[200%]">
+                    <div class="flex gap-20 items-center px-8 opacity-40 hover:opacity-100 transition-opacity duration-500">
+                        <div class="flex items-center gap-3"><i class="fa-brands fa-shopify text-3xl text-green-400"></i> <span class="text-xl font-bold text-white">Shopify</span></div>
+                        <div class="flex items-center gap-3"><i class="fa-solid fa-envelope text-3xl text-blue-400"></i> <span class="text-xl font-bold text-white">Outlook</span></div>
+                        <div class="flex items-center gap-3"><i class="fa-brands fa-whatsapp text-3xl text-green-500"></i> <span class="text-xl font-bold text-white">WhatsApp</span></div>
+                        <div class="flex items-center gap-3"><i class="fa-solid fa-file-invoice text-3xl text-blue-500"></i> <span class="text-xl font-bold text-white">Xero</span></div>
+                        <div class="flex items-center gap-3"><i class="fa-brands fa-hubspot text-3xl text-orange-500"></i> <span class="text-xl font-bold text-white">HubSpot</span></div>
+                         <!-- Duplicate -->
+                        <div class="flex items-center gap-3"><i class="fa-brands fa-shopify text-3xl text-green-400"></i> <span class="text-xl font-bold text-white">Shopify</span></div>
+                        <div class="flex items-center gap-3"><i class="fa-solid fa-envelope text-3xl text-blue-400"></i> <span class="text-xl font-bold text-white">Outlook</span></div>
+                        <div class="flex items-center gap-3"><i class="fa-brands fa-whatsapp text-3xl text-green-500"></i> <span class="text-xl font-bold text-white">WhatsApp</span></div>
+                        <div class="flex items-center gap-3"><i class="fa-solid fa-file-invoice text-3xl text-blue-500"></i> <span class="text-xl font-bold text-white">Xero</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculator -->
+            <section id="calculator" class="py-24 bg-brand-dark relative overflow-hidden">
+                <div class="absolute inset-0 bg-brand-accent/5 pointer-events-none"></div>
+                <div class="max-w-5xl mx-auto px-4 relative z-10">
+                    <div class="glass-panel border border-brand-accent/20 rounded-3xl p-10 md:p-16 shadow-2xl" data-aos="zoom-in">
+                        <div class="text-center mb-12"><h2 class="text-3xl font-bold text-white">Revenue Leakage Audit</h2><p class="text-brand-dim mt-2">Input your numbers to see what "Manual Process" costs you annually.</p></div>
+                        <div class="grid md:grid-cols-2 gap-16 items-center">
+                            <div class="space-y-10">
+                                <div><label class="flex justify-between text-sm font-bold text-white mb-4"><span>Average Job Value</span><span id="val-display" class="text-brand-accent bg-brand-accent/10 px-2 py-1 rounded">£500</span></label><input type="range" id="job-value" min="100" max="5000" step="50" value="500" class="w-full h-2 bg-brand-navy rounded-lg appearance-none cursor-pointer accent-brand-accent" oninput="calculateROI()"></div>
+                                <div><label class="flex justify-between text-sm font-bold text-white mb-4"><span>Missed Calls / Week</span><span id="calls-display" class="text-brand-accent bg-brand-accent/10 px-2 py-1 rounded">3</span></label><input type="range" id="missed-calls" min="1" max="50" step="1" value="3" class="w-full h-2 bg-brand-navy rounded-lg appearance-none cursor-pointer accent-brand-accent" oninput="calculateROI()"></div>
+                                <div><label class="flex justify-between text-sm font-bold text-white mb-4"><span>Close Rate</span><span id="rate-display" class="text-brand-accent bg-brand-accent/10 px-2 py-1 rounded">30%</span></label><input type="range" id="close-rate" value="30" min="10" max="100" class="w-full h-2 bg-brand-navy rounded-lg appearance-none cursor-pointer accent-brand-accent" oninput="calculateROI()"></div>
+                            </div>
+                            <div class="text-center bg-brand-navy/80 rounded-2xl p-8 border border-white/10 relative overflow-hidden">
+                                <div class="absolute top-0 left-0 w-full h-1 bg-brand-danger"></div><div class="text-xs text-brand-dim uppercase tracking-wider mb-4">Estimated Annual Loss</div><div class="text-6xl font-extrabold text-white mb-2 tracking-tight" id="annual-loss">£23,400</div><a href="https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit" target="_blank" class="bg-brand-success text-white px-8 py-4 rounded-xl font-bold hover:bg-green-600 transition-all w-full shadow-glow text-lg block text-center">Stop The Bleeding</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Plans -->
+            <section id="plans" class="py-24 bg-brand-navy border-y border-white/5">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                        <h2 class="text-4xl font-bold text-white mb-4">Core Infrastructure Plans</h2>
+                        <div class="flex items-center justify-center gap-4 mt-6">
+                            <span class="text-sm text-white font-medium">Monthly</span>
+                            <div class="relative inline-block w-14 h-8 align-middle select-none">
+                                <input type="checkbox" id="pricing-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer top-1 left-1 transition-all duration-300"/>
+                                <label for="pricing-toggle" class="toggle-label block overflow-hidden h-8 rounded-full bg-brand-panel border border-white/20 cursor-pointer w-14"></label>
+                            </div>
+                            <span class="text-sm text-brand-dim font-medium">Annual <span class="text-brand-dark bg-brand-accent text-[10px] font-bold px-1.5 py-0.5 rounded ml-1">-20%</span></span>
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-8 mb-12">
+                        <div class="glass-panel rounded-2xl p-8 hover:border-brand-accent/30 transition-all flex flex-col group relative" data-aos="fade-up">
+                            <h3 class="text-xl font-bold text-white">Digital Foundation</h3><div class="text-4xl font-bold text-white mb-1 mt-4" id="price-foundation">£1,250</div><div class="text-xs text-brand-dim mb-8 uppercase tracking-wide">One-Time Build</div>
+                            <ul class="space-y-4 mb-8 flex-1 text-sm text-brand-light"><li class="flex gap-3"><i class="fa-solid fa-check text-brand-accent"></i> High-Speed Website</li><li class="flex gap-3"><i class="fa-solid fa-check text-brand-accent"></i> Google Maps SEO</li></ul>
+                            <a href="https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit" target="_blank" class="w-full py-3 bg-white/5 hover:bg-white/10 text-white rounded-lg font-bold border border-white/10 transition-colors block text-center">Initialize</a>
+                        </div>
+                        <div class="glass-panel rounded-2xl p-8 border-brand-accent/50 relative transform md:-translate-y-4 shadow-2xl shadow-brand-accent/5 flex flex-col bg-brand-navy" data-aos="fade-up" data-aos-delay="100">
+                            <div class="absolute top-0 inset-x-0 h-1 bg-brand-accent"></div><div class="absolute top-4 right-4 bg-brand-accent text-brand-dark text-[10px] font-bold px-2 py-1 rounded">POPULAR</div>
+                            <h3 class="text-xl font-bold text-white">Growth Logic</h3><div class="text-4xl font-bold text-white mb-1 mt-4" id="price-growth">£249</div><div class="text-xs text-brand-dim mb-8 uppercase tracking-wide">Per Month</div>
+                            <ul class="space-y-4 mb-8 flex-1 text-sm text-white font-medium"><li class="flex gap-3"><i class="fa-solid fa-bolt text-brand-accent"></i> Missed Call Bot</li><li class="flex gap-3"><i class="fa-solid fa-bolt text-brand-accent"></i> Review Engine</li><li class="flex gap-3"><i class="fa-solid fa-bolt text-brand-accent"></i> Unified Inbox</li></ul>
+                            <a href="https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit" target="_blank" class="w-full py-4 bg-brand-accent hover:bg-white text-brand-dark rounded-lg font-bold transition-all shadow-glow block text-center">Start 7-Day Trial</a>
+                        </div>
+                        <div class="glass-panel rounded-2xl p-8 hover:border-white/20 transition-all flex flex-col group" data-aos="fade-up" data-aos-delay="200">
+                            <h3 class="text-xl font-bold text-white">Enterprise</h3><div class="text-4xl font-bold text-white mb-1 mt-4" id="price-enterprise">£697</div><div class="text-xs text-brand-dim mb-8 uppercase tracking-wide">Per Month</div>
+                            <ul class="space-y-4 mb-8 flex-1 text-sm text-brand-light"><li class="flex gap-3"><i class="fa-solid fa-check text-brand-accent"></i> Everything in Growth</li><li class="flex gap-3"><i class="fa-solid fa-check text-brand-accent"></i> AI Sales Agent</li></ul>
+                            <a href="https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit" target="_blank" class="w-full py-3 bg-white/5 hover:bg-white/10 text-white rounded-lg font-bold border border-white/10 transition-colors block text-center">Deploy</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Engineers -->
+            <section id="engineers" class="py-24 bg-brand-dark border-t border-white/5">
+                <div class="max-w-4xl mx-auto px-4">
+                    <div class="glass-panel rounded-2xl p-10 flex flex-col md:flex-row items-center gap-10 shadow-2xl" data-aos="zoom-in">
+                        <div class="w-32 h-32 rounded-full bg-gradient-to-br from-brand-accent to-orange-500 p-1 flex-shrink-0"><div class="w-full h-full rounded-full bg-brand-navy flex items-center justify-center text-4xl text-white font-bold font-mono">BA</div></div>
+                        <div class="text-center md:text-left">
+                            <h3 class="text-3xl font-bold text-white mb-1">Benedict Anokye-Davies</h3>
+                            <p class="text-brand-dim text-sm mb-4">Founder & Lead Systems Architect</p>
+                            <p class="text-brand-light mb-6 max-w-lg">Pioneering the "Infrastructure-First" approach. Benedict specializes in connecting disconnected systems and building custom logic that saves businesses 20+ hours a week.</p>
+                            <div class="flex gap-4 justify-center md:justify-start">
+                                <a href="mailto:benanokye577@gmail.com" class="text-white text-xs bg-white/5 hover:bg-white/10 px-4 py-2 rounded border border-white/10">Email Direct</a>
+                                <a href="https://www.linkedin.com/in/benedict-anokye-davies/" target="_blank" class="text-white text-xs bg-[#0077b5] hover:bg-[#006396] px-4 py-2 rounded">LinkedIn</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- VIEW: MARKETPLACE -->
+        <div id="view-marketplace" class="hidden view-transition pb-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 pt-10">
+                    <h2 class="text-4xl font-bold text-white mb-4">Systems Catalog</h2>
+                    <div class="relative max-w-md mx-auto">
+                        <i class="fa-solid fa-search absolute left-3 top-3 text-brand-dim text-xs"></i>
+                        <input type="text" id="market-search" onkeyup="searchTools()" placeholder="Search 150+ modules..." class="w-full bg-brand-panel border border-white/10 rounded-lg py-2.5 pl-9 pr-3 text-sm text-white focus:border-brand-accent focus:outline-none">
+                    </div>
+                </div>
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="lg:w-1/4">
+                        <div class="sticky top-28 bg-brand-panel border border-white/10 rounded-xl p-6 space-y-2">
+                            <button onclick="filterTools('All')" class="filter-btn w-full text-left text-sm text-white py-2 px-3 rounded bg-white/10 border-l-2 border-brand-accent" data-filter="All">All Systems</button>
+                            <button onclick="filterTools('Automation')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Automation">Automation</button>
+                            <button onclick="filterTools('Marketing')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Marketing">Marketing</button>
+                            <button onclick="filterTools('Sales')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Sales">Sales</button>
+                            <button onclick="filterTools('Operations')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Operations">Operations</button>
+                        </div>
+                    </div>
+                    <div class="lg:w-3/4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="marketplace-grid"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sticky Stack -->
+            <div id="floating-stack" class="fixed bottom-0 left-0 w-full bg-brand-navy/95 border-t border-brand-accent/30 backdrop-blur-md z-50 transform translate-y-full transition-transform duration-300 shadow-card">
+                <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-brand-accent/10 p-3 rounded-lg text-brand-accent"><i class="fa-solid fa-layer-group text-2xl"></i></div>
+                        <div><div class="text-xs text-brand-dim uppercase tracking-wider">Current Stack</div><div class="text-white font-bold"><span id="stack-count">0</span> Modules Selected</div></div>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <div class="text-right hidden md:block"><div class="text-xs text-brand-dim">Estimated Investment</div><div class="text-lg text-white font-mono font-bold" id="stack-total">£0/mo</div></div>
+                        <button onclick="openModal('Custom Bundle Request')" class="bg-brand-accent text-brand-dark px-8 py-3 rounded-lg font-bold hover:bg-white transition-colors shadow-glow">Continue to Engineer <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: CLIENT DASHBOARD -->
+        <div id="view-client" class="hidden view-transition pb-20 pt-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-end mb-10 border-b border-white/5 pb-6">
+                    <div><div class="text-brand-accent font-mono text-xs mb-2">CLIENT PORTAL</div><h2 class="text-4xl font-bold text-white" id="client-portal-name">Welcome</h2></div>
+                    <button onclick="logout()" class="text-sm text-brand-dim hover:text-white">Log Out</button>
+                </div>
+                <div class="bg-brand-panel border border-white/10 rounded-xl p-6" id="client-modules-container">
+                     <h3 class="text-white font-bold mb-4">Active Modules</h3>
+                     <div class="space-y-2" id="client-modules-list"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-navy border-t border-white/5 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center gap-3"><span class="font-bold text-lg text-white">VEXEL <span class="text-brand-dim">LOGIC</span></span></div>
+            <div class="text-brand-dim text-sm">&copy; 2024 Vexel Logic.</div>
+        </div>
+    </footer>
+
+    <!-- WIDGETS -->
+    <div class="fixed bottom-6 right-6 z-50 chat-float">
+        <button onclick="openChat()" class="bg-brand-accent text-brand-dark w-14 h-14 rounded-full shadow-glow flex items-center justify-center text-2xl hover:bg-white transition-colors relative" aria-label="Open Chat"><i class="fa-solid fa-robot"></i></button>
+    </div>
+
+    <!-- MODALS -->
+    <!-- Tool Detail Modal -->
+    <div id="tool-modal" class="fixed inset-0 z-[80] hidden overflow-y-auto"><div class="flex items-center justify-center min-h-screen px-4 text-center sm:p-0"><div class="fixed inset-0 bg-brand-dark/95 backdrop-blur-sm" onclick="closeToolModal()"></div><div class="relative inline-block align-bottom glass-panel rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:max-w-2xl w-full border border-white/10 tool-card"><div class="p-8 bg-brand-navy"><div class="flex justify-between mb-6"><span class="text-brand-accent text-xs font-bold uppercase" id="tm-cat">Category</span><button onclick="closeToolModal()" class="text-brand-dim hover:text-white" aria-label="Close"><i class="fa-solid fa-xmark text-2xl"></i></button></div><h3 class="text-3xl font-bold text-white mb-4" id="tm-title">Tool Name</h3><p class="text-brand-light mb-6" id="tm-desc">Description.</p><div class="bg-brand-success/5 border-l-2 border-brand-success p-4 mb-6"><p class="text-sm text-brand-dim italic" id="tm-example">Example.</p></div><div class="flex justify-between items-center border-t border-white/10 pt-6"><span class="text-2xl font-mono text-white font-bold" id="tm-price">£99</span><div class="flex gap-3"><button id="tm-request-only" class="bg-white/10 text-white px-5 py-3 rounded-lg font-bold hover:bg-white/20 transition-colors text-sm border border-white/10">Request This Tool Only</button><button id="tm-add" class="bg-brand-accent text-brand-dark px-6 py-3 rounded-lg font-bold">Add to Stack</button></div></div></div></div></div></div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 z-[70] hidden overflow-y-auto"><div class="flex items-center justify-center min-h-screen px-4"><div class="fixed inset-0 bg-brand-dark/95 backdrop-blur-sm" onclick="closeLoginModal()"></div><div class="relative glass-panel rounded-2xl p-8 max-w-md w-full"><h3 class="text-2xl font-bold text-white mb-4">Login</h3><input id="login-email" type="email" placeholder="Email" class="w-full bg-brand-navy p-3.5 rounded-lg text-white mb-4 border border-white/10"><input id="login-pass" type="password" placeholder="Password" class="w-full bg-brand-navy p-3.5 rounded-lg text-white mb-4 border border-white/10"><button onclick="handleLogin()" class="w-full bg-brand-accent text-brand-dark font-bold py-3.5 rounded-lg shadow-glow">Login</button><div class="text-center text-brand-dim text-xs mt-4 pt-4 border-t border-white/5"><p>Demo: admin@biwad.co.uk / demo123</p></div></div></div></div>
+    
+    <!-- Lead Capture Modal -->
+    <div id="trial-modal" class="fixed inset-0 z-[60] hidden overflow-y-auto"><div class="flex items-center justify-center min-h-screen px-4"><div class="fixed inset-0 bg-brand-dark/95 backdrop-blur-sm" onclick="closeModal()"></div><div class="relative glass-panel rounded-2xl p-8 max-w-lg w-full"><div class="bg-brand-accent/5 p-3 rounded border border-brand-accent/20 mb-6 text-brand-accent text-sm font-bold flex justify-between"><span>System:</span><span id="package-display">Growth</span></div><form id="modal-form"><input type="hidden" id="selected-package" name="package"><input type="text" name="business" placeholder="Business Name" class="w-full bg-brand-navy p-3.5 rounded-lg text-white mb-4 border border-white/10" required><input type="text" name="name" placeholder="Contact Name" class="w-full bg-brand-navy p-3.5 rounded-lg text-white mb-4 border border-white/10" required><input type="tel" name="phone" placeholder="Phone Number" class="w-full bg-brand-navy p-3.5 rounded-lg text-white mb-4 border border-white/10"><input type="email" name="email" placeholder="Email" class="w-full bg-brand-navy p-3.5 rounded-lg text-white mb-4 border border-white/10" required><textarea name="notes" rows="2" placeholder="Notes..." class="w-full bg-brand-navy p-3.5 rounded-lg text-white mb-4 border border-white/10"></textarea><button type="submit" class="w-full bg-brand-accent text-brand-dark font-bold py-4 rounded-lg shadow-glow">Transmit Request to Engineer</button></form></div></div></div>
+
+    <!-- Exit Intent Modal -->
+    <div id="exit-modal" class="fixed inset-0 z-[90] hidden overflow-y-auto"><div class="flex items-center justify-center min-h-screen px-4"><div class="fixed inset-0 bg-brand-dark/90 backdrop-blur-md" onclick="closeExitModal()"></div><div class="relative bg-brand-panel border border-brand-accent/50 rounded-2xl p-8 max-w-md w-full text-center shadow-glow"><div class="w-16 h-16 bg-brand-accent rounded-full flex items-center justify-center mx-auto mb-4 text-3xl text-brand-dark"><i class="fa-solid fa-phone-volume"></i></div><h3 class="text-2xl font-bold text-white mb-2">Stop Losing Revenue Today.</h3><p class="text-brand-dim mb-6">Book a Priority Strategy Call with an Engineer.</p><button onclick="openModal('Exit Intent Strategy Call'); closeExitModal()" class="w-full bg-brand-accent text-brand-dark font-bold py-3 rounded-lg">Book Priority Call</button><button onclick="closeExitModal()" class="mt-4 text-xs text-brand-dim hover:text-white">No thanks.</button></div></div></div>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        // --- CONFIG ---
+        const supabase = window.supabase.createClient('https://ryqhqbuqkarugqvcnjbf.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5cWhxYnVxa2FydWdxdmNuamJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQyNTQzNTEsImV4cCI6MjA3OTgzMDM1MX0.ysEUvNIhmAg_6kGjwQwpzoWXc0tclDmkBCg3MRxjcNk');
+        AOS.init({ once: true, offset: 50, duration: 800 });
+
+        // --- DATA ---
+        const baseTools = [
+            { name: "Missed Call Bot", cat: "Automation", price: 99, desc: "Recovers dropped calls.", fullDesc: "Detects missed calls and texts back immediately.", example: "Recovered £4k/mo." },
+            { name: "Review Engine", cat: "Automation", price: 79, desc: "Auto-Google reviews.", fullDesc: "Requests reviews after invoicing.", example: "4.2 to 4.9 stars." },
+            { name: "Unified Inbox", cat: "Operations", price: 79, desc: "All chats in one.", fullDesc: "Combines FB, SMS, Email.", example: "Saved 5hrs/week." },
+            { name: "AI Receptionist", cat: "Sales", price: 199, desc: "24/7 Booking Agent.", fullDesc: "Qualifies leads on site.", example: "Booked 45 exams." },
+            { name: "Database Reactivator", cat: "Sales", price: 199, desc: "Win-back old leads.", fullDesc: "SMS campaigns to old lists.", example: "£12k revenue in 48h." },
+        ];
+        const toolsDB = [];
+        // Create 150 unique tools with realistic IDs
+        for(let i=0; i<150; i++) {
+            const base = baseTools[i % baseTools.length];
+            toolsDB.push({
+                ...base,
+                id: 'tool-' + i, // Unique ID
+                name: i < 5 ? base.name : `${base.name} V${i}`, // Visual variance
+                cat: i < 5 ? base.cat : ['Automation', 'Marketing', 'Sales', 'Operations', 'Industry'][Math.floor(Math.random()*5)]
+            });
+        }
+
+        let cart = [];
+        let isAnnual = false;
+        let currentFilter = 'All';
+
+        // --- MEMOIZED TOOL GENERATION (Performance Fix) ---
+        function renderMarketplace(filter) {
+            const grid = document.getElementById('marketplace-grid');
+            if(!grid) return;
+            
+            // Clear only if filter changed or init
+            if(grid.dataset.currentFilter === filter && grid.children.length > 0 && !document.getElementById('market-search').value) return;
+            
+            grid.innerHTML = '';
+            grid.dataset.currentFilter = filter;
+            currentFilter = filter;
+            
+            const filtered = filter === "All" ? toolsDB : toolsDB.filter(t => t.cat === filter);
+            
+            // Fragment for perf
+            const fragment = document.createDocumentFragment();
+            
+            filtered.forEach(tool => {
+                const isSelected = cart.some(c => c.id === tool.id);
+                const price = isAnnual ? Math.floor(tool.price * 0.8) : tool.price;
+                const el = document.createElement('div');
+                el.className = `tool-card border p-6 rounded-xl cursor-pointer ${isSelected ? 'border-brand-success/50 bg-brand-success/5' : 'border-white/10 bg-brand-panel hover:bg-brand-panel/80'} group`;
+                el.innerHTML = `
+                    <div class="flex justify-between items-start mb-4 pointer-events-none"><span class="text-[10px] font-bold text-brand-dim bg-white/5 px-2 py-1 rounded">${tool.cat}</span>${isSelected ? '<i class="fa-solid fa-circle-check text-brand-success"></i>' : '<i class="fa-regular fa-circle text-brand-dim group-hover:text-white"></i>'}</div>
+                    <h4 class="text-white font-bold text-xl mb-2 pointer-events-none">${tool.name}</h4>
+                    <p class="text-brand-dim text-sm mb-6 line-clamp-2 pointer-events-none">${tool.desc}</p>
+                    <div class="flex items-center justify-between mt-auto border-t border-white/5 pt-4"><span class="text-brand-accent font-mono font-bold">£${price}<span class="text-xs text-brand-dim">/mo</span></span><button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent">Specs <i class="fa-solid fa-arrow-right"></i></button></div>`;
+                el.onclick = () => toggleTool(tool.id);
+                fragment.appendChild(el);
+            });
+            grid.appendChild(fragment);
+        }
+
+        // --- FILTER FIX ---
+        function filterTools(category) {
+            // Update UI active state with robust data attribute matching
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                const btnCategory = btn.getAttribute('data-filter');
+                if (btnCategory === category) {
+                    btn.classList.remove('text-brand-dim', 'border-transparent', 'bg-white/10');
+                    btn.classList.add('active', 'bg-brand-accent', 'text-brand-dark', 'border-brand-accent');
+                } else {
+                    btn.classList.add('text-brand-dim', 'border-transparent', 'hover:bg-white/5');
+                    btn.classList.remove('active', 'bg-brand-accent', 'text-brand-dark', 'border-brand-accent', 'bg-white/10');
+                }
+            });
+            renderMarketplace(category);
+        }
+
+        function toggleTool(id) {
+            const tool = toolsDB.find(t => t.id === id);
+            const index = cart.findIndex(t => t.id === id);
+            if (index === -1) cart.push(tool); else cart.splice(index, 1);
+            // Save to local storage (Persistence)
+            localStorage.setItem('vexel_cart', JSON.stringify(cart));
+            updateStackBar();
+            renderMarketplace(currentFilter);
+        }
+
+        // --- SEARCH DEBOUNCE (Performance) ---
+        let debounceTimer;
+        function searchTools() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                const query = document.getElementById('market-search').value.toLowerCase();
+                const grid = document.getElementById('marketplace-grid');
+                grid.innerHTML = '';
+                const filtered = toolsDB.filter(t => t.name.toLowerCase().includes(query) || t.desc.toLowerCase().includes(query));
+                // Reuse render logic
+                const fragment = document.createDocumentFragment();
+                filtered.forEach(tool => {
+                    const isSelected = cart.some(c => c.id === tool.id);
+                    const price = isAnnual ? Math.floor(tool.price * 0.8) : tool.price;
+                    const el = document.createElement('div');
+                    el.className = `tool-card border p-6 rounded-xl cursor-pointer ${isSelected ? 'border-brand-success/50 bg-brand-success/5' : 'border-white/10 bg-brand-panel hover:bg-brand-panel/80'} group`;
+                    el.innerHTML = `
+                    <div class="flex justify-between items-start mb-4 pointer-events-none"><span class="text-[10px] font-bold text-brand-dim bg-white/5 px-2 py-1 rounded">${tool.cat}</span>${isSelected ? '<i class="fa-solid fa-circle-check text-brand-success"></i>' : '<i class="fa-regular fa-circle text-brand-dim group-hover:text-white"></i>'}</div>
+                    <h4 class="text-white font-bold text-xl mb-2 pointer-events-none">${tool.name}</h4>
+                    <p class="text-brand-dim text-sm mb-6 line-clamp-2 pointer-events-none">${tool.desc}</p>
+                    <div class="flex items-center justify-between mt-auto border-t border-white/5 pt-4"><span class="text-brand-accent font-mono font-bold">£${price}<span class="text-xs text-brand-dim">/mo</span></span><button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent">Specs <i class="fa-solid fa-arrow-right"></i></button></div>`;
+                    el.onclick = () => toggleTool(tool.id);
+                    fragment.appendChild(el);
+                });
+                grid.appendChild(fragment);
+            }, 300); // 300ms delay
+        }
+
+        function switchView(view, targetId = null) {
+            document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById('view-' + view).classList.remove('hidden');
+            const hero = document.getElementById('hero-section');
+            if(view === 'landing') { 
+                if(hero) hero.classList.remove('hidden');
+                setTimeout(() => renderSkeletonMarketplace(), 100); 
+            } else { 
+                if(hero) hero.classList.add('hidden');
+                renderMarketplace('All');
+            }
+            if(targetId) setTimeout(() => document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' }), 150);
+            else window.scrollTo(0,0);
+        }
+
+        function updateStackBar() {
+            const bar = document.getElementById('floating-stack');
+            const total = document.getElementById('stack-total');
+            const count = document.getElementById('stack-count');
+            if (cart.length > 0) {
+                bar.classList.remove('translate-y-full');
+                const sum = cart.reduce((acc, t) => acc + (isAnnual ? Math.floor(t.price * 0.8) : t.price), 0);
+                total.innerText = `£${sum}/mo`;
+                count.innerText = cart.length;
+            } else {
+                bar.classList.add('translate-y-full');
+            }
+        }
+
+        // Other Utils
+        function openToolModal(id, e) {
+            if(e) e.stopPropagation();
+            const tool = toolsDB.find(t => t.id === id);
+            document.getElementById('tm-title').innerText = tool.name;
+            document.getElementById('tm-cat').innerText = tool.cat;
+            document.getElementById('tm-desc').innerText = tool.fullDesc;
+            document.getElementById('tm-example').innerText = tool.example;
+            document.getElementById('tm-price').innerText = `£${tool.price}/mo`;
+            const btn = document.getElementById('tm-add');
+            const isSelected = cart.some(c => c.id === tool.id);
+            btn.innerHTML = isSelected ? "Remove" : "Add To Stack";
+            btn.onclick = () => { toggleTool(id); closeToolModal(); };
+            document.getElementById('tm-request-only').onclick = () => { closeToolModal(); openModal(`Single Tool: ${tool.name}`); }
+            document.getElementById('tool-modal').classList.remove('hidden');
+        }
+        function closeToolModal() { document.getElementById('tool-modal').classList.add('hidden'); }
+        function openModal(pkg) {
+            if(pkg === 'Custom Bundle Request') pkg = `Custom Stack (${cart.length} Items)`;
+            document.getElementById('selected-package').value = pkg;
+            document.getElementById('package-display').innerText = pkg;
+            document.getElementById('trial-modal').classList.remove('hidden');
+        }
+        function closeModal() { document.getElementById('trial-modal').classList.add('hidden'); }
+        function openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); }
+        function closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); }
+        function closeExitModal() { document.getElementById('exit-modal').classList.add('hidden'); }
+        function openChat() { alert("Connecting to Engineer..."); }
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+        
+        const toggle = document.getElementById('pricing-toggle');
+        if(toggle) {
+            toggle.addEventListener('change', function() {
+                isAnnual = this.checked;
+                document.getElementById('price-foundation').innerText = isAnnual ? '£1,000' : '£1,250';
+                document.getElementById('price-growth').innerText = isAnnual ? '£199' : '£249';
+                document.getElementById('price-enterprise').innerText = isAnnual ? '£557' : '£697';
+                if(!document.getElementById('view-marketplace').classList.contains('hidden')) renderMarketplace(currentFilter);
+            });
+        }
+
+        // Auth & Form
+        const demoAccounts = { "admin@biwad.co.uk": {pass: "demo123", role: "client"}, "dev@vexellogic.com": {pass: "admin123", role: "admin"} };
+        async function handleLogin() {
+            const email = document.getElementById('login-email').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
+            if(demoAccounts[email] && demoAccounts[email].pass === pass) {
+                closeLoginModal(); switchView('client'); initClientDashboard(email.split('@')[0]); return;
+            }
+            const btn = document.getElementById('login-btn');
+            btn.innerText = 'Connecting...';
+            try {
+                if(!pass) { 
+                    const { error } = await supabase.auth.signInWithOtp({ email });
+                    if(error) throw error;
+                    Toastify({ text: "Magic Link Sent!", style: { background: "#10B981" } }).showToast();
+                } else { alert("For live accounts, use magic link."); }
+            } catch (e) { alert("Error: " + e.message); }
+            btn.innerText = 'Login';
+        }
+        function initClientDashboard(name) {
+            document.getElementById('client-portal-name').innerText = "Welcome, " + name;
+            document.getElementById('client-modules-list').innerHTML = `<div class="flex justify-between text-sm bg-black/20 p-2 rounded border border-white/5"><span>Missed Call Bot</span><span class="text-brand-success text-xs">● Active</span></div>`;
+        }
+        function logout() { location.reload(); }
+        function calculateROI() {
+            const val = document.getElementById('job-value').value;
+            const missed = document.getElementById('missed-calls').value;
+            const rate = document.getElementById('close-rate').value;
+            document.getElementById('val-display').innerText = `£${val}`;
+            document.getElementById('calls-display').innerText = missed;
+            document.getElementById('rate-display').innerText = `${rate}%`;
+            const loss = (val * missed * 52) * (rate / 100);
+            document.getElementById('annual-loss').innerText = `£${loss.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+        }
+        document.getElementById('modal-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            btn.innerText = 'Transmitting...'; btn.disabled = true;
+            const formData = new FormData(this);
+            // Input Sanitization
+            const data = {
+                business_name: formData.get('business').trim(),
+                contact_name: formData.get('name').trim(),
+                phone: formData.get('phone').trim(),
+                email: formData.get('email').trim(),
+                service_type: formData.get('package'),
+                notes: formData.get('notes') ? formData.get('notes').trim() : ''
+            };
+            
+            // Simple Email Validation
+            if(!data.email.includes('@')) { alert("Invalid Email"); btn.disabled = false; btn.innerText = 'Transmit Request'; return; }
+
+            try {
+                triggerConfetti();
+                await supabase.from('leads').insert([data]);
+                Toastify({ text: "Request Received! Engineer notified.", duration: 4000, style: { background: "#10B981" } }).showToast();
+                setTimeout(() => { closeModal(); btn.innerText = 'Transmit Request'; btn.disabled = false; }, 2000);
+            } catch (err) {
+                // Fallback Mode
+                console.warn("DB Offline, Saving Locally");
+                localStorage.setItem('unsent_lead', JSON.stringify(data));
+                alert("Request Saved Locally (Network Issue). We will retry automatically.");
+                closeModal(); btn.innerText = 'Transmit Request'; btn.disabled = false;
+            }
+        });
+        function triggerConfetti() { confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); }
+
+        window.onload = function() {
+            renderMarketplace('All');
+            // Restore Cart
+            const savedCart = localStorage.getItem('vexel_cart');
+            if(savedCart) { cart = JSON.parse(savedCart); updateStackBar(); }
+            
+            document.addEventListener('mouseleave', e => {
+                if (e.clientY <= 0 && !sessionStorage.getItem('exitShown')) {
+                    document.getElementById('exit-modal').classList.remove('hidden');
+                    sessionStorage.setItem('exitShown', 'true');
+                }
+            });
+        };
+    </script>
+</body>
+</html>

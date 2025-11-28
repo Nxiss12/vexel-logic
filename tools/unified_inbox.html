@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Inbox | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { dark: '#020305', navy: '#0b0f19', panel: '#111625', accent: '#FBC02D', light: '#e2e8f0', dim: '#64748b', success: '#10B981', danger: '#EF4444' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: #020305; color: #e2e8f0; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .conversation:hover { background: rgba(255,255,255,0.03); cursor: pointer; }
+        .conversation.active { background: rgba(251, 192, 45, 0.1); border-left: 3px solid #FBC02D; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-80 glass-panel border-r border-white/10 flex flex-col">
+            <!-- Header -->
+            <div class="p-4 border-b border-white/10">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 bg-brand-accent rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-inbox text-brand-dark text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-white">Unified Inbox</h1>
+                        <p class="text-xs text-brand-dim">All channels, one place</p>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div class="relative">
+                    <i class="fa-solid fa-search absolute left-3 top-2.5 text-brand-dim text-sm"></i>
+                    <input type="text" placeholder="Search conversations..." class="w-full bg-brand-navy border border-white/10 rounded-lg py-2 pl-9 pr-3 text-sm text-white focus:border-brand-accent focus:outline-none">
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="p-4 border-b border-white/10">
+                <div class="flex gap-2">
+                    <button class="flex-1 bg-brand-accent text-brand-dark text-xs font-bold py-2 px-3 rounded-lg">All</button>
+                    <button class="flex-1 bg-white/5 text-white text-xs font-medium py-2 px-3 rounded-lg hover:bg-white/10">Unread (3)</button>
+                </div>
+            </div>
+
+            <!-- Conversations List -->
+            <div class="flex-1 overflow-y-auto">
+                <div class="conversation active p-4 border-b border-white/5" onclick="loadConversation(1)">
+                    <div class="flex items-start gap-3">
+                        <div class="relative">
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">SM</div>
+                            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-blue-500 rounded-full border-2 border-brand-navy flex items-center justify-center">
+                                <i class="fa-brands fa-facebook-messenger text-white text-[8px]"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-white font-medium text-sm">Sarah Mitchell</span>
+                                <span class="text-xs text-brand-dim">2m</span>
+                            </div>
+                            <p class="text-brand-light text-xs truncate">Do you have availability next week?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="conversation p-4 border-b border-white/5" onclick="loadConversation(2)">
+                    <div class="flex items-start gap-3">
+                        <div class="relative">
+                            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">DK</div>
+                            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-brand-navy flex items-center justify-center">
+                                <i class="fa-brands fa-whatsapp text-white text-[8px]"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-white font-medium text-sm">David Kumar</span>
+                                <span class="text-xs text-brand-dim">1h</span>
+                            </div>
+                            <p class="text-brand-light text-xs truncate">Thanks for the quote!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="conversation p-4 border-b border-white/5" onclick="loadConversation(3)">
+                    <div class="flex items-start gap-3">
+                        <div class="relative">
+                            <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm">EL</div>
+                            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-gray-500 rounded-full border-2 border-brand-navy flex items-center justify-center">
+                                <i class="fa-solid fa-envelope text-white text-[8px]"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-white font-medium text-sm">Emma Lewis</span>
+                                <span class="text-xs text-brand-dim">3h</span>
+                            </div>
+                            <p class="text-brand-light text-xs truncate">Invoice received, payment sent</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="conversation p-4 border-b border-white/5" onclick="loadConversation(4)">
+                    <div class="flex items-start gap-3">
+                        <div class="relative">
+                            <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">JB</div>
+                            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-orange-500 rounded-full border-2 border-brand-navy flex items-center justify-center">
+                                <i class="fa-solid fa-comment text-white text-[8px]"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="text-white font-medium text-sm">James Brown</span>
+                                <span class="text-xs text-brand-dim">Yesterday</span>
+                            </div>
+                            <p class="text-brand-light text-xs truncate">Can you send me your portfolio?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chat -->
+        <div class="flex-1 flex flex-col">
+            <!-- Chat Header -->
+            <div class="glass-panel p-4 border-b border-white/10">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">SM</div>
+                        <div>
+                            <div class="text-white font-medium">Sarah Mitchell</div>
+                            <div class="flex items-center gap-2 text-xs text-brand-dim">
+                                <i class="fa-brands fa-facebook-messenger text-blue-500"></i>
+                                <span>Facebook Messenger</span>
+                                <span>•</span>
+                                <span>+44 7912 XXX 234</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="w-9 h-9 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center text-brand-light">
+                            <i class="fa-solid fa-user"></i>
+                        </button>
+                        <button class="w-9 h-9 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center text-brand-light">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div id="messages" class="flex-1 overflow-y-auto p-6 space-y-4">
+                <div class="flex justify-start">
+                    <div class="max-w-md">
+                        <div class="bg-white/10 rounded-2xl rounded-tl-sm p-3">
+                            <p class="text-white text-sm">Hi! I saw your ad on Facebook. Do you have availability for a consultation next week?</p>
+                        </div>
+                        <div class="text-xs text-brand-dim mt-1 ml-2">10:32 AM</div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end">
+                    <div class="max-w-md">
+                        <div class="bg-brand-accent rounded-2xl rounded-tr-sm p-3">
+                            <p class="text-brand-dark text-sm">Hi Sarah! Thanks for reaching out. Yes, I have slots available Tuesday and Thursday afternoon. Which works better for you?</p>
+                        </div>
+                        <div class="text-xs text-brand-dim mt-1 mr-2 text-right">10:35 AM</div>
+                    </div>
+                </div>
+
+                <div class="flex justify-start">
+                    <div class="max-w-md">
+                        <div class="bg-white/10 rounded-2xl rounded-tl-sm p-3">
+                            <p class="text-white text-sm">Tuesday would be perfect! What time?</p>
+                        </div>
+                        <div class="text-xs text-brand-dim mt-1 ml-2">10:37 AM</div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end">
+                    <div class="max-w-md">
+                        <div class="bg-brand-accent rounded-2xl rounded-tr-sm p-3">
+                            <p class="text-brand-dark text-sm">I have 2pm or 4pm available. The consultation is free and takes about 30 minutes.</p>
+                        </div>
+                        <div class="text-xs text-brand-dim mt-1 mr-2 text-right">10:38 AM</div>
+                    </div>
+                </div>
+
+                <div class="flex justify-start">
+                    <div class="max-w-md">
+                        <div class="bg-white/10 rounded-2xl rounded-tl-sm p-3">
+                            <p class="text-white text-sm">2pm works great. Should I bring anything?</p>
+                        </div>
+                        <div class="text-xs text-brand-dim mt-1 ml-2">10:40 AM</div>
+                    </div>
+                </div>
+
+                <div class="text-center my-4">
+                    <span class="bg-white/5 text-brand-dim text-xs px-3 py-1 rounded-full">Today</span>
+                </div>
+
+                <div class="flex justify-start">
+                    <div class="max-w-md">
+                        <div class="bg-white/10 rounded-2xl rounded-tl-sm p-3">
+                            <p class="text-white text-sm">Do you have availability next week?</p>
+                        </div>
+                        <div class="text-xs text-brand-dim mt-1 ml-2">Just now</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="glass-panel p-4 border-t border-white/10">
+                <div class="flex gap-3">
+                    <button class="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-lg flex items-center justify-center text-brand-light">
+                        <i class="fa-solid fa-paperclip"></i>
+                    </button>
+                    <input type="text" placeholder="Type a message..." class="flex-1 bg-brand-navy border border-white/10 rounded-lg px-4 py-2 text-white text-sm focus:border-brand-accent focus:outline-none">
+                    <button class="w-10 h-10 bg-brand-accent hover:bg-yellow-300 rounded-lg flex items-center justify-center text-brand-dark transition-colors">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+                
+                <!-- Quick Replies -->
+                <div class="flex gap-2 mt-3">
+                    <button class="bg-white/5 hover:bg-white/10 text-brand-light text-xs px-3 py-1.5 rounded-lg transition-colors">
+                        Thanks for reaching out!
+                    </button>
+                    <button class="bg-white/5 hover:bg-white/10 text-brand-light text-xs px-3 py-1.5 rounded-lg transition-colors">
+                        I'll get back to you shortly
+                    </button>
+                    <button class="bg-white/5 hover:bg-white/10 text-brand-light text-xs px-3 py-1.5 rounded-lg transition-colors">
+                        Can you provide more details?
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar (Contact Info) -->
+        <div class="w-64 glass-panel border-l border-white/10 p-6">
+            <h3 class="text-white font-bold mb-4">Contact Info</h3>
+            
+            <div class="text-center mb-6">
+                <div class="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-3">SM</div>
+                <div class="text-white font-bold">Sarah Mitchell</div>
+                <div class="text-brand-dim text-xs">Active now</div>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <div class="text-xs text-brand-dim uppercase tracking-wider mb-1">Phone</div>
+                    <div class="text-white text-sm">+44 7912 XXX 234</div>
+                </div>
+                <div>
+                    <div class="text-xs text-brand-dim uppercase tracking-wider mb-1">Email</div>
+                    <div class="text-white text-sm">sarah.m@email.com</div>
+                </div>
+                <div>
+                    <div class="text-xs text-brand-dim uppercase tracking-wider mb-1">Source</div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-brands fa-facebook text-blue-500"></i>
+                        <span class="text-white text-sm">Facebook Ad</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="text-xs text-brand-dim uppercase tracking-wider mb-1">Tags</div>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="bg-brand-accent/10 text-brand-accent text-xs px-2 py-1 rounded">Lead</span>
+                        <span class="bg-blue-500/10 text-blue-400 text-xs px-2 py-1 rounded">High Value</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="text-xs text-brand-dim uppercase tracking-wider mb-2">Notes</div>
+                    <textarea class="w-full bg-brand-navy border border-white/10 rounded-lg p-2 text-white text-xs focus:border-brand-accent focus:outline-none" rows="3" placeholder="Add notes about this contact..."></textarea>
+                </div>
+            </div>
+
+            <button class="w-full bg-white/5 hover:bg-white/10 text-white text-sm font-medium py-2 rounded-lg mt-6">
+                <i class="fa-solid fa-calendar-plus mr-2"></i>Schedule Meeting
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function loadConversation(id) {
+            // Remove active from all
+            document.querySelectorAll('.conversation').forEach(c => c.classList.remove('active'));
+            // Add active to clicked
+            event.currentTarget.classList.add('active');
+            // In production, this would load actual conversation data
+        }
+    </script>
+</body>
+</html>

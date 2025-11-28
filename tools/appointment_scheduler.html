@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Scheduler | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brand: { dark: '#020305', navy: '#0b0f19', panel: '#111625', accent: '#FBC02D' } } } } }
+    </script>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #020305; color: #e2e8f0; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .time-slot { cursor: pointer; transition: all 0.2s; }
+        .time-slot:hover { background: rgba(251, 192, 45, 0.1); border-color: #FBC02D; }
+        .time-slot.booked { opacity: 0.4; cursor: not-allowed; }
+    </style>
+</head>
+<body class="min-h-screen p-6">
+    <div class="max-w-5xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <h1 class="text-2xl font-bold text-white flex items-center gap-3">
+                <i class="fa-solid fa-calendar-days text-brand-accent"></i>
+                Appointment Scheduler
+            </h1>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Select Date & Time</h3>
+                <input type="date" id="date-picker" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white mb-4 focus:border-brand-accent focus:outline-none">
+                
+                <div class="grid grid-cols-3 gap-2" id="time-slots"></div>
+            </div>
+            
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Your Details</h3>
+                <div class="space-y-3">
+                    <input type="text" placeholder="Full Name" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none">
+                    <input type="email" placeholder="Email" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none">
+                    <input type="tel" placeholder="Phone" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none">
+                    <textarea rows="3" placeholder="Notes (optional)" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none"></textarea>
+                    <button class="w-full bg-brand-accent text-brand-dark font-bold py-3 rounded-lg">Book Appointment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const slots = ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30'];
+        const container = document.getElementById('time-slots');
+        slots.forEach(time => {
+            const slot = document.createElement('div');
+            slot.className = 'time-slot bg-brand-navy border border-white/10 rounded-lg p-2 text-center text-white text-sm';
+            slot.textContent = time;
+            slot.onclick = () => slot.classList.toggle('bg-brand-accent/20');
+            container.appendChild(slot);
+        });
+        
+        document.getElementById('date-picker').valueAsDate = new Date();
+    </script>
+</body>
+</html>

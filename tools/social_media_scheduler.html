@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Scheduler | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brand: { dark: '#020305', navy: '#0b0f19', panel: '#111625', accent: '#FBC02D' } } } } }
+    </script>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #020305; color: #e2e8f0; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="min-h-screen p-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <h1 class="text-2xl font-bold text-white flex items-center gap-3">
+                <i class="fa-solid fa-calendar-check text-brand-accent"></i>
+                Social Media Scheduler
+            </h1>
+        </div>
+        
+        <div class="grid lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Create Post</h3>
+                <textarea rows="5" placeholder="What's on your mind?" class="w-full bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none mb-4"></textarea>
+                
+                <div class="grid grid-cols-4 gap-3 mb-4">
+                    <button class="bg-blue-600 text-white p-3 rounded-lg"><i class="fa-brands fa-facebook"></i></button>
+                    <button class="bg-blue-400 text-white p-3 rounded-lg"><i class="fa-brands fa-twitter"></i></button>
+                    <button class="bg-pink-600 text-white p-3 rounded-lg"><i class="fa-brands fa-instagram"></i></button>
+                    <button class="bg-blue-700 text-white p-3 rounded-lg"><i class="fa-brands fa-linkedin"></i></button>
+                </div>
+                
+                <div class="flex gap-3">
+                    <input type="datetime-local" class="flex-1 bg-brand-navy border border-white/10 rounded-lg p-3 text-white text-sm focus:border-brand-accent focus:outline-none">
+                    <button class="bg-brand-accent text-brand-dark px-6 py-3 rounded-lg font-bold">Schedule</button>
+                </div>
+            </div>
+            
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4 text-sm">Scheduled Posts</h3>
+                <div class="space-y-3">
+                    <div class="bg-brand-navy/50 border border-white/5 rounded-lg p-3">
+                        <div class="text-white text-sm mb-1">Product Launch</div>
+                        <div class="text-gray-500 text-xs">Tomorrow 10:00 AM</div>
+                        <div class="flex gap-1 mt-2">
+                            <span class="w-5 h-5 bg-blue-600 rounded flex items-center justify-center text-white text-[10px]"><i class="fa-brands fa-facebook"></i></span>
+                            <span class="w-5 h-5 bg-pink-600 rounded flex items-center justify-center text-white text-[10px]"><i class="fa-brands fa-instagram"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Tracker | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brand: { dark: '#020305', navy: '#0b0f19', accent: '#FBC02D' } } } } }
+    </script>
+    <style>
+        body { background: #020305; color: #e2e8f0; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-4xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <h1 class="text-2xl font-bold text-white"><i class="fa-solid fa-stopwatch text-brand-accent mr-3"></i>Time Tracker</h1>
+        </div>
+        
+        <div class="glass-panel rounded-xl p-8 text-center mb-6">
+            <div class="text-7xl font-bold text-white mb-4" id="timer">00:00:00</div>
+            <button id="start-btn" onclick="startTimer()" class="bg-brand-accent text-brand-dark px-8 py-3 rounded-lg font-bold mr-2">
+                <i class="fa-solid fa-play mr-2"></i>Start
+            </button>
+            <button id="stop-btn" onclick="stopTimer()" class="bg-red-500 text-white px-8 py-3 rounded-lg font-bold" disabled>
+                <i class="fa-solid fa-stop mr-2"></i>Stop
+            </button>
+        </div>
+        
+        <div class="glass-panel rounded-xl p-6">
+            <h3 class="text-white font-bold mb-4">Today's Log</h3>
+            <div class="space-y-2">
+                <div class="flex justify-between items-center p-3 bg-brand-navy/50 rounded-lg">
+                    <span class="text-white">Client Project A</span>
+                    <span class="text-brand-accent font-mono font-bold">2h 34m</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-brand-navy/50 rounded-lg">
+                    <span class="text-white">Admin Tasks</span>
+                    <span class="text-brand-accent font-mono font-bold">45m</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let interval;
+        let seconds = 0;
+        
+        function startTimer() {
+            document.getElementById('start-btn').disabled = true;
+            document.getElementById('stop-btn').disabled = false;
+            interval = setInterval(() => {
+                seconds++;
+                const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+                const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+                const s = (seconds % 60).toString().padStart(2, '0');
+                document.getElementById('timer').textContent = `${h}:${m}:${s}`;
+            }, 1000);
+        }
+        
+        function stopTimer() {
+            clearInterval(interval);
+            document.getElementById('start-btn').disabled = false;
+            document.getElementById('stop-btn').disabled = true;
+        }
+    </script>
+</body>
+</html>
