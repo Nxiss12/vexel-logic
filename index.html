@@ -84,6 +84,15 @@
         
         .tool-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
         .tool-card:hover { transform: translateY(-4px); border-color: rgba(251, 192, 45, 0.4); box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5); }
+        .tool-card.selected { 
+            border-color: rgba(16, 185, 129, 0.6) !important; 
+            background: rgba(16, 185, 129, 0.05) !important; 
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2), 0 10px 40px -10px rgba(16, 185, 129, 0.3) !important;
+        }
+        .tool-card.selected:hover { 
+            border-color: rgba(16, 185, 129, 0.8) !important; 
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3), 0 10px 40px -10px rgba(16, 185, 129, 0.4) !important;
+        }
         
         .iphone-mockup { border: 12px solid #1a1a1a; border-radius: 40px; overflow: hidden; position: relative; background: #000; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9); }
         
@@ -572,11 +581,30 @@
                 <div class="flex flex-col lg:flex-row gap-8">
                     <div class="lg:w-1/4">
                         <div class="sticky top-28 bg-brand-panel border border-white/10 rounded-xl p-6 space-y-2">
-                            <button onclick="filterTools('All')" class="filter-btn w-full text-left text-sm text-white py-2 px-3 rounded bg-white/10 border-l-2 border-brand-accent" data-filter="All">All Systems</button>
-                            <button onclick="filterTools('Automation')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Automation">Automation</button>
-                            <button onclick="filterTools('Marketing')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Marketing">Marketing</button>
-                            <button onclick="filterTools('Sales')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Sales">Sales</button>
-                            <button onclick="filterTools('Operations')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Operations">Operations</button>
+                            <button onclick="filterTools('All')" class="filter-btn active w-full text-left text-sm font-medium py-2 px-3 rounded bg-brand-accent text-brand-dark border-l-2 border-brand-accent" data-filter="All">
+                                All Systems <span class="float-right opacity-70">150</span>
+                            </button>
+                            <button onclick="filterTools('Automation')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Automation">
+                                Automation <span class="float-right opacity-50">30</span>
+                            </button>
+                            <button onclick="filterTools('Marketing')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Marketing">
+                                Marketing <span class="float-right opacity-50">30</span>
+                            </button>
+                            <button onclick="filterTools('Sales')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Sales">
+                                Sales <span class="float-right opacity-50">30</span>
+                            </button>
+                            <button onclick="filterTools('Operations')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Operations">
+                                Operations <span class="float-right opacity-50">30</span>
+                            </button>
+                            <button onclick="filterTools('Finance')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Finance">
+                                Finance <span class="float-right opacity-50">30</span>
+                            </button>
+                            <button onclick="filterTools('Productivity')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Productivity">
+                                Productivity <span class="float-right opacity-50">30</span>
+                            </button>
+                            <button onclick="filterTools('Industry')" class="filter-btn w-full text-left text-sm text-brand-dim hover:text-white py-2 px-3 rounded hover:bg-white/5 transition-colors border-l-2 border-transparent" data-filter="Industry">
+                                Industry-Specific <span class="float-right opacity-50">30</span>
+                            </button>
                         </div>
                     </div>
                     <div class="lg:w-3/4">
@@ -703,25 +731,232 @@
         const supabase = window.supabase.createClient('https://ryqhqbuqkarugqvcnjbf.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5cWhxYnVxa2FydWdxdmNuamJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQyNTQzNTEsImV4cCI6MjA3OTgzMDM1MX0.ysEUvNIhmAg_6kGjwQwpzoWXc0tclDmkBCg3MRxjcNk');
         AOS.init({ once: true, offset: 50, duration: 800 });
 
-        // --- DATA ---
-        const baseTools = [
-            { name: "Missed Call Bot", cat: "Automation", price: 99, desc: "Recovers dropped calls.", fullDesc: "Detects missed calls and texts back immediately.", example: "Recovered £4k/mo." },
-            { name: "Review Engine", cat: "Automation", price: 79, desc: "Auto-Google reviews.", fullDesc: "Requests reviews after invoicing.", example: "4.2 to 4.9 stars." },
-            { name: "Unified Inbox", cat: "Operations", price: 79, desc: "All chats in one.", fullDesc: "Combines FB, SMS, Email.", example: "Saved 5hrs/week." },
-            { name: "AI Receptionist", cat: "Sales", price: 199, desc: "24/7 Booking Agent.", fullDesc: "Qualifies leads on site.", example: "Booked 45 exams." },
-            { name: "Database Reactivator", cat: "Sales", price: 199, desc: "Win-back old leads.", fullDesc: "SMS campaigns to old lists.", example: "£12k revenue in 48h." },
+        // --- DATA: 150 UNIQUE TOOLS ---
+        const toolsDB = [
+            // AUTOMATION (30 tools)
+            { id: 'auto-1', name: "Missed Call Bot", cat: "Automation", price: 99, desc: "Auto-text missed calls in 30s.", fullDesc: "Detects missed calls and texts back immediately with custom message.", example: "Recovered £4k/mo for plumbing client." },
+            { id: 'auto-2', name: "Review Engine", cat: "Automation", price: 79, desc: "Auto-request Google reviews.", fullDesc: "Sends review requests 48hrs after invoice payment.", example: "4.2★ to 4.9★ in 8 weeks." },
+            { id: 'auto-3', name: "Follow-Up Sequencer", cat: "Automation", price: 89, desc: "Multi-touch follow-up campaigns.", fullDesc: "Sends 3-5 automated follow-ups over 2 weeks.", example: "35% response rate increase." },
+            { id: 'auto-4', name: "Meeting Scheduler", cat: "Automation", price: 69, desc: "Auto-find meeting times.", fullDesc: "AI scans calendars, suggests optimal times.", example: "Saved 4hrs/week scheduling." },
+            { id: 'auto-5', name: "Email Auto-Responder", cat: "Automation", price: 49, desc: "Intelligent out-of-office replies.", fullDesc: "Context-aware auto-responses with booking link.", example: "Zero inbox anxiety." },
+            { id: 'auto-6', name: "Document Auto-Filer", cat: "Automation", price: 59, desc: "AI organizes documents.", fullDesc: "Auto-categorizes and names uploaded files.", example: "15min/day saved." },
+            { id: 'auto-7', name: "Task Automation Engine", cat: "Automation", price: 129, desc: "IFTTT for business processes.", fullDesc: "Create if-this-then-that workflows without code.", example: "30 workflows automated." },
+            { id: 'auto-8', name: "Data Entry Bot", cat: "Automation", price: 149, desc: "OCR + auto-population.", fullDesc: "Scans documents, fills forms automatically.", example: "80% faster data entry." },
+            { id: 'auto-9', name: "Report Generator", cat: "Automation", price: 99, desc: "Automated weekly reports.", fullDesc: "Pulls data from 10+ sources, creates PDF reports.", example: "3hrs/week saved." },
+            { id: 'auto-10', name: "Backup Automator", cat: "Automation", price: 39, desc: "Scheduled cloud backups.", fullDesc: "Daily automated backups to multiple cloud locations.", example: "Prevented data loss twice." },
+            { id: 'auto-11', name: "Email Filter Pro", cat: "Automation", price: 45, desc: "Advanced email sorting.", fullDesc: "AI-based email categorization and auto-archive.", example: "Inbox zero achieved." },
+            { id: 'auto-12', name: "Reminder System", cat: "Automation", price: 29, desc: "Smart follow-up reminders.", fullDesc: "Analyzes email threads, sets automatic reminders.", example: "Zero dropped conversations." },
+            { id: 'auto-13', name: "Meeting Notes Bot", cat: "Automation", price: 89, desc: "Auto-transcribe meetings.", fullDesc: "Records Zoom/Teams, transcribes, summarizes.", example: "Perfect meeting recall." },
+            { id: 'auto-14', name: "Invoice Auto-Send", cat: "Automation", price: 69, desc: "Job done = invoice sent.", fullDesc: "Triggers invoice generation after project completion.", example: "Paid 40% faster." },
+            { id: 'auto-15', name: "Expense Auto-Categorizer", cat: "Automation", price: 49, desc: "Scan receipts, auto-categorize.", fullDesc: "OCR receipts, AI categorizes for tax.", example: "Tax prep in 1 hour not 8." },
+            { id: 'auto-16', name: "Social Auto-Poster", cat: "Automation", price: 79, desc: "Cross-platform posting.", fullDesc: "One post → Facebook, Twitter, LinkedIn, Instagram.", example: "5x social reach." },
+            { id: 'auto-17', name: "Lead Capture Bot", cat: "Automation", price: 99, desc: "Website chat to CRM.", fullDesc: "Captures chat leads, adds to CRM automatically.", example: "Zero lost web leads." },
+            { id: 'auto-18', name: "Contract Auto-Sender", cat: "Automation", price: 89, desc: "Quote accepted = contract sent.", fullDesc: "Triggers contract generation after quote acceptance.", example: "Signed 2x faster." },
+            { id: 'auto-19', name: "Payment Reminder Bot", cat: "Automation", price: 59, desc: "Auto-chase late invoices.", fullDesc: "Sends polite reminders 3, 7, 14 days after due date.", example: "Paid 60% faster." },
+            { id: 'auto-20', name: "Onboarding Sequencer", cat: "Automation", price: 79, desc: "Auto-welcome new clients.", fullDesc: "5-email onboarding sequence with docs and next steps.", example: "90% completion rate." },
+            { id: 'auto-21', name: "Birthday/Anniversary Bot", cat: "Automation", price: 39, desc: "Never forget important dates.", fullDesc: "Auto-sends personalized messages on client birthdays.", example: "Massive goodwill boost." },
+            { id: 'auto-22', name: "Stock Alert System", cat: "Automation", price: 49, desc: "Low stock notifications.", fullDesc: "Monitors inventory, alerts when below threshold.", example: "Zero stock-outs." },
+            { id: 'auto-23', name: "Weather-Based Triggers", cat: "Automation", price: 59, desc: "Weather-responsive campaigns.", fullDesc: "HVAC emergency ads when temperature drops.", example: "40% more emergency calls." },
+            { id: 'auto-24', name: "Competitive Price Monitor", cat: "Automation", price: 99, desc: "Track competitor pricing.", fullDesc: "Daily scans competitor sites, alerts on price changes.", example: "Always competitive." },
+            { id: 'auto-25', name: "Form Auto-Filler", cat: "Automation", price: 45, desc: "Saves your info, one-click fill.", fullDesc: "Chrome extension for instant form completion.", example: "2min → 10sec per form." },
+            { id: 'auto-26', name: "Calendar Sync Master", cat: "Automation", price: 69, desc: "Sync Google, Outlook, Apple.", fullDesc: "Two-way sync across all calendar platforms.", example: "Zero double-bookings." },
+            { id: 'auto-27', name: "Smart Queue System", cat: "Automation", price: 89, desc: "Auto-prioritize work queue.", fullDesc: "AI sorts tasks by urgency and value.", example: "30% faster completion." },
+            { id: 'auto-28', name: "Voice-to-Text Notes", cat: "Automation", price: 59, desc: "Speak, it transcribes.", fullDesc: "Voice notes → text → organized by project.", example: "Note-taking while driving." },
+            { id: 'auto-29', name: "Duplicate Detector", cat: "Automation", price: 49, desc: "Find duplicate contacts/files.", fullDesc: "Scans database, flags duplicates, suggests merge.", example: "Cleaned 2,000 entries." },
+            { id: 'auto-30', name: "Auto-Archive System", cat: "Automation", price: 39, desc: "Auto-move old files.", fullDesc: "Archives files older than X days automatically.", example: "Always organized." },
+
+            // MARKETING (30 tools)
+            { id: 'mkt-1', name: "Social Media Scheduler", cat: "Marketing", price: 89, desc: "Schedule posts across platforms.", fullDesc: "Plan content calendar, auto-post to 5 platforms.", example: "3x posting consistency." },
+            { id: 'mkt-2', name: "Email Campaign Builder", cat: "Marketing", price: 79, desc: "Design & send newsletters.", fullDesc: "Drag-drop email designer with A/B testing.", example: "32% open rate." },
+            { id: 'mkt-3', name: "Landing Page Builder", cat: "Marketing", price: 99, desc: "High-converting pages fast.", fullDesc: "Pre-built templates, no-code editor, analytics.", example: "15% conversion rate." },
+            { id: 'mkt-4', name: "SEO Analyzer", cat: "Marketing", price: 59, desc: "Website SEO audit tool.", fullDesc: "Scans site, identifies issues, suggests fixes.", example: "Ranking up 15 positions." },
+            { id: 'mkt-5', name: "Content Calendar", cat: "Marketing", price: 49, desc: "Plan all marketing content.", fullDesc: "Visual calendar for blogs, social, emails.", example: "Never miss a post." },
+            { id: 'mkt-6', name: "Hashtag Generator", cat: "Marketing", price: 29, desc: "AI-suggested hashtags.", fullDesc: "Analyzes post, suggests optimal hashtags.", example: "40% more reach." },
+            { id: 'mkt-7', name: "Ad Performance Dashboard", cat: "Marketing", price: 129, desc: "Unified ad analytics.", fullDesc: "Google, Facebook, LinkedIn ads in one view.", example: "Cut wasted spend 35%." },
+            { id: 'mkt-8', name: "Competitor Tracker", cat: "Marketing", price: 99, desc: "Monitor competitor activity.", fullDesc: "Tracks competitor content, pricing, campaigns.", example: "Always ahead." },
+            { id: 'mkt-9', name: "Referral Program Manager", cat: "Marketing", price: 89, desc: "Automated referral tracking.", fullDesc: "Generate codes, track referrals, auto-reward.", example: "40% more referrals." },
+            { id: 'mkt-10', name: "Influencer Outreach Tool", cat: "Marketing", price: 79, desc: "Find & contact influencers.", fullDesc: "Database of 10k+ influencers, email templates.", example: "Secured 3 partnerships." },
+            { id: 'mkt-11', name: "Brand Monitoring", cat: "Marketing", price: 69, desc: "Track brand mentions.", fullDesc: "Alerts when your brand is mentioned anywhere online.", example: "Caught 12 leads." },
+            { id: 'mkt-12', name: "Google My Business Manager", cat: "Marketing", price: 59, desc: "Update all GMB locations.", fullDesc: "Bulk update hours, posts, photos across locations.", example: "Saved 2hrs/week." },
+            { id: 'mkt-13', name: "Local SEO Tool", cat: "Marketing", price: 79, desc: "Optimize for local search.", fullDesc: "Directory submissions, citations, local keywords.", example: "Top 3 local results." },
+            { id: 'mkt-14', name: "Press Release Builder", cat: "Marketing", price: 69, desc: "PR templates & distribution.", fullDesc: "Write releases, distribute to 500+ outlets.", example: "Featured in 3 publications." },
+            { id: 'mkt-15', name: "QR Code Generator", cat: "Marketing", price: 0, desc: "Generate custom QR codes.", fullDesc: "Create QR codes for URLs, WiFi, contact cards.", example: "Menu ordering system." },
+            { id: 'mkt-16', name: "Email Signature Generator", cat: "Marketing", price: 0, desc: "Professional email signatures.", fullDesc: "Branded HTML signatures for entire team.", example: "Consistent branding." },
+            { id: 'mkt-17', name: "A/B Test Manager", cat: "Marketing", price: 89, desc: "Split test everything.", fullDesc: "Test headlines, CTAs, landing pages automatically.", example: "Conversions up 45%." },
+            { id: 'mkt-18', name: "Webinar Funnel Builder", cat: "Marketing", price: 149, desc: "Automated webinar system.", fullDesc: "Registration, reminders, replay delivery.", example: "120 attendees avg." },
+            { id: 'mkt-19', name: "Retargeting Pixel Manager", cat: "Marketing", price: 59, desc: "Manage Facebook/Google pixels.", fullDesc: "Install, test, optimize retargeting pixels.", example: "30% lower CPA." },
+            { id: 'mkt-20', name: "Video Marketing Suite", cat: "Marketing", price: 99, desc: "Video hosting & analytics.", fullDesc: "Upload, embed, track video performance.", example: "Videos convert 2.5x better." },
+            { id: 'mkt-21', name: "Customer Survey Tool", cat: "Marketing", price: 49, desc: "NPS & satisfaction surveys.", fullDesc: "Auto-send surveys, collect feedback, analyze sentiment.", example: "NPS score: 72." },
+            { id: 'mkt-22', name: "Affiliate Dashboard", cat: "Marketing", price: 129, desc: "Manage affiliate program.", fullDesc: "Track affiliates, commissions, payouts automatically.", example: "50 active affiliates." },
+            { id: 'mkt-23', name: "SMS Marketing", cat: "Marketing", price: 99, desc: "Bulk SMS campaigns.", fullDesc: "Segment audiences, send targeted SMS, track replies.", example: "18% response rate." },
+            { id: 'mkt-24', name: "Push Notification System", cat: "Marketing", price: 79, desc: "Web push notifications.", fullDesc: "Send browser notifications to subscribers.", example: "12% click rate." },
+            { id: 'mkt-25', name: "Chatbot Builder", cat: "Marketing", price: 149, desc: "No-code website chatbot.", fullDesc: "Build conversation flows, capture leads 24/7.", example: "40 leads/month." },
+            { id: 'mkt-26', name: "Popup Creator", cat: "Marketing", price: 45, desc: "Exit-intent & timed popups.", fullDesc: "Design popups, set triggers, capture emails.", example: "8% email capture rate." },
+            { id: 'mkt-27', name: "Content Repurposer", cat: "Marketing", price: 89, desc: "One blog → 10 pieces.", fullDesc: "AI converts blog to social posts, emails, quotes.", example: "10x content output." },
+            { id: 'mkt-28', name: "UTM Link Builder", cat: "Marketing", price: 29, desc: "Track campaign sources.", fullDesc: "Generate UTM links, track which campaigns convert.", example: "Know your ROI." },
+            { id: 'mkt-29', name: "Social Proof Widget", cat: "Marketing", price: 69, desc: "Live visitor notifications.", fullDesc: "'John from London just booked' popups.", example: "Conversions up 23%." },
+            { id: 'mkt-30', name: "Review Aggregator", cat: "Marketing", price: 79, desc: "Show all reviews in one place.", fullDesc: "Pulls Google, Facebook, Trustpilot reviews to widget.", example: "Trust boost." },
+
+            // SALES (30 tools)
+            { id: 'sales-1', name: "AI Receptionist", cat: "Sales", price: 199, desc: "24/7 intelligent booking.", fullDesc: "AI qualifies leads, books appointments automatically.", example: "83% qualification rate." },
+            { id: 'sales-2', name: "Database Reactivator", cat: "Sales", price: 199, desc: "Win-back dormant customers.", fullDesc: "Smart SMS campaigns to old leads with offers.", example: "£12k in 48 hours." },
+            { id: 'sales-3', name: "Lead Scoring Dashboard", cat: "Sales", price: 129, desc: "Prioritize hot prospects.", fullDesc: "Scores leads by behavior, highlights ready-to-buy.", example: "Close rate up 40%." },
+            { id: 'sales-4', name: "CRM Lite", cat: "Sales", price: 99, desc: "Simple customer management.", fullDesc: "Track contacts, deals, follow-ups in one place.", example: "Never lose a lead." },
+            { id: 'sales-5', name: "Sales Pipeline Visualizer", cat: "Sales", price: 89, desc: "Drag-drop deal stages.", fullDesc: "Visual pipeline with forecast and analytics.", example: "Hit quota 3 months straight." },
+            { id: 'sales-6', name: "Proposal Generator", cat: "Sales", price: 149, desc: "Beautiful proposals fast.", fullDesc: "Templates, e-signature, tracking, automatic follow-up.", example: "Sent in 10min not 2hrs." },
+            { id: 'sales-7', name: "Demo Scheduler", cat: "Sales", price: 69, desc: "Booking page for demos.", fullDesc: "Qualify leads, book demos, send reminders.", example: "20% no-show reduction." },
+            { id: 'sales-8', name: "Sales Leaderboard", cat: "Sales", price: 49, desc: "Gamify team performance.", fullDesc: "Real-time rankings, achievements, rewards.", example: "Team competition boosted sales 25%." },
+            { id: 'sales-9', name: "Commission Calculator", cat: "Sales", price: 59, desc: "Auto-calculate commissions.", fullDesc: "Tracks sales, calculates splits, generates reports.", example: "Zero disputes." },
+            { id: 'sales-10', name: "Territory Manager", cat: "Sales", price: 79, desc: "Assign leads by location.", fullDesc: "Auto-route leads to reps based on geography.", example: "Faster response times." },
+            { id: 'sales-11', name: "Call Script Builder", cat: "Sales", price: 45, desc: "Create & test scripts.", fullDesc: "Templates for cold calls, discovery, closing.", example: "Close rate up 15%." },
+            { id: 'sales-12', name: "Objection Handler", cat: "Sales", price: 49, desc: "Database of responses.", fullDesc: "Common objections with proven responses.", example: "Overcome 8/10 objections." },
+            { id: 'sales-13', name: "Win/Loss Analyzer", cat: "Sales", price: 69, desc: "Why deals close or fail.", fullDesc: "Track reasons, identify patterns, improve process.", example: "Win rate up 20%." },
+            { id: 'sales-14', name: "Upsell Identifier", cat: "Sales", price: 89, desc: "AI flags upsell opportunities.", fullDesc: "Analyzes purchase history, suggests upgrades.", example: "£15k in upsells." },
+            { id: 'sales-15', name: "Quote Comparison Tool", cat: "Sales", price: 79, desc: "Show vs competitor pricing.", fullDesc: "Side-by-side quote comparisons highlight your value.", example: "Win more bids." },
+            { id: 'sales-16', name: "Contract Signer", cat: "Sales", price: 59, desc: "E-signature integration.", fullDesc: "Send contracts, get signatures, auto-file.", example: "Signed in hours not days." },
+            { id: 'sales-17', name: "Sales Forecaster", cat: "Sales", price: 99, desc: "Predict monthly revenue.", fullDesc: "AI analyzes pipeline, predicts close probability.", example: "Accurate within 8%." },
+            { id: 'sales-18', name: "Competitor Battle Cards", cat: "Sales", price: 69, desc: "Beat competitors in demos.", fullDesc: "Talking points for competing against each vendor.", example: "Win rate vs X up 35%." },
+            { id: 'sales-19', name: "Cold Email Sequencer", cat: "Sales", price: 79, desc: "Multi-touch email campaigns.", fullDesc: "5-email sequences with tracking and optimization.", example: "22% response rate." },
+            { id: 'sales-20', name: "LinkedIn Prospector", cat: "Sales", price: 89, desc: "Find & message prospects.", fullDesc: "Search LinkedIn, export lists, send messages.", example: "Found 500 prospects." },
+            { id: 'sales-21', name: "Discovery Call Script", cat: "Sales", price: 39, desc: "Ask better questions.", fullDesc: "Questionnaire template for qualifying calls.", example: "Qualify in 5min not 30." },
+            { id: 'sales-22', name: "Deal Room", cat: "Sales", price: 129, desc: "Buyer workspace for deals.", fullDesc: "Shared space for proposals, contracts, Q&A.", example: "Close cycles 40% shorter." },
+            { id: 'sales-23', name: "Referral Request Bot", cat: "Sales", price: 59, desc: "Auto-ask happy customers.", fullDesc: "Triggers referral request after positive feedback.", example: "3x more referrals." },
+            { id: 'sales-24', name: "Sales Training Hub", cat: "Sales", price: 99, desc: "Onboard reps faster.", fullDesc: "Video training, scripts, certifications.", example: "Reps productive Week 1." },
+            { id: 'sales-25', name: "Demo Recording System", cat: "Sales", price: 69, desc: "Record & review demos.", fullDesc: "Auto-record calls, highlight key moments, share.", example: "Learn from wins." },
+            { id: 'sales-26', name: "Pricing Calculator", cat: "Sales", price: 49, desc: "Dynamic quote generator.", fullDesc: "Customers select options, see price instantly.", example: "Self-serve quotes." },
+            { id: 'sales-27', name: "Sales Battle Card Library", cat: "Sales", price: 59, desc: "Handle any objection.", fullDesc: "Database of proven responses by scenario.", example: "Close tough deals." },
+            { id: 'sales-28', name: "Video Prospecting Tool", cat: "Sales", price: 79, desc: "Record personalized videos.", fullDesc: "Send video messages to prospects, track views.", example: "50% response rate." },
+            { id: 'sales-29', name: "ROI Calculator Builder", cat: "Sales", price: 89, desc: "Build custom calculators.", fullDesc: "Create industry-specific ROI tools for your site.", example: "Lead magnet." },
+            { id: 'sales-30', name: "Sales Playbook Builder", cat: "Sales", price: 69, desc: "Document your process.", fullDesc: "Templates for building repeatable sales systems.", example: "Consistent results." },
+
+            // OPERATIONS (30 tools)
+            { id: 'ops-1', name: "Unified Inbox", cat: "Operations", price: 79, desc: "All messages in one place.", fullDesc: "Facebook, WhatsApp, Email, SMS in single dashboard.", example: "Saved 5hrs/week." },
+            { id: 'ops-2', name: "Project Tracker", cat: "Operations", price: 69, desc: "Kanban project management.", fullDesc: "Visual boards, task assignments, due dates.", example: "On-time delivery up 60%." },
+            { id: 'ops-3', name: "Time Tracker", cat: "Operations", price: 39, desc: "Track billable hours.", fullDesc: "One-click timer, auto-convert to invoices.", example: "Bill 20% more hours." },
+            { id: 'ops-4', name: "Team Directory", cat: "Operations", price: 29, desc: "Internal contact database.", fullDesc: "Org chart, contact info, skills matrix.", example: "Find expertise fast." },
+            { id: 'ops-5', name: "Shift Scheduler", cat: "Operations", price: 89, desc: "Employee shift planning.", fullDesc: "Drag-drop scheduling, shift swaps, notifications.", example: "Zero scheduling conflicts." },
+            { id: 'ops-6', name: "Equipment Tracker", cat: "Operations", price: 59, desc: "Inventory for tools/assets.", fullDesc: "Track who has what, maintenance schedules.", example: "Nothing lost." },
+            { id: 'ops-7', name: "Vehicle Fleet Manager", cat: "Operations", price: 99, desc: "Track vehicles & mileage.", fullDesc: "Maintenance schedules, fuel logs, GPS tracking.", example: "20% fuel savings." },
+            { id: 'ops-8', name: "KPI Dashboard", cat: "Operations", price: 129, desc: "Live business metrics.", fullDesc: "Real-time KPIs, custom dashboards, alerts.", example: "Know status instantly." },
+            { id: 'ops-9', name: "SOP Library", cat: "Operations", price: 49, desc: "Standard operating procedures.", fullDesc: "Document processes, video tutorials, checklists.", example: "Onboard in 2 days not 2 weeks." },
+            { id: 'ops-10', name: "Training Portal", cat: "Operations", price: 89, desc: "Employee training & certs.", fullDesc: "Video courses, quizzes, certification tracking.", example: "Certified team." },
+            { id: 'ops-11', name: "Compliance Checklist", cat: "Operations", price: 79, desc: "Regulatory requirements.", fullDesc: "Industry-specific compliance tracking and reminders.", example: "Zero violations." },
+            { id: 'ops-12', name: "Vendor Manager", cat: "Operations", price: 69, desc: "Supplier contacts & contracts.", fullDesc: "Track vendors, renewal dates, pricing history.", example: "Renegotiated 3 contracts." },
+            { id: 'ops-13', name: "Purchase Order System", cat: "Operations", price: 89, desc: "PO creation & approval.", fullDesc: "Request, approve, track purchase orders.", example: "Controlled spending." },
+            { id: 'ops-14', name: "Warehouse Layout Tool", cat: "Operations", price: 59, desc: "Visual floor plan designer.", fullDesc: "Drag-drop warehouse layout, optimize flow.", example: "25% faster picking." },
+            { id: 'ops-15', name: "Return Management", cat: "Operations", price: 79, desc: "RMA processing system.", fullDesc: "Customer returns, tracking, refund automation.", example: "Process in 1 day." },
+            { id: 'ops-16', name: "Quality Control Tracker", cat: "Operations", price: 69, desc: "Defect tracking system.", fullDesc: "Log issues, assign fixes, track completion.", example: "Defects down 40%." },
+            { id: 'ops-17', name: "Maintenance Scheduler", cat: "Operations", price: 59, desc: "Equipment servicing calendar.", fullDesc: "Track service dates, auto-schedule, vendor alerts.", example: "Zero equipment downtime." },
+            { id: 'ops-18', name: "Access Control System", cat: "Operations", price: 99, desc: "Who can access what.", fullDesc: "Role-based permissions, activity logs.", example: "Secure & auditable." },
+            { id: 'ops-19', name: "Incident Report System", cat: "Operations", price: 79, desc: "Log workplace incidents.", fullDesc: "Forms, photos, witness statements, compliance docs.", example: "Insurance claims easier." },
+            { id: 'ops-20', name: "Inventory Sync", cat: "Operations", price: 149, desc: "Multi-platform stock sync.", fullDesc: "Real-time sync across Shopify, WooCommerce, Square.", example: "Zero overselling." },
+            { id: 'ops-21', name: "Checklist Generator", cat: "Operations", price: 39, desc: "Create process checklists.", fullDesc: "Build recurring checklists, assign, track completion.", example: "Nothing forgotten." },
+            { id: 'ops-22', name: "Approval Workflow Builder", cat: "Operations", price: 89, desc: "Multi-step approval chains.", fullDesc: "Route requests through approval chains automatically.", example: "Clear process." },
+            { id: 'ops-23', name: "Resource Allocator", cat: "Operations", price: 99, desc: "Assign team to projects.", fullDesc: "Capacity planning, workload balancing.", example: "Optimal utilization." },
+            { id: 'ops-24', name: "Meeting Room Booker", cat: "Operations", price: 49, desc: "Reserve spaces & equipment.", fullDesc: "Calendar for rooms, projectors, vehicles.", example: "Zero double-bookings." },
+            { id: 'ops-25', name: "Digital Signature Pad", cat: "Operations", price: 59, desc: "Capture signatures on iPad.", fullDesc: "Job completion signatures, waivers, consent forms.", example: "Paperless operations." },
+            { id: 'ops-26', name: "Emergency Contact System", cat: "Operations", price: 39, desc: "After-hours escalation.", fullDesc: "Auto-route urgent calls to on-call staff.", example: "24/7 coverage." },
+            { id: 'ops-27', name: "Workspace Booking", cat: "Operations", price: 69, desc: "Hot-desk reservation.", fullDesc: "Book desks, meeting rooms, parking spots.", example: "Hybrid work organized." },
+            { id: 'ops-28', name: "Asset Check-Out System", cat: "Operations", price: 59, desc: "Track borrowed equipment.", fullDesc: "Log who took what, when, automatic returns.", example: "Nothing goes missing." },
+            { id: 'ops-29', name: "Client Portal", cat: "Operations", price: 149, desc: "Branded customer dashboard.", fullDesc: "Projects, files, invoices, messaging in one place.", example: "Professional experience." },
+            { id: 'ops-30', name: "Delivery Route Optimizer", cat: "Operations", price: 89, desc: "Fastest delivery routes.", fullDesc: "AI plans optimal routes, saves fuel and time.", example: "30% faster deliveries." },
+
+            // FINANCE (30 tools) - Adding "Finance" as category
+            { id: 'fin-1', name: "Invoice Generator", cat: "Finance", price: 49, desc: "Professional PDF invoices.", fullDesc: "Automated numbering, calculations, email sending.", example: "Invoiced in 2min." },
+            { id: 'fin-2', name: "Expense Tracker", cat: "Finance", price: 29, desc: "Track business expenses.", fullDesc: "Receipt scanning, categorization, tax reports.", example: "Tax-ready in 1 hour." },
+            { id: 'fin-3', name: "Quote Calculator", cat: "Finance", price: 39, desc: "Interactive pricing tool.", fullDesc: "Hourly rate, materials, margin calculation.", example: "Accurate quotes fast." },
+            { id: 'fin-4', name: "Cash Flow Forecaster", cat: "Finance", price: 99, desc: "90-day cash projection.", fullDesc: "Predicts income, expenses, alerts on shortfalls.", example: "No surprises." },
+            { id: 'fin-5', name: "Profit Margin Calculator", cat: "Finance", price: 49, desc: "Product-level profitability.", fullDesc: "Calculate margins per product/service.", example: "Cut unprofitable services." },
+            { id: 'fin-6', name: "Break-Even Analyzer", cat: "Finance", price: 59, desc: "Know your survival number.", fullDesc: "Calculates break-even for business or projects.", example: "Financial clarity." },
+            { id: 'fin-7', name: "Tax Estimator", cat: "Finance", price: 69, desc: "Quarterly tax calculator.", fullDesc: "Estimates tax liability, suggests set-aside amount.", example: "No tax surprises." },
+            { id: 'fin-8', name: "Budget Tracker", cat: "Finance", price: 79, desc: "Actuals vs planned.", fullDesc: "Compare spending to budget, alerts on overages.", example: "Stayed under budget." },
+            { id: 'fin-9', name: "Depreciation Calculator", cat: "Finance", price: 49, desc: "Asset depreciation schedules.", fullDesc: "Calculate depreciation for tax purposes.", example: "Max deductions." },
+            { id: 'fin-10', name: "Payroll Assistant", cat: "Finance", price: 129, desc: "Calculate wages & deductions.", fullDesc: "Gross to net calculations, PAYE, NI, pension.", example: "Payroll in 15min." },
+            { id: 'fin-11', name: "Expense Report Builder", cat: "Finance", price: 39, desc: "Employee expense submissions.", fullDesc: "Mobile app for expense claims, approval workflow.", example: "Reimbursed in 2 days." },
+            { id: 'fin-12', name: "Financial Dashboard", cat: "Finance", price: 149, desc: "Real-time P&L.", fullDesc: "Live profit & loss, balance sheet, cash position.", example: "Know your numbers." },
+            { id: 'fin-13', name: "AR/AP Tracker", cat: "Finance", price: 89, desc: "Accounts receivable/payable.", fullDesc: "Track who owes you, who you owe, aging reports.", example: "Collect faster." },
+            { id: 'fin-14', name: "Multi-Currency Converter", cat: "Finance", price: 59, desc: "Real-time exchange rates.", fullDesc: "Auto-convert international quotes and invoices.", example: "Global sales easy." },
+            { id: 'fin-15', name: "Subscription Tracker", cat: "Finance", price: 45, desc: "Track all software costs.", fullDesc: "Monitor subscriptions, alert on renewals, suggest cuts.", example: "Cut £400/mo waste." },
+            { id: 'fin-16', name: "Mileage Logger", cat: "Finance", price: 39, desc: "Auto-track business miles.", fullDesc: "GPS-based mileage logging for tax deductions.", example: "£1,200 deduction." },
+            { id: 'fin-17', name: "Receipt Organizer", cat: "Finance", price: 49, desc: "Scan & categorize receipts.", fullDesc: "Photo receipts, OCR text, auto-categorize.", example: "Shoeboxes eliminated." },
+            { id: 'fin-18', name: "Bill Payment Scheduler", cat: "Finance", price: 59, desc: "Never miss payments.", fullDesc: "Track due dates, schedule payments, confirmations.", example: "Zero late fees." },
+            { id: 'fin-19', name: "Financial Report Generator", cat: "Finance", price: 99, desc: "Monthly reports automated.", fullDesc: "Pull from accounting software, create PDF reports.", example: "Board-ready reports." },
+            { id: 'fin-20', name: "Grant Tracking System", cat: "Finance", price: 79, desc: "Apply & track funding.", fullDesc: "Grant deadlines, applications, reporting requirements.", example: "Secured £50k grant." },
+            { id: 'fin-21', name: "Petty Cash Manager", cat: "Finance", price: 29, desc: "Track small cash expenses.", fullDesc: "Log petty cash, reconcile daily, prevent theft.", example: "Accounted for." },
+            { id: 'fin-22', name: "Payment Terms Optimizer", cat: "Finance", price: 69, desc: "Negotiate better terms.", fullDesc: "Analyzes payment terms, suggests improvements.", example: "Improved cash flow." },
+            { id: 'fin-23', name: "Late Fee Calculator", cat: "Finance", price: 39, desc: "Auto-add late charges.", fullDesc: "Calculates late fees per your policy.", example: "Recovered £2,400." },
+            { id: 'fin-24', name: "Financial Goal Tracker", cat: "Finance", price: 49, desc: "Track revenue targets.", fullDesc: "Set goals, track progress, celebrate wins.", example: "Hit targets 2 quarters straight." },
+            { id: 'fin-25', name: "Loan Payment Calculator", cat: "Finance", price: 45, desc: "Calculate loan scenarios.", fullDesc: "Compare loan options, amortization schedules.", example: "Saved £8k in interest." },
+            { id: 'fin-26', name: "Pricing Strategy Tool", cat: "Finance", price: 89, desc: "Find optimal pricing.", fullDesc: "Analyzes costs, market, suggests pricing tiers.", example: "Revenue up 15%." },
+            { id: 'fin-27', name: "Profit Sharing Calculator", cat: "Finance", price: 59, desc: "Calculate employee bonuses.", fullDesc: "Fair profit-sharing formulas based on performance.", example: "Team motivation up." },
+            { id: 'fin-28', name: "Stripe Dashboard", cat: "Finance", price: 69, desc: "Payment analytics.", fullDesc: "Stripe metrics, failed payments, customer LTV.", example: "Reduce churn 15%." },
+            { id: 'fin-29', name: "Donation Tracker", cat: "Finance", price: 49, desc: "Charitable giving records.", fullDesc: "Track donations, generate tax receipts.", example: "Tax deductions maximized." },
+            { id: 'fin-30', name: "Contract Value Tracker", cat: "Finance", price: 79, desc: "Monitor contract revenues.", fullDesc: "Track recurring contracts, renewal dates, LTV.", example: "Never lose renewal." },
+
+            // PRODUCTIVITY (30 tools) - Adding "Productivity" as category
+            { id: 'prod-1', name: "Appointment Scheduler", cat: "Productivity", price: 59, desc: "Client booking calendar.", fullDesc: "Self-serve booking with SMS confirmations.", example: "Zero phone tag." },
+            { id: 'prod-2', name: "Pomodoro Timer", cat: "Productivity", price: 0, desc: "Focus session timer.", fullDesc: "25-min work blocks with break reminders.", example: "Productivity up 40%." },
+            { id: 'prod-3', name: "Daily Standup Bot", cat: "Productivity", price: 39, desc: "Async team check-ins.", fullDesc: "Collects updates, summarizes, shares with team.", example: "No more meetings." },
+            { id: 'prod-4', name: "Habit Tracker", cat: "Productivity", price: 29, desc: "Personal goals & routines.", fullDesc: "Track daily habits, streak counters, reminders.", example: "90-day streaks." },
+            { id: 'prod-5', name: "Meeting Cost Calculator", cat: "Productivity", price: 0, desc: "Show $ cost of meetings.", fullDesc: "Calculate hourly rate × attendees × time.", example: "Cut unnecessary meetings." },
+            { id: 'prod-6', name: "Focus Mode", cat: "Productivity", price: 39, desc: "Block distracting sites.", fullDesc: "Schedule focus blocks, block social media.", example: "Deep work achieved." },
+            { id: 'prod-7', name: "Note-Taking App", cat: "Productivity", price: 49, desc: "Markdown notes with tags.", fullDesc: "Fast note capture, search, organize by project.", example: "Never lose ideas." },
+            { id: 'prod-8', name: "Mind Map Tool", cat: "Productivity", price: 59, desc: "Visual brainstorming.", fullDesc: "Drag-drop mind mapping with export.", example: "Better ideation." },
+            { id: 'prod-9', name: "Goal Tracker", cat: "Productivity", price: 45, desc: "OKR & KPI tracking.", fullDesc: "Set quarterly goals, track weekly progress.", example: "Hit 8/10 goals." },
+            { id: 'prod-10', name: "Reading List", cat: "Productivity", price: 0, desc: "Save & organize articles.", fullDesc: "Bookmark articles, tag, search, read later.", example: "Knowledge organized." },
+            { id: 'prod-11', name: "Password Manager", cat: "Productivity", price: 49, desc: "Secure credential storage.", fullDesc: "Encrypted passwords, auto-fill, team sharing.", example: "Security + convenience." },
+            { id: 'prod-12', name: "Email Templates", cat: "Productivity", price: 39, desc: "Reusable email responses.", fullDesc: "Save common replies, insert with shortcuts.", example: "Reply in 10sec." },
+            { id: 'prod-13', name: "Quick Links Dashboard", cat: "Productivity", price: 0, desc: "Bookmarks on steroids.", fullDesc: "Custom start page with your most-used links.", example: "Access anything fast." },
+            { id: 'prod-14', name: "Screen Time Tracker", cat: "Productivity", price: 29, desc: "See where time goes.", fullDesc: "Track app usage, website time, productivity score.", example: "Reclaimed 2hrs/day." },
+            { id: 'prod-15', name: "Distraction Blocker", cat: "Productivity", price: 39, desc: "Schedule deep work.", fullDesc: "Block social media during focus hours.", example: "Finish projects faster." },
+            { id: 'prod-16', name: "Energy Level Tracker", cat: "Productivity", price: 29, desc: "Optimize your schedule.", fullDesc: "Log energy throughout day, find peak times.", example: "Do hard work when sharp." },
+            { id: 'prod-17', name: "Context Switcher", cat: "Productivity", price: 49, desc: "Switch projects fast.", fullDesc: "Save workspace states, one-click context switch.", example: "No mental overhead." },
+            { id: 'prod-18', name: "Break Reminder", cat: "Productivity", price: 0, desc: "Avoid burnout.", fullDesc: "Reminds you to take breaks, stretch, hydrate.", example: "Sustained energy." },
+            { id: 'prod-19', name: "Weekly Review Template", cat: "Productivity", price: 39, desc: "Reflect & plan.", fullDesc: "Guided weekly review process, goal adjustment.", example: "Continuous improvement." },
+            { id: 'prod-20', name: "Keyboard Shortcut Trainer", cat: "Productivity", price: 29, desc: "Learn shortcuts fast.", fullDesc: "Practice common shortcuts, track proficiency.", example: "30% faster navigation." },
+            { id: 'prod-21', name: "Decision Logger", cat: "Productivity", price: 45, desc: "Track why you decided.", fullDesc: "Log decisions, reasoning, outcomes for learning.", example: "Better decisions." },
+            { id: 'prod-22', name: "Eisenhower Matrix", cat: "Productivity", price: 0, desc: "Prioritize tasks.", fullDesc: "Sort tasks by urgent/important quadrants.", example: "Work on what matters." },
+            { id: 'prod-23', name: "90-Day Planner", cat: "Productivity", price: 49, desc: "Quarterly goal setting.", fullDesc: "Break big goals into 12-week sprints.", example: "Shipped 3 major projects." },
+            { id: 'prod-24', name: "Accountability Partner Bot", cat: "Productivity", price: 39, desc: "Daily goal check-ins.", fullDesc: "Sends daily reminders, tracks completion streaks.", example: "95% goal completion." },
+            { id: 'prod-25', name: "Time Blocking Calendar", cat: "Productivity", price: 29, desc: "Theme your days.", fullDesc: "Color-coded calendar with focus blocks.", example: "Control your time." },
+            { id: 'prod-26', name: "Morning Routine Builder", cat: "Productivity", price: 35, desc: "Perfect start every day.", fullDesc: "Guided morning routine with habit stacking.", example: "Consistent mornings." },
+            { id: 'prod-27', name: "Deep Work Scheduler", cat: "Productivity", price: 49, desc: "Book focus blocks.", fullDesc: "Auto-schedule 2-4 hour deep work sessions.", example: "Finished book in 90 days." },
+            { id: 'prod-28', name: "Meeting Agenda Generator", cat: "Productivity", price: 29, desc: "Never waste meetings.", fullDesc: "AI generates agenda from meeting goal.", example: "Productive meetings." },
+            { id: 'prod-29', name: "Project Deadline Calculator", cat: "Productivity", price: 39, desc: "Realistic timeline estimates.", fullDesc: "Calculates realistic deadlines based on task complexity.", example: "On-time delivery." },
+            { id: 'prod-30', name: "Batch Processing Queue", cat: "Productivity", price: 45, desc: "Group similar tasks.", fullDesc: "Queue similar tasks, process in batches.", example: "3x faster completion." },
+
+            // INDUSTRY-SPECIFIC (30 tools) - Changed from generic "Industry"
+            { id: 'ind-1', name: "Contractor Job Scheduler", cat: "Industry", price: 149, desc: "For trades businesses.", fullDesc: "Job scheduling, crew assignment, materials tracking.", example: "Organized chaos." },
+            { id: 'ind-2', name: "Patient Portal", cat: "Industry", price: 179, desc: "For healthcare practices.", fullDesc: "HIPAA-compliant patient dashboard, records, messaging.", example: "Better patient experience." },
+            { id: 'ind-3', name: "Legal Case Manager", cat: "Industry", price: 199, desc: "For law firms.", fullDesc: "Case tracking, document management, billing.", example: "Never miss deadline." },
+            { id: 'ind-4', name: "Restaurant POS Sync", cat: "Industry", price: 129, desc: "For hospitality.", fullDesc: "Sync orders to kitchen, inventory, accounting.", example: "Seamless operations." },
+            { id: 'ind-5', name: "Salon Booking System", cat: "Industry", price: 89, desc: "For beauty businesses.", fullDesc: "Stylist scheduling, client preferences, reminders.", example: "Reduced no-shows 70%." },
+            { id: 'ind-6', name: "Gym Member Portal", cat: "Industry", price: 119, desc: "For fitness centers.", fullDesc: "Class booking, payment tracking, workout logs.", example: "Member retention up." },
+            { id: 'ind-7', name: "Veterinary Scheduler", cat: "Industry", price: 99, desc: "For vet clinics.", fullDesc: "Pet records, vaccinations, appointment reminders.", example: "Happy pet owners." },
+            { id: 'ind-8', name: "Property Management Suite", cat: "Industry", price: 179, desc: "For landlords.", fullDesc: "Tenant portal, maintenance requests, rent tracking.", example: "Manage 50 properties." },
+            { id: 'ind-9', name: "Tutoring Session Planner", cat: "Industry", price: 69, desc: "For education.", fullDesc: "Student scheduling, progress tracking, parent updates.", example: "Professional tutoring." },
+            { id: 'ind-10', name: "Cleaning Job Router", cat: "Industry", price: 89, desc: "For cleaning services.", fullDesc: "Job scheduling, staff GPS, before/after photos.", example: "Optimized routes." },
+            { id: 'ind-11', name: "Auto Repair Estimator", cat: "Industry", price: 129, desc: "For mechanics.", fullDesc: "Part lookup, labor calculation, instant quotes.", example: "Quote in 2min." },
+            { id: 'ind-12', name: "Wedding Planner CRM", cat: "Industry", price: 149, desc: "For event planners.", fullDesc: "Vendor management, timeline, budget tracking.", example: "Perfect weddings." },
+            { id: 'ind-13', name: "Photography Workflow", cat: "Industry", price: 119, desc: "For photographers.", fullDesc: "Booking, contracts, gallery delivery, payment.", example: "Professional workflow." },
+            { id: 'ind-14', name: "Consulting Time Tracker", cat: "Industry", price: 89, desc: "For consultants.", fullDesc: "Client time tracking, automatic invoicing, reports.", example: "Bill every minute." },
+            { id: 'ind-15', name: "Architect Project Manager", cat: "Industry", price: 179, desc: "For architecture firms.", fullDesc: "Project phases, document versioning, client approvals.", example: "On-time, on-budget." },
+            { id: 'ind-16', name: "Real Estate Lead Tracker", cat: "Industry", price: 99, desc: "For estate agents.", fullDesc: "Property leads, viewings, offer tracking.", example: "Close more sales." },
+            { id: 'ind-17', name: "HVAC Service Scheduler", cat: "Industry", price: 109, desc: "For HVAC businesses.", fullDesc: "Service calls, maintenance contracts, parts inventory.", example: "Efficient operations." },
+            { id: 'ind-18', name: "Therapy Session Manager", cat: "Industry", price: 129, desc: "For therapists.", fullDesc: "Confidential notes, billing, appointment scheduling.", example: "HIPAA-compliant." },
+            { id: 'ind-19', name: "Dental Practice Suite", cat: "Industry", price: 149, desc: "For dentists.", fullDesc: "Appointments, treatment plans, insurance claims.", example: "Smooth practice." },
+            { id: 'ind-20', name: "Car Wash Queue System", cat: "Industry", price: 79, desc: "For car washes.", fullDesc: "Queue management, membership tracking, upsells.", example: "Process 30% more cars." },
+            { id: 'ind-21', name: "Barber Shop Scheduler", cat: "Industry", price: 69, desc: "For barber shops.", fullDesc: "Walk-ins + appointments, barber preferences.", example: "No waiting chaos." },
+            { id: 'ind-22', name: "Personal Trainer Planner", cat: "Industry", price: 89, desc: "For PT businesses.", fullDesc: "Client workouts, progress photos, meal plans.", example: "Client results visible." },
+            { id: 'ind-23', name: "Landscaping Quote Tool", cat: "Industry", price: 99, desc: "For landscapers.", fullDesc: "Measure area, calculate materials, instant quote.", example: "Quote while on-site." },
+            { id: 'ind-24', name: "Catering Order System", cat: "Industry", price: 109, desc: "For caterers.", fullDesc: "Menu selection, dietary restrictions, delivery scheduling.", example: "Perfect events." },
+            { id: 'ind-25', name: "Music Lesson Scheduler", cat: "Industry", price: 79, desc: "For music teachers.", fullDesc: "Student scheduling, progress tracking, recital planning.", example: "Organized teaching." },
+            { id: 'ind-26', name: "Pet Grooming Tracker", cat: "Industry", price: 89, desc: "For groomers.", fullDesc: "Pet profiles, grooming history, appointment reminders.", example: "Happy pets & owners." },
+            { id: 'ind-27', name: "Home Inspection Manager", cat: "Industry", price: 119, desc: "For inspectors.", fullDesc: "Checklist forms, photo reports, instant delivery.", example: "Professional reports." },
+            { id: 'ind-28', name: "Moving Company Planner", cat: "Industry", price: 129, desc: "For movers.", fullDesc: "Job scheduling, inventory lists, route optimization.", example: "Efficient moves." },
+            { id: 'ind-29', name: "Taxi Dispatch System", cat: "Industry", price: 149, desc: "For cab companies.", fullDesc: "Driver allocation, route optimization, payment tracking.", example: "More rides/hour." },
+            { id: 'ind-30', name: "Locksmith Job Tracker", cat: "Industry", price: 89, desc: "For locksmiths.", fullDesc: "Emergency calls, job tracking, key inventory.", example: "Fast emergency response." }
         ];
-        const toolsDB = [];
-        // Create 150 unique tools with realistic IDs
-        for(let i=0; i<150; i++) {
-            const base = baseTools[i % baseTools.length];
-            toolsDB.push({
-                ...base,
-                id: 'tool-' + i, // Unique ID
-                name: i < 5 ? base.name : `${base.name} V${i}`, // Visual variance
-                cat: i < 5 ? base.cat : ['Automation', 'Marketing', 'Sales', 'Operations', 'Industry'][Math.floor(Math.random()*5)]
-            });
-        }
 
         let cart = [];
         let isAnnual = false;
@@ -748,13 +983,20 @@
                 const isSelected = cart.some(c => c.id === tool.id);
                 const price = isAnnual ? Math.floor(tool.price * 0.8) : tool.price;
                 const el = document.createElement('div');
-                el.className = `tool-card border p-6 rounded-xl cursor-pointer ${isSelected ? 'border-brand-success/50 bg-brand-success/5' : 'border-white/10 bg-brand-panel hover:bg-brand-panel/80'} group`;
+                el.className = `tool-card ${isSelected ? 'selected' : ''} border p-6 rounded-xl cursor-pointer transition-all group`;
+                el.setAttribute('data-tool-id', tool.id);
                 el.innerHTML = `
-                    <div class="flex justify-between items-start mb-4 pointer-events-none"><span class="text-[10px] font-bold text-brand-dim bg-white/5 px-2 py-1 rounded">${tool.cat}</span>${isSelected ? '<i class="fa-solid fa-circle-check text-brand-success"></i>' : '<i class="fa-regular fa-circle text-brand-dim group-hover:text-white"></i>'}</div>
+                    <div class="flex justify-between items-start mb-4 pointer-events-none">
+                        <span class="text-[10px] font-bold px-2 py-1 rounded ${isSelected ? 'bg-brand-success/20 text-brand-success' : 'text-brand-dim bg-white/5'}">${tool.cat}</span>
+                        ${isSelected ? '<i class="fa-solid fa-circle-check text-brand-success text-xl"></i>' : '<i class="fa-regular fa-circle text-brand-dim group-hover:text-brand-accent text-xl"></i>'}
+                    </div>
                     <h4 class="text-white font-bold text-xl mb-2 pointer-events-none">${tool.name}</h4>
                     <p class="text-brand-dim text-sm mb-6 line-clamp-2 pointer-events-none">${tool.desc}</p>
-                    <div class="flex items-center justify-between mt-auto border-t border-white/5 pt-4"><span class="text-brand-accent font-mono font-bold">£${price}<span class="text-xs text-brand-dim">/mo</span></span><button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent">Specs <i class="fa-solid fa-arrow-right"></i></button></div>
-                    ${isSelected ? '<div class="mt-3 text-center text-xs text-brand-success font-medium pointer-events-none"><i class="fa-solid fa-check mr-1"></i>Added • Click to remove</div>' : '<div class="mt-3 text-center text-xs text-brand-dim group-hover:text-white pointer-events-none">Click to add to stack</div>'}`;
+                    <div class="flex items-center justify-between mt-auto border-t border-white/5 pt-4">
+                        <span class="text-brand-accent font-mono font-bold">£${price}<span class="text-xs text-brand-dim">/mo</span></span>
+                        <button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent transition-colors">Specs <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                    ${isSelected ? '<div class="mt-3 text-center text-xs text-brand-success font-bold pointer-events-none bg-brand-success/10 py-2 rounded"><i class="fa-solid fa-check-circle mr-1"></i>SELECTED • Click to remove</div>' : '<div class="mt-3 text-center text-xs text-brand-dim group-hover:text-brand-accent pointer-events-none py-2">Click to add to your stack</div>'}`;
                 el.onclick = () => toggleTool(tool.id);
                 fragment.appendChild(el);
             });
@@ -802,13 +1044,20 @@
                     const isSelected = cart.some(c => c.id === tool.id);
                     const price = isAnnual ? Math.floor(tool.price * 0.8) : tool.price;
                     const el = document.createElement('div');
-                    el.className = `tool-card border p-6 rounded-xl cursor-pointer ${isSelected ? 'border-brand-success/50 bg-brand-success/5' : 'border-white/10 bg-brand-panel hover:bg-brand-panel/80'} group`;
+                    el.className = `tool-card ${isSelected ? 'selected' : ''} border p-6 rounded-xl cursor-pointer transition-all group`;
+                    el.setAttribute('data-tool-id', tool.id);
                     el.innerHTML = `
-                    <div class="flex justify-between items-start mb-4 pointer-events-none"><span class="text-[10px] font-bold text-brand-dim bg-white/5 px-2 py-1 rounded">${tool.cat}</span>${isSelected ? '<i class="fa-solid fa-circle-check text-brand-success"></i>' : '<i class="fa-regular fa-circle text-brand-dim group-hover:text-white"></i>'}</div>
+                    <div class="flex justify-between items-start mb-4 pointer-events-none">
+                        <span class="text-[10px] font-bold px-2 py-1 rounded ${isSelected ? 'bg-brand-success/20 text-brand-success' : 'text-brand-dim bg-white/5'}">${tool.cat}</span>
+                        ${isSelected ? '<i class="fa-solid fa-circle-check text-brand-success text-xl"></i>' : '<i class="fa-regular fa-circle text-brand-dim group-hover:text-brand-accent text-xl"></i>'}
+                    </div>
                     <h4 class="text-white font-bold text-xl mb-2 pointer-events-none">${tool.name}</h4>
                     <p class="text-brand-dim text-sm mb-6 line-clamp-2 pointer-events-none">${tool.desc}</p>
-                    <div class="flex items-center justify-between mt-auto border-t border-white/5 pt-4"><span class="text-brand-accent font-mono font-bold">£${price}<span class="text-xs text-brand-dim">/mo</span></span><button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent">Specs <i class="fa-solid fa-arrow-right"></i></button></div>
-                    ${isSelected ? '<div class="mt-3 text-center text-xs text-brand-success font-medium pointer-events-none"><i class="fa-solid fa-check mr-1"></i>Added • Click to remove</div>' : '<div class="mt-3 text-center text-xs text-brand-dim group-hover:text-white pointer-events-none">Click to add to stack</div>'}`;
+                    <div class="flex items-center justify-between mt-auto border-t border-white/5 pt-4">
+                        <span class="text-brand-accent font-mono font-bold">£${price}<span class="text-xs text-brand-dim">/mo</span></span>
+                        <button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent transition-colors">Specs <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                    ${isSelected ? '<div class="mt-3 text-center text-xs text-brand-success font-bold pointer-events-none bg-brand-success/10 py-2 rounded"><i class="fa-solid fa-check-circle mr-1"></i>SELECTED • Click to remove</div>' : '<div class="mt-3 text-center text-xs text-brand-dim group-hover:text-brand-accent pointer-events-none py-2">Click to add to your stack</div>'}`;
                     el.onclick = () => toggleTool(tool.id);
                     fragment.appendChild(el);
                 });
