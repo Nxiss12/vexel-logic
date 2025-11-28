@@ -195,7 +195,7 @@ This is a production business platform, but contributions are welcome!
 
 This project is proprietary software owned by Vexel Logic.
 
-**For business inquiries:** benanokye577@gmail.com
+**For business inquiries:** Visit [vexellogicc.netlify.app](https://vexellogicc.netlify.app) or book a consultation through our [calendar](https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit).
 
 ---
 
@@ -215,10 +215,11 @@ This project is proprietary software owned by Vexel Logic.
 **Benedict Anokye-Davies**  
 Founder & Lead Systems Architect
 
-- **Email:** benanokye577@gmail.com
 - **LinkedIn:** [Benedict Anokye-Davies](https://www.linkedin.com/in/benedict-anokye-davies/)
 - **Website:** [vexellogicc.netlify.app](https://vexellogicc.netlify.app)
 - **Book Demo:** [calendly.com/benanokye577/vexel-demo-revenue-recovery-audit](https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit)
+
+**For business inquiries, please book a call through the website.**
 
 ---
 
