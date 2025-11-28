@@ -4,9 +4,11 @@
 openai>=1.0.0          # AI content generation (optional - has fallback)
 rich>=13.0.0           # Beautiful terminal UI (optional - has fallback)
 
-# Optional enhancements
+# Auto-scraping (for prospect_scraper.py)
 requests>=2.28.0       # HTTP requests for web scraping
 beautifulsoup4>=4.12.0 # HTML parsing for lead scraping
+
+# Scheduling & utilities
 schedule>=1.2.0        # Task scheduling
 python-dotenv>=1.0.0   # Environment variable management
 
