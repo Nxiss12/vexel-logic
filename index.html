@@ -215,19 +215,205 @@
             <!-- Calculator -->
             <section id="calculator" class="py-24 bg-brand-dark relative overflow-hidden">
                 <div class="absolute inset-0 bg-brand-accent/5 pointer-events-none"></div>
-                <div class="max-w-5xl mx-auto px-4 relative z-10">
+                <div class="max-w-6xl mx-auto px-4 relative z-10">
                     <div class="glass-panel border border-brand-accent/20 rounded-3xl p-10 md:p-16 shadow-2xl" data-aos="zoom-in">
-                        <div class="text-center mb-12"><h2 class="text-3xl font-bold text-white">Revenue Leakage Audit</h2><p class="text-brand-dim mt-2">Input your numbers to see what "Manual Process" costs you annually.</p></div>
-                        <div class="grid md:grid-cols-2 gap-16 items-center">
-                            <div class="space-y-10">
-                                <div><label class="flex justify-between text-sm font-bold text-white mb-4"><span>Average Job Value</span><span id="val-display" class="text-brand-accent bg-brand-accent/10 px-2 py-1 rounded">£500</span></label><input type="range" id="job-value" min="100" max="5000" step="50" value="500" class="w-full h-2 bg-brand-navy rounded-lg appearance-none cursor-pointer accent-brand-accent" oninput="calculateROI()"></div>
-                                <div><label class="flex justify-between text-sm font-bold text-white mb-4"><span>Missed Calls / Week</span><span id="calls-display" class="text-brand-accent bg-brand-accent/10 px-2 py-1 rounded">3</span></label><input type="range" id="missed-calls" min="1" max="50" step="1" value="3" class="w-full h-2 bg-brand-navy rounded-lg appearance-none cursor-pointer accent-brand-accent" oninput="calculateROI()"></div>
-                                <div><label class="flex justify-between text-sm font-bold text-white mb-4"><span>Close Rate</span><span id="rate-display" class="text-brand-accent bg-brand-accent/10 px-2 py-1 rounded">30%</span></label><input type="range" id="close-rate" value="30" min="10" max="100" class="w-full h-2 bg-brand-navy rounded-lg appearance-none cursor-pointer accent-brand-accent" oninput="calculateROI()"></div>
+                        <!-- Header -->
+                        <div class="text-center mb-8">
+                            <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/30 px-4 py-2 rounded-full mb-4">
+                                <i class="fa-solid fa-triangle-exclamation text-red-400"></i>
+                                <span class="text-red-400 text-xs font-bold uppercase tracking-wider">Revenue Diagnostic</span>
                             </div>
-                            <div class="text-center bg-brand-navy/80 rounded-2xl p-8 border border-white/10 relative overflow-hidden">
-                                <div class="absolute top-0 left-0 w-full h-1 bg-brand-danger"></div><div class="text-xs text-brand-dim uppercase tracking-wider mb-4">Estimated Annual Loss</div><div class="text-6xl font-extrabold text-white mb-2 tracking-tight" id="annual-loss">£23,400</div><a href="https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit" target="_blank" class="bg-brand-success text-white px-8 py-4 rounded-xl font-bold hover:bg-green-600 transition-all w-full shadow-glow text-lg block text-center">Stop The Bleeding</a>
+                            <h2 class="text-4xl font-bold text-white mb-3">How Much Are Missed Calls Costing You?</h2>
+                            <p class="text-brand-light text-lg max-w-2xl mx-auto">Most UK service businesses don't realize they're losing £15k-£40k annually just from calls that go unanswered. Let's calculate YOUR number.</p>
+                        </div>
+
+                        <!-- The Problem Explained -->
+                        <div class="bg-brand-navy/50 border-l-4 border-brand-accent rounded-lg p-6 mb-8">
+                            <h3 class="text-white font-bold mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-lightbulb text-brand-accent"></i>
+                                Why This Happens
+                            </h3>
+                            <p class="text-brand-light text-sm leading-relaxed mb-3">You're on a job site, in a meeting, or driving. A potential customer calls. It goes to voicemail. You think: <em>"I'll call them back in an hour."</em></p>
+                            <p class="text-brand-light text-sm leading-relaxed">But by then, they've already called 2 other companies. <span class="text-brand-accent font-bold">You've lost the job before you even knew about it.</span></p>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-12 items-start">
+                            <!-- Inputs -->
+                            <div class="space-y-8">
+                                <!-- Job Value -->
+                                <div>
+                                    <label class="flex justify-between text-sm font-bold text-white mb-2">
+                                        <span>Average Job Value</span>
+                                        <span id="val-display" class="text-brand-accent bg-brand-accent/10 px-3 py-1.5 rounded font-mono">£800</span>
+                                    </label>
+                                    <input type="range" id="job-value" min="100" max="5000" step="50" value="800" class="w-full h-2 bg-brand-navy rounded-lg appearance-none cursor-pointer accent-brand-accent" oninput="calculateROI()">
+                                    <div class="flex justify-between text-xs text-brand-dim mt-2">
+                                        <span>£100</span>
+                                        <span>£5,000</span>
+                                    </div>
+                                    <p class="text-xs text-brand-dim mt-2 italic">💡 Typical range: Trades £500-£2,000 | Healthcare £150-£800 | Consulting £1,000-£5,000</p>
+                                </div>
+
+                                <!-- Missed Calls -->
+                                <div>
+                                    <label class="flex justify-between text-sm font-bold text-white mb-2">
+                                        <span>Missed Calls Per Week</span>
+                                        <span id="calls-display" class="text-brand-accent bg-brand-accent/10 px-3 py-1.5 rounded font-mono">5</span>
+                                    </label>
+                                    <input type="range" id="missed-calls" min="1" max="50" step="1" value="5" class="w-full h-2 bg-brand-navy rounded-lg appearance-none cursor-pointer accent-brand-accent" oninput="calculateROI()">
+                                    <div class="flex justify-between text-xs text-brand-dim mt-2">
+                                        <span>1/week</span>
+                                        <span>50/week</span>
+                                    </div>
+                                    <p class="text-xs text-brand-dim mt-2 italic">💡 Not sure? Check your phone: Settings → Screen Time → Phone App. Most businesses: 3-8/week.</p>
+                                </div>
+
+                                <!-- Close Rate -->
+                                <div>
+                                    <label class="flex justify-between text-sm font-bold text-white mb-2">
+                                        <span>Your Normal Close Rate</span>
+                                        <span id="rate-display" class="text-brand-accent bg-brand-accent/10 px-3 py-1.5 rounded font-mono">35%</span>
+                                    </label>
+                                    <input type="range" id="close-rate" value="35" min="10" max="100" class="w-full h-2 bg-brand-navy rounded-lg appearance-none cursor-pointer accent-brand-accent" oninput="calculateROI()">
+                                    <div class="flex justify-between text-xs text-brand-dim mt-2">
+                                        <span>10%</span>
+                                        <span>100%</span>
+                                    </div>
+                                    <p class="text-xs text-brand-dim mt-2 italic">💡 For calls you DO answer and quote. Industry average: 25-40%.</p>
+                                </div>
+                            </div>
+
+                            <!-- Results Panel -->
+                            <div class="space-y-6">
+                                <div class="text-center bg-gradient-to-br from-red-500/10 to-brand-danger/10 border-2 border-red-500/30 rounded-2xl p-8 relative overflow-hidden">
+                                    <div class="absolute top-0 left-0 w-full h-1 bg-red-500"></div>
+                                    <div class="text-xs text-red-400 uppercase tracking-wider mb-3 font-bold">⚠️ Estimated Annual Loss</div>
+                                    <div class="text-6xl md:text-7xl font-extrabold text-white mb-3 tracking-tight" id="annual-loss">£7,280</div>
+                                    <p class="text-brand-light text-sm mb-6 leading-relaxed">That's <span id="monthly-loss" class="text-brand-accent font-bold">£607/month</span> in revenue you're <strong>already losing</strong> to competitors who text back faster.</p>
+                                    <a href="https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit" target="_blank" class="bg-brand-success text-white px-8 py-4 rounded-xl font-bold hover:bg-green-600 transition-all w-full shadow-glow text-lg block text-center group">
+                                        Stop The Bleeding <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                                    </a>
+                                </div>
+
+                                <!-- The Solution -->
+                                <div class="bg-brand-navy/80 border border-brand-accent/30 rounded-xl p-6">
+                                    <h3 class="text-white font-bold mb-3 flex items-center gap-2">
+                                        <i class="fa-solid fa-check-circle text-brand-accent"></i>
+                                        How We Fix This
+                                    </h3>
+                                    <ul class="space-y-3 text-sm text-brand-light">
+                                        <li class="flex gap-3">
+                                            <i class="fa-solid fa-bolt text-brand-accent mt-0.5"></i>
+                                            <span><strong class="text-white">Instant SMS Response:</strong> Missed call triggers auto-text in &lt;30 seconds: "Hey! Sorry I missed you. On site till 3pm. How can I help?"</span>
+                                        </li>
+                                        <li class="flex gap-3">
+                                            <i class="fa-solid fa-bolt text-brand-accent mt-0.5"></i>
+                                            <span><strong class="text-white">Keeps Them Engaged:</strong> They don't call competitor #2 because they know you're responsive.</span>
+                                        </li>
+                                        <li class="flex gap-3">
+                                            <i class="fa-solid fa-bolt text-brand-accent mt-0.5"></i>
+                                            <span><strong class="text-white">64% Recovery Rate:</strong> 2 out of every 3 missed calls turn into booked jobs.</span>
+                                        </li>
+                                    </ul>
+                                    <div class="mt-4 pt-4 border-t border-white/10">
+                                        <div class="flex justify-between items-center text-xs">
+                                            <span class="text-brand-dim">Investment:</span>
+                                            <span class="text-white font-bold">£99/month</span>
+                                        </div>
+                                        <div class="flex justify-between items-center text-xs mt-1">
+                                            <span class="text-brand-dim">Your Potential Recovery:</span>
+                                            <span class="text-brand-accent font-bold" id="recovery-display">£4,659/year</span>
+                                        </div>
+                                        <div class="flex justify-between items-center text-sm mt-3 pt-3 border-t border-brand-accent/20">
+                                            <span class="text-white font-bold">ROI:</span>
+                                            <span class="text-brand-accent font-bold text-lg" id="roi-display">47:1</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Real Example -->
+                        <div class="mt-12 pt-8 border-t border-white/10">
+                            <div class="max-w-3xl mx-auto">
+                                <div class="bg-brand-accent/5 border border-brand-accent/20 rounded-xl p-6">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-12 h-12 rounded-full bg-brand-accent/20 flex items-center justify-center flex-shrink-0">
+                                            <i class="fa-solid fa-quote-left text-brand-accent"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-brand-light text-sm leading-relaxed mb-3"><em>"I didn't think I was missing that many calls. After tracking for a week, it was 7-8 per week. The system paid for itself in <strong class="text-white">the first 3 days</strong> when I closed a £2,400 job from a call I would have missed."</em></p>
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-xs">JM</div>
+                                                <div>
+                                                    <div class="text-white font-bold text-sm">James Mitchell</div>
+                                                    <div class="text-brand-dim text-xs">JM Plumbing & Heating, Nottingham</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Why This Matters -->
+            <section class="py-16 bg-brand-navy/50">
+                <div class="max-w-6xl mx-auto px-4">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="glass-panel rounded-xl p-6 text-center">
+                            <div class="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fa-solid fa-phone-slash text-red-400 text-2xl"></i>
+                            </div>
+                            <h3 class="text-white font-bold mb-2">The Hidden Cost</h3>
+                            <p class="text-brand-dim text-sm">Every missed call is a potential customer who needed you RIGHT NOW. While you're busy, they're calling your competitors.</p>
+                        </div>
+                        
+                        <div class="glass-panel rounded-xl p-6 text-center">
+                            <div class="w-16 h-16 bg-brand-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fa-solid fa-clock-rotate-left text-brand-accent text-2xl"></i>
+                            </div>
+                            <h3 class="text-white font-bold mb-2">The Reality</h3>
+                            <p class="text-brand-dim text-sm">By the time you call back (even 2 hours later), 78% have already booked someone else. Speed wins in service businesses.</p>
+                        </div>
+                        
+                        <div class="glass-panel rounded-xl p-6 text-center">
+                            <div class="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fa-solid fa-mobile-screen-button text-green-400 text-2xl"></i>
+                            </div>
+                            <h3 class="text-white font-bold mb-2">The Solution</h3>
+                            <p class="text-brand-dim text-sm">Auto-text in 30 seconds. Keeps them engaged. Books the job. Works 24/7. Recovers 64% of calls you would have lost.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Industry Examples -->
+                    <div class="mt-12 max-w-4xl mx-auto">
+                        <h3 class="text-white font-bold text-center mb-6">Real Numbers from Different Industries:</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="bg-brand-panel border border-white/10 rounded-lg p-4">
+                                <div class="text-brand-accent text-xs font-bold mb-2 uppercase">Trades (Plumbers, Electricians)</div>
+                                <div class="text-sm text-brand-light mb-1">Avg job: £600-£1,200</div>
+                                <div class="text-sm text-brand-light mb-1">Missed: 5-10/week</div>
+                                <div class="text-sm text-white font-bold">Annual loss: £15k-£30k</div>
+                            </div>
+                            
+                            <div class="bg-brand-panel border border-white/10 rounded-lg p-4">
+                                <div class="text-brand-accent text-xs font-bold mb-2 uppercase">Healthcare (Dentists, Physio)</div>
+                                <div class="text-sm text-brand-light mb-1">Avg appointment: £80-£200</div>
+                                <div class="text-sm text-brand-light mb-1">Missed: 8-15/week</div>
+                                <div class="text-sm text-white font-bold">Annual loss: £5k-£12k</div>
+                            </div>
+                            
+                            <div class="bg-brand-panel border border-white/10 rounded-lg p-4">
+                                <div class="text-brand-accent text-xs font-bold mb-2 uppercase">Professional Services</div>
+                                <div class="text-sm text-brand-light mb-1">Avg project: £1,500-£5,000</div>
+                                <div class="text-sm text-brand-light mb-1">Missed: 3-6/week</div>
+                                <div class="text-sm text-white font-bold">Annual loss: £20k-£50k</div>
+                            </div>
+                        </div>
+                        <p class="text-center text-brand-dim text-sm mt-6 italic">These are conservative estimates. Your actual loss could be higher.</p>
                     </div>
                 </div>
             </section>
@@ -742,20 +928,52 @@
             const missed = parseFloat(document.getElementById('missed-calls').value);
             const rate = parseFloat(document.getElementById('close-rate').value);
             
+            // Update displays
             document.getElementById('val-display').innerText = `£${val}`;
             document.getElementById('calls-display').innerText = missed;
             document.getElementById('rate-display').innerText = `${rate}%`;
             
-            const loss = Math.round((val * missed * 52) * (rate / 100));
-            document.getElementById('annual-loss').innerText = `£${loss.toLocaleString()}`;
+            // Calculate total annual loss
+            const annualLoss = Math.round((val * missed * 52) * (rate / 100));
+            document.getElementById('annual-loss').innerText = `£${annualLoss.toLocaleString()}`;
+            
+            // Calculate monthly loss
+            const monthlyLoss = Math.round(annualLoss / 12);
+            const monthlyEl = document.getElementById('monthly-loss');
+            if (monthlyEl) {
+                monthlyEl.innerText = `£${monthlyLoss.toLocaleString()}/month`;
+            }
+            
+            // Calculate recovery (64% of missed calls recovered)
+            const recoveryRate = 0.64;
+            const potentialRecovery = Math.round(annualLoss * recoveryRate);
+            const recoveryEl = document.getElementById('recovery-display');
+            if (recoveryEl) {
+                recoveryEl.innerText = `£${potentialRecovery.toLocaleString()}/year`;
+            }
+            
+            // Calculate ROI (recovery / annual cost)
+            const annualCost = 99 * 12; // £99/month * 12 months
+            const roi = Math.round(potentialRecovery / annualCost);
+            const roiEl = document.getElementById('roi-display');
+            if (roiEl) {
+                roiEl.innerText = roi + ':1';
+            }
             
             // Track high-value calculations
-            if (loss > 30000) {
-                trackEvent('high_value_calculation', { annual_loss: loss });
+            if (annualLoss > 30000) {
+                trackEvent('high_value_calculation', { 
+                    annual_loss: annualLoss,
+                    potential_recovery: potentialRecovery,
+                    roi: roi
+                });
             }
             
             // Store in session for demo call context
-            sessionStorage.setItem('calculated_loss', loss);
+            sessionStorage.setItem('calculated_loss', annualLoss);
+            sessionStorage.setItem('job_value', val);
+            sessionStorage.setItem('missed_calls', missed);
+            sessionStorage.setItem('close_rate', rate);
         }
         document.getElementById('modal-form').addEventListener('submit', async function(e) {
             e.preventDefault();
