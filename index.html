@@ -295,8 +295,11 @@
                         <div class="bg-brand-accent/10 p-3 rounded-lg text-brand-accent"><i class="fa-solid fa-layer-group text-2xl"></i></div>
                         <div><div class="text-xs text-brand-dim uppercase tracking-wider">Current Stack</div><div class="text-white font-bold"><span id="stack-count">0</span> Modules Selected</div></div>
                     </div>
-                    <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-4">
                         <div class="text-right hidden md:block"><div class="text-xs text-brand-dim">Estimated Investment</div><div class="text-lg text-white font-mono font-bold" id="stack-total">£0/mo</div></div>
+                        <button onclick="clearStack()" class="bg-white/10 hover:bg-red-500/20 text-white px-4 py-3 rounded-lg font-medium transition-colors border border-white/10 hover:border-red-500">
+                            <i class="fa-solid fa-trash-can mr-2"></i>Clear All
+                        </button>
                         <button onclick="openModal('Custom Bundle Request')" class="bg-brand-accent text-brand-dark px-8 py-3 rounded-lg font-bold hover:bg-white transition-colors shadow-glow">Continue to Engineer <i class="fa-solid fa-arrow-right ml-2"></i></button>
                     </div>
                 </div>
@@ -400,7 +403,8 @@
                     <div class="flex justify-between items-start mb-4 pointer-events-none"><span class="text-[10px] font-bold text-brand-dim bg-white/5 px-2 py-1 rounded">${tool.cat}</span>${isSelected ? '<i class="fa-solid fa-circle-check text-brand-success"></i>' : '<i class="fa-regular fa-circle text-brand-dim group-hover:text-white"></i>'}</div>
                     <h4 class="text-white font-bold text-xl mb-2 pointer-events-none">${tool.name}</h4>
                     <p class="text-brand-dim text-sm mb-6 line-clamp-2 pointer-events-none">${tool.desc}</p>
-                    <div class="flex items-center justify-between mt-auto border-t border-white/5 pt-4"><span class="text-brand-accent font-mono font-bold">£${price}<span class="text-xs text-brand-dim">/mo</span></span><button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent">Specs <i class="fa-solid fa-arrow-right"></i></button></div>`;
+                    <div class="flex items-center justify-between mt-auto border-t border-white/5 pt-4"><span class="text-brand-accent font-mono font-bold">£${price}<span class="text-xs text-brand-dim">/mo</span></span><button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent">Specs <i class="fa-solid fa-arrow-right"></i></button></div>
+                    ${isSelected ? '<div class="mt-3 text-center text-xs text-brand-success font-medium pointer-events-none"><i class="fa-solid fa-check mr-1"></i>Added • Click to remove</div>' : '<div class="mt-3 text-center text-xs text-brand-dim group-hover:text-white pointer-events-none">Click to add to stack</div>'}`;
                 el.onclick = () => toggleTool(tool.id);
                 fragment.appendChild(el);
             });
@@ -453,7 +457,8 @@
                     <div class="flex justify-between items-start mb-4 pointer-events-none"><span class="text-[10px] font-bold text-brand-dim bg-white/5 px-2 py-1 rounded">${tool.cat}</span>${isSelected ? '<i class="fa-solid fa-circle-check text-brand-success"></i>' : '<i class="fa-regular fa-circle text-brand-dim group-hover:text-white"></i>'}</div>
                     <h4 class="text-white font-bold text-xl mb-2 pointer-events-none">${tool.name}</h4>
                     <p class="text-brand-dim text-sm mb-6 line-clamp-2 pointer-events-none">${tool.desc}</p>
-                    <div class="flex items-center justify-between mt-auto border-t border-white/5 pt-4"><span class="text-brand-accent font-mono font-bold">£${price}<span class="text-xs text-brand-dim">/mo</span></span><button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent">Specs <i class="fa-solid fa-arrow-right"></i></button></div>`;
+                    <div class="flex items-center justify-between mt-auto border-t border-white/5 pt-4"><span class="text-brand-accent font-mono font-bold">£${price}<span class="text-xs text-brand-dim">/mo</span></span><button onclick="event.stopPropagation(); openToolModal('${tool.id}', event)" class="text-xs text-white hover:text-brand-accent">Specs <i class="fa-solid fa-arrow-right"></i></button></div>
+                    ${isSelected ? '<div class="mt-3 text-center text-xs text-brand-success font-medium pointer-events-none"><i class="fa-solid fa-check mr-1"></i>Added • Click to remove</div>' : '<div class="mt-3 text-center text-xs text-brand-dim group-hover:text-white pointer-events-none">Click to add to stack</div>'}`;
                     el.onclick = () => toggleTool(tool.id);
                     fragment.appendChild(el);
                 });
@@ -490,6 +495,16 @@
             }
         }
 
+        function clearStack() {
+            if (cart.length === 0) return;
+            if (confirm(`Remove all ${cart.length} tools from your stack?`)) {
+                cart = [];
+                localStorage.setItem('vexel_cart', JSON.stringify(cart));
+                updateStackBar();
+                renderMarketplace(currentFilter);
+            }
+        }
+
         // Other Utils
         function openToolModal(id, e) {
             if(e) e.stopPropagation();
@@ -501,7 +516,8 @@
             document.getElementById('tm-price').innerText = `£${tool.price}/mo`;
             const btn = document.getElementById('tm-add');
             const isSelected = cart.some(c => c.id === tool.id);
-            btn.innerHTML = isSelected ? "Remove" : "Add To Stack";
+            btn.innerHTML = isSelected ? '<i class="fa-solid fa-xmark mr-2"></i>Remove from Stack' : '<i class="fa-solid fa-plus mr-2"></i>Add to Stack';
+            btn.className = isSelected ? 'bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-bold transition-colors' : 'bg-brand-accent hover:bg-yellow-300 text-brand-dark px-6 py-3 rounded-lg font-bold transition-colors';
             btn.onclick = () => { toggleTool(id); closeToolModal(); };
             document.getElementById('tm-request-only').onclick = () => { closeToolModal(); openModal(`Single Tool: ${tool.name}`); }
             document.getElementById('tool-modal').classList.remove('hidden');
