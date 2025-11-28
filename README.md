@@ -40,7 +40,7 @@ python -m http.server 8000
 **Option C: Quick View**
 - Double-click `index.html` (some features may not work)
 
-**📖 Full guide:** See [LOCAL_DEVELOPMENT.md](LOCAL_DEVELOPMENT.md)
+**📖 Full guide:** See [LOCAL_DEVELOPMENT.md](docs/LOCAL_DEVELOPMENT.md)
 
 ### 2. **Browse Tools**
 Once server is running:
@@ -53,7 +53,7 @@ Once server is running:
 export GEMINI_API_KEY=your_key_here
 
 # Run the AI architect
-python vexel_architect.py
+python scripts/vexel_architect.py
 ```
 
 ---
@@ -74,7 +74,7 @@ Your site is already configured for GitHub Pages! Just enable it:
 
 **✅ Auto-deploys on every git push - no manual steps needed!**
 
-**📖 Full guide:** See [FREE_HOSTING_SETUP.md](FREE_HOSTING_SETUP.md) for:
+**📖 Full guide:** See [FREE_HOSTING_SETUP.md](docs/FREE_HOSTING_SETUP.md) for:
 - GitHub Pages setup (detailed)
 - Vercel alternative (also free)
 - Cloudflare Pages option
@@ -89,27 +89,42 @@ Your site is already configured for GitHub Pages! Just enable it:
 Vexel project/
 │
 ├── index.html                          # Main website (production-ready)
-├── vexel_architect.py                  # AI tool generator (Gemini)
-├── vexel_prime.py                      # Local GPU tool generator
+├── README.md                           # You are here
+├── PROJECT_STRUCTURE.md                # 📋 Detailed folder guide
 │
-├── tools/                              # All automation tools
-│   ├── index.html                      # Tools directory/catalog
-│   ├── CATALOG.md                      # Complete 150-tool specs
-│   ├── missed_call_bot.html            # Core tool #1
-│   ├── review_engine.html              # Core tool #2
-│   ├── unified_inbox.html              # Core tool #3
-│   ├── ai_receptionist.html            # Core tool #4
-│   ├── database_reactivator.html       # Core tool #5
-│   ├── invoice_generator.html          # Business tool
-│   ├── appointment_scheduler.html      # Operations tool
-│   ├── ... (21 total built tools)
-│   └── ... (129+ cataloged for build)
+├── 📁 docs/                            # All documentation (11 files)
+│   ├── GO_TO_MARKET_STRATEGY.md
+│   ├── SCALING_OPERATIONS_PLAYBOOK.md
+│   ├── MARKETING_EXECUTION_PLAN.md
+│   ├── FREE_HOSTING_SETUP.md
+│   └── ... (see docs/README.md)
 │
-├── GO_TO_MARKET_STRATEGY.md           # Marketing & sales plan
-├── SCALING_OPERATIONS_PLAYBOOK.md     # Operations manual
-├── PROJECT_SUMMARY.md                 # This build's completion report
-└── README.md                          # You are here
+├── 📁 scripts/                         # Python utility scripts
+│   ├── vexel_architect.py              # AI tool generator (Gemini)
+│   ├── vexel_prime.py                  # Local GPU generator
+│   └── README.md
+│
+├── 📁 tools/                           # 150+ business tools
+│   ├── index.html                      # Tool browser
+│   ├── CATALOG.md                      # Complete specs
+│   ├── marketing_tools/                # 30+ marketing tools
+│   └── [21 built tools].html
+│
+├── 📁 ai_agent/                        # AI Growth Agent
+│   ├── vexel_agent.py                  # Main agent
+│   ├── linkedin_importer.py            # ✅ Working importer
+│   ├── auto_runner.py                  # Content generator
+│   └── README.md
+│
+├── 📁 marketing_assets/                # Ready-to-use content
+│   ├── READY_TO_POST_CONTENT.md
+│   └── scheduled_posts.json
+│
+└── 📁 .github/workflows/               # Auto-deploy config
+    └── deploy.yml
 ```
+
+**📖 See [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) for complete details**
 
 ---
 
@@ -146,24 +161,14 @@ Vexel project/
 
 ## 📚 DOCUMENTATION
 
-### For Strategy & Business:
-- **[GO_TO_MARKET_STRATEGY.md](GO_TO_MARKET_STRATEGY.md)** - Complete marketing, sales, and growth plan
-  - Target: 50 clients in Year 1
-  - Channels: Local SEO + LinkedIn + Partnerships
-  - Pricing: £249-£697/month
+**📖 See [docs/](docs/) folder for all documentation**
 
-- **[SCALING_OPERATIONS_PLAYBOOK.md](SCALING_OPERATIONS_PLAYBOOK.md)** - Operations manual
-  - Tech stack setup
-  - Hiring roadmap
-  - Customer success systems
-  - Financial models
-
-### For Development:
+### Quick Links:
+- **[docs/GO_TO_MARKET_STRATEGY.md](docs/GO_TO_MARKET_STRATEGY.md)** - Complete marketing, sales, and growth plan
+- **[docs/SCALING_OPERATIONS_PLAYBOOK.md](docs/SCALING_OPERATIONS_PLAYBOOK.md)** - Operations manual
+- **[docs/MARKETING_EXECUTION_PLAN.md](docs/MARKETING_EXECUTION_PLAN.md)** - 30-day marketing plan
 - **[tools/CATALOG.md](tools/CATALOG.md)** - Complete specifications for all 150 tools
-- **Python files** - Comments explain AI tool generation workflow
-
-### For Overview:
-- **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)** - Detailed completion report
+- **[docs/PROJECT_SUMMARY.md](docs/PROJECT_SUMMARY.md)** - Detailed completion report
 
 ---
 
@@ -243,7 +248,7 @@ Vexel project/
 - [ ] Launch referral program
 - [ ] Book 5+ demos for Month 2
 
-**Detailed plan in [GO_TO_MARKET_STRATEGY.md](GO_TO_MARKET_STRATEGY.md)**
+**Detailed plan in [docs/GO_TO_MARKET_STRATEGY.md](docs/GO_TO_MARKET_STRATEGY.md)**
 
 ---
 
@@ -256,7 +261,7 @@ Vexel project/
 export GEMINI_API_KEY=your_actual_key
 
 # 2. Run the architect
-python vexel_architect.py
+python scripts/vexel_architect.py
 
 # 3. Use the "Tool Fabricator" tab
 # Enter tool name: "Customer Feedback Widget"
@@ -270,7 +275,7 @@ python vexel_architect.py
 
 ```bash
 # Requires: LM Studio running on port 1234
-python vexel_prime.py
+python scripts/vexel_prime.py
 
 # Use the chat interface to request tool builds
 ```
@@ -312,15 +317,15 @@ python vexel_prime.py
 - ✅ £5k MRR
 - ✅ £10k month
 
-**Dashboard template in [SCALING_OPERATIONS_PLAYBOOK.md](SCALING_OPERATIONS_PLAYBOOK.md)**
+**Dashboard template in [docs/SCALING_OPERATIONS_PLAYBOOK.md](docs/SCALING_OPERATIONS_PLAYBOOK.md)**
 
 ---
 
 ## 💬 SUPPORT
 
 **Documentation:**
-- Strategy questions → [GO_TO_MARKET_STRATEGY.md](GO_TO_MARKET_STRATEGY.md)
-- Operations questions → [SCALING_OPERATIONS_PLAYBOOK.md](SCALING_OPERATIONS_PLAYBOOK.md)
+- Strategy questions → [docs/GO_TO_MARKET_STRATEGY.md](docs/GO_TO_MARKET_STRATEGY.md)
+- Operations questions → [docs/SCALING_OPERATIONS_PLAYBOOK.md](docs/SCALING_OPERATIONS_PLAYBOOK.md)
 - Tool specs → [tools/CATALOG.md](tools/CATALOG.md)
 
 **Contact:**
