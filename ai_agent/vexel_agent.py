@@ -18,6 +18,16 @@ from pathlib import Path
 from typing import List, Dict, Optional
 import time
 
+# Load environment variables from .env file
+try:
+    from dotenv import load_dotenv
+    env_path = Path(__file__).parent / ".env"
+    if env_path.exists():
+        load_dotenv(env_path)
+        print("✅ Loaded API key from .env file")
+except ImportError:
+    pass  # dotenv not installed, will use system env vars
+
 # Try importing optional dependencies
 try:
     from openai import OpenAI

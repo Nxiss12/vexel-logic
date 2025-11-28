@@ -4,6 +4,12 @@
 .env
 .env.local
 .env.*.local
+ai_agent/.env
+ai_agent/*.db
+ai_agent/automation_log.json
+ai_agent/daily_tasks_*.md
+ai_agent/email_campaign.md
+ai_agent/testimonial_posts.md
 
 # Python
 __pycache__/
