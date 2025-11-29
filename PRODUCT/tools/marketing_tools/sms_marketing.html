@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS Marketing | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6"><h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-comment-sms text-brand-accent"></i>SMS Marketing</h1></div>
+        <div class="grid lg:grid-cols-2 gap-6">
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Compose SMS Campaign</h3>
+                <div class="space-y-3">
+                    <input type="text" placeholder="Campaign Name" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                    <select class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                        <option>All Subscribers (2,847)</option>
+                        <option>Segment: Recent Customers (892)</option>
+                        <option>Segment: VIP (234)</option>
+                    </select>
+                    <textarea id="sms-text" rows="4" maxlength="160" placeholder="Message (160 char limit)" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white"></textarea>
+                    <div class="flex justify-between text-xs text-gray-400"><span>Characters: <span id="char-count">0</span>/160</span><span>Est. cost: £<span id="cost">0.00</span></span></div>
+                    <input type="datetime-local" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                    <button class="w-full bg-brand-accent text-black font-bold py-3 rounded-lg"><i class="fa-solid fa-paper-plane mr-2"></i>Schedule Campaign</button>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <div class="glass-panel rounded-xl p-6">
+                    <h3 class="text-white font-bold text-sm mb-3">Campaign Stats</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between"><span class="text-gray-400">Sent this month</span><span class="text-white">4,890</span></div>
+                        <div class="flex justify-between"><span class="text-gray-400">Delivered</span><span class="text-white">4,823 (98.6%)</span></div>
+                        <div class="flex justify-between"><span class="text-gray-400">Click rate</span><span class="text-brand-accent">18.4%</span></div>
+                    </div>
+                </div>
+                <div class="glass-panel rounded-xl p-6">
+                    <h3 class="text-white font-bold text-sm mb-3">Preview</h3>
+                    <div class="bg-white rounded-lg p-4">
+                        <div class="border-b pb-2 mb-2 text-gray-500 text-xs">From: YourBusiness</div>
+                        <div class="text-gray-800 text-sm" id="preview">Your message will appear here...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('sms-text').addEventListener('input',function(){
+            const len=this.value.length;
+            document.getElementById('char-count').textContent=len;
+            document.getElementById('cost').textContent=(len>0?(2847*0.05).toFixed(2):'0.00');
+            document.getElementById('preview').textContent=this.value||'Your message will appear here...';
+        });
+    </script>
+</body>
+</html>
+
+
+

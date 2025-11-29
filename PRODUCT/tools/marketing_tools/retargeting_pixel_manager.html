@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retargeting Pixel Manager | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-5xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-crosshairs text-brand-accent"></i>Retargeting Pixel Manager</h1>
+        </div>
+        <div class="glass-panel rounded-xl p-6 mb-6">
+            <h3 class="text-white font-bold mb-4">Installed Pixels</h3>
+            <div class="space-y-3">
+                <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-4 flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-brands fa-facebook text-blue-500 text-2xl"></i>
+                        <div><div class="text-white font-medium">Facebook Pixel</div><div class="text-gray-400 text-xs">ID: 1234567890</div></div>
+                    </div>
+                    <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded text-sm">✓ Active</span>
+                </div>
+                <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-4 flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-brands fa-google text-red-500 text-2xl"></i>
+                        <div><div class="text-white font-medium">Google Ads Tag</div><div class="text-gray-400 text-xs">ID: G-XXXXXXXXXX</div></div>
+                    </div>
+                    <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded text-sm">✓ Active</span>
+                </div>
+            </div>
+        </div>
+        <div class="glass-panel rounded-xl p-6">
+            <h3 class="text-white font-bold mb-4">Pixel Performance</h3>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div><div class="text-gray-400 text-xs mb-1">Visitors Tracked</div><div class="text-2xl font-bold text-white">12,847</div></div>
+                <div><div class="text-gray-400 text-xs mb-1">Retargeting Pool</div><div class="text-2xl font-bold text-white">3,892</div></div>
+                <div><div class="text-gray-400 text-xs mb-1">Retarget Cost</div><div class="text-2xl font-bold text-brand-accent">£0.42</div></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

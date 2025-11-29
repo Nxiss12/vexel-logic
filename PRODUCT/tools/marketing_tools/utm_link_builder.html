@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTM Link Builder | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-4xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6"><h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-link text-brand-accent"></i>UTM Link Builder</h1></div>
+        <div class="glass-panel rounded-xl p-6">
+            <h3 class="text-white font-bold mb-4">Build Tracking URL</h3>
+            <div class="space-y-3">
+                <div><label class="text-sm text-gray-400 block mb-2">Website URL</label><input type="url" id="base-url" placeholder="https://yourwebsite.com/page" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white"></div>
+                <div class="grid md:grid-cols-2 gap-3">
+                    <div><label class="text-sm text-gray-400 block mb-2">Source</label><input type="text" id="source" placeholder="facebook" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white"></div>
+                    <div><label class="text-sm text-gray-400 block mb-2">Medium</label><input type="text" id="medium" placeholder="cpc" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white"></div>
+                </div>
+                <div><label class="text-sm text-gray-400 block mb-2">Campaign Name</label><input type="text" id="campaign" placeholder="winter_sale_2024" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white"></div>
+                <button onclick="buildUTM()" class="w-full bg-brand-accent text-black font-bold py-3 rounded-lg"><i class="fa-solid fa-magic-wand-sparkles mr-2"></i>Generate Link</button>
+            </div>
+            <div id="result" class="hidden mt-6 p-4 bg-gray-900 rounded-lg border border-brand-accent/30">
+                <div class="text-sm text-gray-400 mb-2">Your Tracking URL:</div>
+                <div class="flex gap-2">
+                    <input type="text" id="utm-url" readonly class="flex-1 bg-gray-800 border border-gray-700 rounded p-2 text-white text-sm font-mono">
+                    <button onclick="copyURL()" class="bg-brand-accent text-black px-4 rounded font-bold"><i class="fa-solid fa-copy"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function buildUTM(){
+            const base=document.getElementById('base-url').value;
+            const source=document.getElementById('source').value;
+            const medium=document.getElementById('medium').value;
+            const campaign=document.getElementById('campaign').value;
+            if(!base||!source||!medium||!campaign){alert('Please fill all fields');return;}
+            const utm=`${base}?utm_source=${source}&utm_medium=${medium}&utm_campaign=${campaign}`;
+            document.getElementById('utm-url').value=utm;
+            document.getElementById('result').classList.remove('hidden');
+        }
+        function copyURL(){navigator.clipboard.writeText(document.getElementById('utm-url').value);alert('✓ Copied to clipboard!');}
+    </script>
+</body>
+</html>
+
+
+

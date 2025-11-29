@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Press Release Builder | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-5xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-newspaper text-brand-accent"></i>Press Release Builder</h1>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-6">
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Press Release Details</h3>
+                <div class="space-y-3">
+                    <select class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                        <option>Product Launch</option>
+                        <option>Funding Announcement</option>
+                        <option>Partnership News</option>
+                        <option>Company Milestone</option>
+                    </select>
+                    <input type="text" placeholder="Headline" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                    <textarea rows="10" placeholder="Body text..." class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white font-serif"></textarea>
+                    <input type="text" placeholder="Contact Name" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                    <button class="w-full bg-brand-accent text-black font-bold py-3 rounded-lg"><i class="fa-solid fa-paper-plane mr-2"></i>Distribute to 500+ Outlets</button>
+                </div>
+            </div>
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Preview</h3>
+                <div class="bg-white rounded-lg p-6 text-gray-800 min-h-96">
+                    <div class="text-xs text-gray-500 mb-4">FOR IMMEDIATE RELEASE</div>
+                    <h2 class="text-2xl font-bold mb-4">Your Headline Here</h2>
+                    <p class="text-sm">Your press release content will appear here...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

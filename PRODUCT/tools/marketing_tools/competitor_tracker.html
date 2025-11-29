@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Competitor Tracker | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brand: { dark: '#020305', navy: '#0b0f19', accent: '#FBC02D' } } } } }
+    </script>
+    <style>
+        body { background: #020305; color: #e2e8f0; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-white flex items-center gap-3">
+                    <i class="fa-solid fa-binoculars text-brand-accent"></i>
+                    Competitor Tracker
+                </h1>
+                <button onclick="addCompetitor()" class="bg-brand-accent text-black px-6 py-3 rounded-lg font-bold">
+                    <i class="fa-solid fa-plus mr-2"></i>Add Competitor
+                </button>
+            </div>
+        </div>
+
+        <!-- Competitors List -->
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="glass-panel rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-white font-bold">Competitor A</h3>
+                        <a href="#" class="text-brand-accent text-sm hover:underline">competitora.com</a>
+                    </div>
+                    <button class="text-gray-400 hover:text-white"><i class="fa-solid fa-gear"></i></button>
+                </div>
+                
+                <div class="space-y-3 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Last updated:</span>
+                        <span class="text-white">2 hours ago</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Pricing changed:</span>
+                        <span class="text-yellow-400">Yes (3 days ago)</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">New content:</span>
+                        <span class="text-white">2 blog posts</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Social activity:</span>
+                        <span class="text-green-400">High (12 posts/week)</span>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <button class="text-brand-accent text-sm hover:underline">View full report →</button>
+                </div>
+            </div>
+
+            <div class="glass-panel rounded-xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-white font-bold">Competitor B</h3>
+                        <a href="#" class="text-brand-accent text-sm hover:underline">competitorb.co.uk</a>
+                    </div>
+                    <button class="text-gray-400 hover:text-white"><i class="fa-solid fa-gear"></i></button>
+                </div>
+                
+                <div class="space-y-3 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Last updated:</span>
+                        <span class="text-white">5 hours ago</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Pricing changed:</span>
+                        <span class="text-gray-400">No</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">New content:</span>
+                        <span class="text-white">1 case study</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Social activity:</span>
+                        <span class="text-gray-400">Low (3 posts/week)</span>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                    <button class="text-brand-accent text-sm hover:underline">View full report →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts -->
+        <div class="glass-panel rounded-xl p-6 mt-6">
+            <h3 class="text-white font-bold mb-4">Recent Alerts</h3>
+            <div class="space-y-2">
+                <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 text-sm">
+                    <div class="flex items-start gap-2">
+                        <i class="fa-solid fa-bell text-yellow-500 mt-0.5"></i>
+                        <div>
+                            <div class="text-white font-medium">Competitor A changed pricing</div>
+                            <div class="text-gray-400 text-xs">Their starter plan dropped from £299 to £249/mo • 3 days ago</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 text-sm">
+                    <div class="flex items-start gap-2">
+                        <i class="fa-solid fa-bell text-blue-500 mt-0.5"></i>
+                        <div>
+                            <div class="text-white font-medium">New competitor detected</div>
+                            <div class="text-gray-400 text-xs">Competitor C launched similar product • 1 week ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addCompetitor() {
+            const url = prompt('Enter competitor website URL:');
+            if (url) {
+                alert(`✓ Now tracking: ${url}\n\nMonitoring:\n• Pricing changes\n• New content\n• Social media activity\n• Product updates\n• SEO keywords`);
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+

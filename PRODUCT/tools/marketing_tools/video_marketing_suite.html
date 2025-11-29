@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Marketing Suite | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-film text-brand-accent"></i>Video Marketing Suite</h1>
+                <button onclick="uploadVideo()" class="bg-brand-accent text-black px-6 py-3 rounded-lg font-bold"><i class="fa-solid fa-upload mr-2"></i>Upload Video</button>
+            </div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="glass-panel rounded-xl p-4"><div class="text-xs text-gray-400 uppercase mb-1">Total Videos</div><div class="text-3xl font-bold text-white">24</div></div>
+            <div class="glass-panel rounded-xl p-4"><div class="text-xs text-gray-400 uppercase mb-1">Total Views</div><div class="text-3xl font-bold text-white">45.2k</div></div>
+            <div class="glass-panel rounded-xl p-4"><div class="text-xs text-gray-400 uppercase mb-1">Avg Watch Time</div><div class="text-3xl font-bold text-white">2:34</div></div>
+        </div>
+        <div class="glass-panel rounded-xl p-6">
+            <h3 class="text-white font-bold mb-4">Video Library</h3>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-gray-900 rounded-lg overflow-hidden cursor-pointer hover:ring-2 ring-brand-accent">
+                    <div class="bg-gradient-to-br from-purple-600 to-blue-600 h-32 flex items-center justify-center"><i class="fa-solid fa-play text-white text-3xl"></i></div>
+                    <div class="p-3"><div class="text-white font-medium text-sm">Product Demo</div><div class="text-gray-400 text-xs">1,234 views • 65% watched</div></div>
+                </div>
+                <div class="bg-gray-900 rounded-lg overflow-hidden cursor-pointer hover:ring-2 ring-brand-accent">
+                    <div class="bg-gradient-to-br from-green-600 to-teal-600 h-32 flex items-center justify-center"><i class="fa-solid fa-play text-white text-3xl"></i></div>
+                    <div class="p-3"><div class="text-white font-medium text-sm">Customer Testimonial</div><div class="text-gray-400 text-xs">892 views • 78% watched</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>function uploadVideo(){alert('Upload video\n\nSupports:\n• MP4, MOV, AVI\n• Up to 2GB\n• Auto-transcoding\n• Auto-generate thumbnails');}</script>
+</body>
+</html>
+
+
+

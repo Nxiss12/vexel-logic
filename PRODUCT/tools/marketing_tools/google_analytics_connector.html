@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6"><h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-chart-simple text-brand-accent"></i>Analytics Dashboard</h1></div>
+        <div class="grid md:grid-cols-4 gap-4 mb-6">
+            <div class="glass-panel rounded-xl p-4"><div class="text-xs text-gray-400 uppercase mb-1">Visitors Today</div><div class="text-3xl font-bold text-white">1,247</div><div class="text-xs text-green-400 mt-1">↑ 23%</div></div>
+            <div class="glass-panel rounded-xl p-4"><div class="text-xs text-gray-400 uppercase mb-1">Page Views</div><div class="text-3xl font-bold text-white">5,892</div><div class="text-xs text-green-400 mt-1">↑ 12%</div></div>
+            <div class="glass-panel rounded-xl p-4"><div class="text-xs text-gray-400 uppercase mb-1">Avg Session</div><div class="text-3xl font-bold text-white">2:34</div><div class="text-xs text-gray-400 mt-1">minutes</div></div>
+            <div class="glass-panel rounded-xl p-4"><div class="text-xs text-gray-400 uppercase mb-1">Bounce Rate</div><div class="text-3xl font-bold text-white">42%</div><div class="text-xs text-green-400 mt-1">↓ 8%</div></div>
+        </div>
+        <div class="glass-panel rounded-xl p-6 mb-6"><h3 class="text-white font-bold mb-4">Traffic Overview</h3><canvas id="trafficChart" height="80"></canvas></div>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Top Pages</h3>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center p-2 bg-gray-900/50 rounded"><span class="text-white text-sm">/homepage</span><span class="text-brand-accent font-bold">2,347</span></div>
+                    <div class="flex justify-between items-center p-2 bg-gray-900/50 rounded"><span class="text-white text-sm">/products</span><span class="text-brand-accent font-bold">1,892</span></div>
+                    <div class="flex justify-between items-center p-2 bg-gray-900/50 rounded"><span class="text-white text-sm">/pricing</span><span class="text-brand-accent font-bold">1,456</span></div>
+                </div>
+            </div>
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Traffic Sources</h3>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center p-2 bg-gray-900/50 rounded"><span class="text-white text-sm">Direct</span><span class="text-white font-bold">42%</span></div>
+                    <div class="flex justify-between items-center p-2 bg-gray-900/50 rounded"><span class="text-white text-sm">Organic Search</span><span class="text-white font-bold">31%</span></div>
+                    <div class="flex justify-between items-center p-2 bg-gray-900/50 rounded"><span class="text-white text-sm">Social Media</span><span class="text-white font-bold">18%</span></div>
+                    <div class="flex justify-between items-center p-2 bg-gray-900/50 rounded"><span class="text-white text-sm">Referral</span><span class="text-white font-bold">9%</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        new Chart(document.getElementById('trafficChart'),{
+            type:'line',
+            data:{
+                labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+                datasets:[{label:'Visitors',data:[820,950,1050,890,1200,780,680],borderColor:'#FBC02D',tension:0.4}]
+            },
+            options:{responsive:true,plugins:{legend:{labels:{color:'#e2e8f0'}}},scales:{y:{ticks:{color:'#64748b'},grid:{color:'rgba(255,255,255,0.05)'}},x:{ticks:{color:'#64748b'},grid:{color:'rgba(255,255,255,0.05)'}}}}
+        });
+    </script>
+</body>
+</html>
+
+
+

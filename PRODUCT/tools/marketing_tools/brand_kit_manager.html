@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Kit Manager | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6"><h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-palette text-brand-accent"></i>Brand Kit Manager</h1></div>
+        <div class="grid lg:grid-cols-2 gap-6">
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Brand Colors</h3>
+                <div class="space-y-3">
+                    <div class="flex gap-3">
+                        <div class="flex-1"><input type="text" value="#FBC02D" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2 text-white text-sm font-mono"></div>
+                        <div class="w-12 h-12 rounded-lg" style="background:#FBC02D"></div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="flex-1"><input type="text" value="#020305" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2 text-white text-sm font-mono"></div>
+                        <div class="w-12 h-12 rounded-lg" style="background:#020305;border:1px solid #666"></div>
+                    </div>
+                    <button class="text-brand-accent text-sm hover:underline"><i class="fa-solid fa-plus mr-1"></i>Add Color</button>
+                </div>
+            </div>
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Brand Fonts</h3>
+                <div class="space-y-2">
+                    <div class="bg-gray-900/50 rounded p-3"><div class="text-white font-bold">Inter</div><div class="text-gray-400 text-xs">Primary Font</div></div>
+                    <div class="bg-gray-900/50 rounded p-3"><div class="text-white font-mono font-bold">JetBrains Mono</div><div class="text-gray-400 text-xs">Monospace</div></div>
+                </div>
+            </div>
+        </div>
+        <div class="glass-panel rounded-xl p-6 mt-6">
+            <h3 class="text-white font-bold mb-4">Logo Variants</h3>
+            <div class="grid grid-cols-4 gap-4">
+                <div class="bg-white rounded-lg p-4 text-center"><div class="text-gray-800 font-bold text-xl mb-2">LOGO</div><div class="text-gray-500 text-xs">Primary</div></div>
+                <div class="bg-gray-900 rounded-lg p-4 text-center"><div class="text-white font-bold text-xl mb-2">LOGO</div><div class="text-gray-400 text-xs">Dark</div></div>
+                <div class="bg-brand-accent rounded-lg p-4 text-center"><div class="text-black font-bold text-xl mb-2">LOGO</div><div class="text-black/70 text-xs">Icon</div></div>
+                <button class="border-2 border-dashed border-gray-700 rounded-lg p-4 hover:border-brand-accent/50"><i class="fa-solid fa-plus text-gray-500 text-2xl"></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

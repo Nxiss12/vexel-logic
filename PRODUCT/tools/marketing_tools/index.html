@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Tools Collection | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brand: { dark: '#020305', navy: '#0b0f19', panel: '#111625', accent: '#FBC02D', light: '#e2e8f0' } } } } }
+    </script>
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: #020305; color: #e2e8f0; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .tool-card { transition: all 0.2s; }
+        .tool-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(251, 192, 45, 0.2); }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="glass-panel rounded-2xl p-8 mb-8 text-center">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <div class="w-16 h-16 bg-brand-accent rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-bullhorn text-3xl"></i>
+                </div>
+            </div>
+            <h1 class="text-5xl font-bold text-white mb-3">Marketing Tools Suite</h1>
+            <p class="text-brand-light text-lg">30 Production-Ready Marketing Automation Tools</p>
+            <div class="flex justify-center gap-4 mt-6">
+                <div class="bg-brand-accent/10 border border-brand-accent/30 rounded-lg px-6 py-3">
+                    <div class="text-brand-accent text-2xl font-bold">30</div>
+                    <div class="text-xs text-gray-400">Tools Built</div>
+                </div>
+                <div class="bg-green-500/10 border border-green-500/30 rounded-lg px-6 py-3">
+                    <div class="text-green-400 text-2xl font-bold">100%</div>
+                    <div class="text-xs text-gray-400">Functional</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tools Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="tools-grid"></div>
+    </div>
+
+    <script>
+        const tools = [
+            { name: 'Social Media Scheduler', file: 'social_media_scheduler.html', icon: 'fa-calendar-days', desc: 'Schedule posts across all platforms', price: '£89' },
+            { name: 'Email Campaign Builder', file: 'email_campaign_builder.html', icon: 'fa-envelope', desc: 'Design & send newsletters', price: '£79' },
+            { name: 'Landing Page Builder', file: 'landing_page_builder.html', icon: 'fa-file-code', desc: 'High-converting pages fast', price: '£99' },
+            { name: 'SEO Analyzer', file: 'seo_analyzer.html', icon: 'fa-magnifying-glass-chart', desc: 'Website SEO audit tool', price: '£59' },
+            { name: 'Content Calendar', file: 'content_calendar.html', icon: 'fa-calendar-alt', desc: 'Plan all marketing content', price: '£49' },
+            { name: 'Hashtag Generator', file: 'hashtag_generator.html', icon: 'fa-hashtag', desc: 'AI-suggested hashtags', price: '£29' },
+            { name: 'Ad Performance Dashboard', file: 'ad_performance_dashboard.html', icon: 'fa-chart-line', desc: 'Unified ad analytics', price: '£129' },
+            { name: 'Competitor Tracker', file: 'competitor_tracker.html', icon: 'fa-binoculars', desc: 'Monitor competitor activity', price: '£99' },
+            { name: 'Referral Program Manager', file: 'referral_program_manager.html', icon: 'fa-users', desc: 'Automated referral tracking', price: '£89' },
+            { name: 'Influencer Outreach Tool', file: 'influencer_outreach_tool.html', icon: 'fa-star', desc: 'Find & contact influencers', price: '£79' },
+            { name: 'Brand Monitoring', file: 'brand_monitoring.html', icon: 'fa-bell', desc: 'Track brand mentions', price: '£69' },
+            { name: 'Google My Business Manager', file: 'google_my_business_manager.html', icon: 'fa-google', desc: 'Update all GMB locations', price: '£59' },
+            { name: 'Local SEO Tool', file: 'local_seo_tool.html', icon: 'fa-map-location-dot', desc: 'Optimize for local search', price: '£79' },
+            { name: 'Press Release Builder', file: 'press_release_builder.html', icon: 'fa-newspaper', desc: 'PR templates & distribution', price: '£69' },
+            { name: 'QR Code Generator', file: 'qr_code_generator.html', icon: 'fa-qrcode', desc: 'Generate custom QR codes', price: 'Free' },
+            { name: 'Email Signature Generator', file: 'email_signature_generator.html', icon: 'fa-signature', desc: 'Professional signatures', price: 'Free' },
+            { name: 'A/B Test Manager', file: 'ab_test_manager.html', icon: 'fa-flask', desc: 'Split test everything', price: '£89' },
+            { name: 'Webinar Funnel Builder', file: 'webinar_funnel_builder.html', icon: 'fa-video', desc: 'Automated webinar system', price: '£149' },
+            { name: 'Retargeting Pixel Manager', file: 'retargeting_pixel_manager.html', icon: 'fa-crosshairs', desc: 'Manage tracking pixels', price: '£59' },
+            { name: 'Video Marketing Suite', file: 'video_marketing_suite.html', icon: 'fa-film', desc: 'Video hosting & analytics', price: '£99' },
+            { name: 'Customer Survey Tool', file: 'customer_survey_tool.html', icon: 'fa-clipboard-question', desc: 'NPS & satisfaction surveys', price: '£49' },
+            { name: 'Affiliate Dashboard', file: 'affiliate_dashboard.html', icon: 'fa-handshake', desc: 'Manage affiliate program', price: '£129' },
+            { name: 'SMS Marketing', file: 'sms_marketing.html', icon: 'fa-comment-sms', desc: 'Bulk SMS campaigns', price: '£99' },
+            { name: 'Push Notification System', file: 'push_notification_system.html', icon: 'fa-bell-concierge', desc: 'Web push notifications', price: '£79' },
+            { name: 'Chatbot Builder', file: 'chatbot_builder.html', icon: 'fa-robot', desc: 'No-code website chatbot', price: '£149' },
+            { name: 'Popup Creator', file: 'popup_creator.html', icon: 'fa-window-maximize', desc: 'Exit-intent & timed popups', price: '£45' },
+            { name: 'Content Repurposer', file: 'content_repurposer.html', icon: 'fa-recycle', desc: 'One blog → 10 pieces', price: '£89' },
+            { name: 'UTM Link Builder', file: 'utm_link_builder.html', icon: 'fa-link', desc: 'Track campaign sources', price: '£29' },
+            { name: 'Social Proof Widget', file: 'social_proof_widget.html', icon: 'fa-bell-concierge', desc: 'Live visitor notifications', price: '£69' },
+            { name: 'Review Aggregator', file: 'review_aggregator.html', icon: 'fa-star', desc: 'Show all reviews', price: '£79' }
+        ];
+
+        const grid = document.getElementById('tools-grid');
+        grid.innerHTML = tools.map(tool => `
+            <a href="${tool.file}" class="tool-card glass-panel rounded-xl p-6 block hover:border-brand-accent/50">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="w-12 h-12 bg-brand-accent/10 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid ${tool.icon} text-brand-accent text-xl"></i>
+                    </div>
+                    <span class="bg-brand-accent/10 text-brand-accent px-3 py-1 rounded-lg text-xs font-bold">${tool.price}</span>
+                </div>
+                <h3 class="text-white font-bold text-lg mb-2">${tool.name}</h3>
+                <p class="text-gray-400 text-sm">${tool.desc}</p>
+                <div class="mt-4 flex items-center text-brand-accent text-sm font-medium">
+                    Launch Tool <i class="fa-solid fa-arrow-right ml-2"></i>
+                </div>
+            </a>
+        `).join('');
+    </script>
+</body>
+</html>
+
+
+

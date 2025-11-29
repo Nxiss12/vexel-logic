@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referral Program Manager | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brand: { dark: '#020305', navy: '#0b0f19', accent: '#FBC02D' } } } } }
+    </script>
+    <style>
+        body { background: #020305; color: #e2e8f0; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <h1 class="text-2xl font-bold text-white flex items-center gap-3">
+                <i class="fa-solid fa-users text-brand-accent"></i>
+                Referral Program Manager
+            </h1>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid md:grid-cols-4 gap-4 mb-6">
+            <div class="glass-panel rounded-xl p-4">
+                <div class="text-xs text-gray-400 uppercase mb-1">Active Referrers</div>
+                <div class="text-3xl font-bold text-white">47</div>
+            </div>
+            <div class="glass-panel rounded-xl p-4">
+                <div class="text-xs text-gray-400 uppercase mb-1">Referrals This Month</div>
+                <div class="text-3xl font-bold text-white">23</div>
+            </div>
+            <div class="glass-panel rounded-xl p-4">
+                <div class="text-xs text-gray-400 uppercase mb-1">Conversion Rate</div>
+                <div class="text-3xl font-bold text-white">34%</div>
+            </div>
+            <div class="glass-panel rounded-xl p-4">
+                <div class="text-xs text-gray-400 uppercase mb-1">Rewards Paid</div>
+                <div class="text-3xl font-bold text-white">£1,240</div>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+            <!-- Program Settings -->
+            <div class="lg:col-span-2 glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Program Configuration</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Reward for Referrer</label>
+                        <div class="flex gap-2">
+                            <input type="number" value="50" class="flex-1 bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                            <select class="bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                                <option>£ Credit</option>
+                                <option>% Discount</option>
+                                <option>Cash</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Reward for New Customer</label>
+                        <div class="flex gap-2">
+                            <input type="number" value="25" class="flex-1 bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                            <select class="bg-gray-900 border border-gray-700 rounded-lg p-3 text-white">
+                                <option>% Discount</option>
+                                <option>£ Credit</option>
+                                <option>Free Month</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-sm text-gray-400 mb-2 block">Referral Link Template</label>
+                        <input type="text" value="yoursite.com/ref/{CODE}" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white font-mono text-sm" readonly>
+                    </div>
+
+                    <button class="w-full bg-brand-accent text-black font-bold py-3 rounded-lg">
+                        <i class="fa-solid fa-save mr-2"></i>Save Configuration
+                    </button>
+                </div>
+            </div>
+
+            <!-- Top Referrers -->
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4 text-sm">🏆 Top Referrers</h3>
+                <div class="space-y-3">
+                    <div class="bg-gray-900/50 rounded-lg p-3">
+                        <div class="flex justify-between items-start mb-1">
+                            <div class="text-white font-medium">Sarah M.</div>
+                            <span class="bg-brand-accent/20 text-brand-accent px-2 py-0.5 rounded text-xs">12 refs</span>
+                        </div>
+                        <div class="text-xs text-gray-400">£600 earned</div>
+                    </div>
+
+                    <div class="bg-gray-900/50 rounded-lg p-3">
+                        <div class="flex justify-between items-start mb-1">
+                            <div class="text-white font-medium">David K.</div>
+                            <span class="bg-brand-accent/20 text-brand-accent px-2 py-0.5 rounded text-xs">8 refs</span>
+                        </div>
+                        <div class="text-xs text-gray-400">£400 earned</div>
+                    </div>
+
+                    <div class="bg-gray-900/50 rounded-lg p-3">
+                        <div class="flex justify-between items-start mb-1">
+                            <div class="text-white font-medium">Emma L.</div>
+                            <span class="bg-brand-accent/20 text-brand-accent px-2 py-0.5 rounded text-xs">6 refs</span>
+                        </div>
+                        <div class="text-xs text-gray-400">£300 earned</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Referrals -->
+        <div class="glass-panel rounded-xl p-6 mt-6">
+            <h3 class="text-white font-bold mb-4">Recent Referrals</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="border-b border-gray-700">
+                        <tr class="text-left">
+                            <th class="pb-3 text-gray-400">Referrer</th>
+                            <th class="pb-3 text-gray-400">New Customer</th>
+                            <th class="pb-3 text-gray-400">Date</th>
+                            <th class="pb-3 text-gray-400">Status</th>
+                            <th class="pb-3 text-gray-400">Reward</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-white">
+                        <tr class="border-b border-gray-800">
+                            <td class="py-3">Sarah M.</td>
+                            <td class="py-3">John Smith</td>
+                            <td class="py-3">Today</td>
+                            <td class="py-3"><span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs">Converted</span></td>
+                            <td class="py-3">£50</td>
+                        </tr>
+                        <tr class="border-b border-gray-800">
+                            <td class="py-3">David K.</td>
+                            <td class="py-3">Jane Doe</td>
+                            <td class="py-3">Yesterday</td>
+                            <td class="py-3"><span class="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded text-xs">Pending</span></td>
+                            <td class="py-3">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addCompetitor() {
+            const url = prompt('Enter competitor website:');
+            if (url) {
+                alert(`✓ Tracking ${url}\n\nMonitoring:\n• Pricing changes\n• Content updates\n• Social activity\n• Product features\n• Marketing campaigns`);
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+

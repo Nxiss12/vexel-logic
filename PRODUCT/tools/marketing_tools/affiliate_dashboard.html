@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiliate Dashboard | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-handshake text-brand-accent"></i>Affiliate Dashboard</h1>
+        </div>
+        <div class="grid md:grid-cols-4 gap-4 mb-6">
+            <div class="glass-panel rounded-xl p-4"><div class="text-xs text-gray-400 uppercase mb-1">Active Affiliates</div><div class="text-3xl font-bold text-white">87</div></div>
+            <div class="glass-panel rounded-xl p-4"><div class="text-xs text-gray-400 uppercase mb-1">Total Sales</div><div class="text-3xl font-bold text-white">£34,892</div></div>
+            <div class="glass-panel rounded-xl p-4"><div class="text-xs text-gray-400 uppercase mb-1">Commissions Owed</div><div class="text-3xl font-bold text-white">£6,978</div></div>
+            <div class="glass-panel rounded-xl p-4"><div class="text-xs text-gray-400 uppercase mb-1">Avg Commission</div><div class="text-3xl font-bold text-white">20%</div></div>
+        </div>
+        <div class="glass-panel rounded-xl p-6">
+            <h3 class="text-white font-bold mb-4">Top Affiliates</h3>
+            <table class="w-full text-sm">
+                <thead class="border-b border-gray-700"><tr class="text-left"><th class="pb-3 text-gray-400">Affiliate</th><th class="pb-3 text-gray-400">Sales</th><th class="pb-3 text-gray-400">Revenue</th><th class="pb-3 text-gray-400">Commission</th></tr></thead>
+                <tbody class="text-white">
+                    <tr class="border-b border-gray-800"><td class="py-3">Sarah M.</td><td class="py-3">23</td><td class="py-3">£12,450</td><td class="py-3">£2,490</td></tr>
+                    <tr class="border-b border-gray-800"><td class="py-3">David K.</td><td class="py-3">18</td><td class="py-3">£9,870</td><td class="py-3">£1,974</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

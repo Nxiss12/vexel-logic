@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion Funnel Analyzer | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-5xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6"><h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-filter text-brand-accent"></i>Conversion Funnel Analyzer</h1></div>
+        <div class="glass-panel rounded-xl p-6">
+            <h3 class="text-white font-bold mb-6">Your Sales Funnel</h3>
+            <div class="space-y-4">
+                <div class="relative">
+                    <div class="flex items-center justify-between bg-blue-500/20 border-l-4 border-blue-500 rounded-lg p-4">
+                        <div><div class="text-white font-bold">1. Landing Page</div><div class="text-gray-400 text-sm">Website visitors</div></div>
+                        <div class="text-white font-bold text-xl">10,000</div>
+                    </div>
+                    <div class="text-center text-xs text-gray-400 my-2">↓ 35% continue</div>
+                </div>
+                <div class="relative">
+                    <div class="flex items-center justify-between bg-green-500/20 border-l-4 border-green-500 rounded-lg p-4">
+                        <div><div class="text-white font-bold">2. Sign Up Page</div><div class="text-gray-400 text-sm">Started registration</div></div>
+                        <div class="text-white font-bold text-xl">3,500</div>
+                    </div>
+                    <div class="text-center text-xs text-gray-400 my-2">↓ 60% complete</div>
+                </div>
+                <div class="relative">
+                    <div class="flex items-center justify-between bg-yellow-500/20 border-l-4 border-yellow-500 rounded-lg p-4">
+                        <div><div class="text-white font-bold">3. Trial Started</div><div class="text-gray-400 text-sm">Active trial users</div></div>
+                        <div class="text-white font-bold text-xl">2,100</div>
+                    </div>
+                    <div class="text-center text-xs text-gray-400 my-2">↓ 28% convert</div>
+                </div>
+                <div class="relative">
+                    <div class="flex items-center justify-between bg-brand-accent/20 border-l-4 border-brand-accent rounded-lg p-4">
+                        <div><div class="text-white font-bold">4. Paid Customer</div><div class="text-gray-400 text-sm">Paying subscribers</div></div>
+                        <div class="text-white font-bold text-xl">588</div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 pt-6 border-t border-gray-700">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-400">Overall Conversion Rate:</span>
+                    <span class="text-brand-accent text-2xl font-bold">5.88%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

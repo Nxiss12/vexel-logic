@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Survey Tool | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>tailwind.config={theme:{extend:{colors:{brand:{dark:'#020305',navy:'#0b0f19',accent:'#FBC02D'}}}}}</script>
+    <style>body{background:#020305;color:#e2e8f0}.glass-panel{background:rgba(17,22,37,0.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08)}</style>
+</head>
+<body class="p-6">
+    <div class="max-w-5xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-white flex items-center gap-3"><i class="fa-solid fa-clipboard-question text-brand-accent"></i>Customer Survey Tool</h1>
+                <button onclick="createSurvey()" class="bg-brand-accent text-black px-6 py-3 rounded-lg font-bold"><i class="fa-solid fa-plus mr-2"></i>New Survey</button>
+            </div>
+        </div>
+        <div class="glass-panel rounded-xl p-6 mb-6">
+            <div class="text-center mb-8">
+                <div class="text-6xl font-bold text-white mb-2">72</div>
+                <div class="text-gray-400">Net Promoter Score (NPS)</div>
+                <div class="text-green-400 text-sm mt-1">↑ Excellent (industry avg: 30-50)</div>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="text-center"><div class="text-green-400 text-2xl font-bold">45%</div><div class="text-gray-400 text-xs">Promoters (9-10)</div></div>
+                <div class="text-center"><div class="text-gray-400 text-2xl font-bold">42%</div><div class="text-gray-400 text-xs">Passives (7-8)</div></div>
+                <div class="text-center"><div class="text-red-400 text-2xl font-bold">13%</div><div class="text-gray-400 text-xs">Detractors (0-6)</div></div>
+            </div>
+        </div>
+        <div class="glass-panel rounded-xl p-6">
+            <h3 class="text-white font-bold mb-4">Active Surveys</h3>
+            <div class="space-y-3">
+                <div class="bg-gray-900/50 rounded-lg p-4 flex justify-between items-center">
+                    <div><div class="text-white font-medium">Post-Purchase Survey</div><div class="text-gray-400 text-xs">287 responses • 42% completion</div></div>
+                    <button class="text-brand-accent text-sm hover:underline">View Results</button>
+                </div>
+                <div class="bg-gray-900/50 rounded-lg p-4 flex justify-between items-center">
+                    <div><div class="text-white font-medium">Quarterly NPS Check</div><div class="text-gray-400 text-xs">124 responses • 38% completion</div></div>
+                    <button class="text-brand-accent text-sm hover:underline">View Results</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>function createSurvey(){alert('Survey Types:\n• NPS (Net Promoter Score)\n• CSAT (Satisfaction)\n• Product Feedback\n• Market Research\n• Exit Survey');}</script>
+</body>
+</html>
+
+
+

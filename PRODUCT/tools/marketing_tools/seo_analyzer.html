@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Analyzer | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { brand: { dark: '#020305', navy: '#0b0f19', accent: '#FBC02D' } } } } }
+    </script>
+    <style>
+        body { background: #020305; color: #e2e8f0; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .progress-circle { transform: rotate(-90deg); }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="glass-panel rounded-2xl p-6 mb-6">
+            <h1 class="text-2xl font-bold text-white flex items-center gap-3">
+                <i class="fa-solid fa-magnifying-glass-chart text-brand-accent"></i>
+                SEO Analyzer
+            </h1>
+        </div>
+
+        <!-- Scan Form -->
+        <div class="glass-panel rounded-xl p-6 mb-6">
+            <div class="flex gap-3">
+                <input type="url" id="url-input" placeholder="Enter website URL (e.g., https://example.com)" class="flex-1 bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:border-brand-accent focus:outline-none">
+                <button onclick="analyzeSite()" class="bg-brand-accent text-black px-8 py-3 rounded-lg font-bold hover:bg-yellow-300">
+                    <i class="fa-solid fa-magnifying-glass mr-2"></i>Analyze
+                </button>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div id="results" class="hidden">
+            <!-- Score Cards -->
+            <div class="grid md:grid-cols-3 gap-6 mb-6">
+                <div class="glass-panel rounded-xl p-6 text-center">
+                    <svg class="w-32 h-32 mx-auto mb-3">
+                        <circle cx="64" cy="64" r="56" fill="none" stroke="#1f2937" stroke-width="8"/>
+                        <circle cx="64" cy="64" r="56" fill="none" stroke="#10B981" stroke-width="8" stroke-dasharray="352" stroke-dashoffset="88" class="progress-circle"/>
+                    </svg>
+                    <div class="text-5xl font-bold text-green-500 mb-2">78</div>
+                    <div class="text-gray-400 text-sm">SEO Score</div>
+                </div>
+
+                <div class="glass-panel rounded-xl p-6 text-center">
+                    <div class="text-5xl font-bold text-brand-accent mb-3">1.8s</div>
+                    <div class="text-gray-400 text-sm mb-2">Load Time</div>
+                    <div class="text-xs text-green-400">✓ Good</div>
+                </div>
+
+                <div class="glass-panel rounded-xl p-6 text-center">
+                    <div class="text-5xl font-bold text-blue-500 mb-3">92</div>
+                    <div class="text-gray-400 text-sm mb-2">Mobile Score</div>
+                    <div class="text-xs text-green-400">✓ Excellent</div>
+                </div>
+            </div>
+
+            <!-- Issues -->
+            <div class="glass-panel rounded-xl p-6">
+                <h3 class="text-white font-bold mb-4">Issues & Recommendations</h3>
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3 p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
+                        <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                        <div>
+                            <div class="text-white font-medium text-sm">Meta descriptions present</div>
+                            <div class="text-gray-400 text-xs">All pages have unique meta descriptions</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                        <i class="fa-solid fa-exclamation-triangle text-yellow-500 mt-1"></i>
+                        <div>
+                            <div class="text-white font-medium text-sm">Missing alt tags on 3 images</div>
+                            <div class="text-gray-400 text-xs">Add descriptive alt text for accessibility</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+                        <i class="fa-solid fa-xmark text-red-500 mt-1"></i>
+                        <div>
+                            <div class="text-white font-medium text-sm">Broken links detected (2)</div>
+                            <div class="text-gray-400 text-xs">Fix /old-page and /contact-us URLs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="w-full bg-brand-accent text-black font-bold py-3 rounded-lg mt-6">
+                    <i class="fa-solid fa-download mr-2"></i>Download Full Report (PDF)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function analyzeSite() {
+            const url = document.getElementById('url-input').value;
+            if (!url || !url.startsWith('http')) {
+                alert('Please enter a valid URL (including https://)');
+                return;
+            }
+
+            // Show loading
+            const btn = event.target;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Analyzing...';
+            btn.disabled = true;
+
+            // Simulate analysis
+            setTimeout(() => {
+                document.getElementById('results').classList.remove('hidden');
+                btn.innerHTML = '<i class="fa-solid fa-magnifying-glass mr-2"></i>Analyze';
+                btn.disabled = false;
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
+
+
+
