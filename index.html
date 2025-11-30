@@ -451,9 +451,10 @@
         <!-- Mobile Dropdown Menu -->
         <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-white/10 absolute w-full z-40">
             <div class="px-4 py-6 space-y-4">
-                <button onclick="switchView('landing', 'plans'); toggleMobileMenu()" class="block text-brand-dim hover:text-white text-left w-full">Core Plans</button>
-                <button onclick="switchView('marketplace'); toggleMobileMenu()" class="block text-brand-accent w-full text-left font-bold">Systems Catalog</button>
-                <button onclick="openLoginModal(); toggleMobileMenu()" class="block text-white w-full text-left">Client Portal</button>
+                <a href="#plans" onclick="toggleMobileMenu()" class="block text-brand-dim hover:text-white text-left w-full">Pricing</a>
+                <a href="#products" onclick="toggleMobileMenu()" class="block text-brand-dim hover:text-white text-left w-full">Products</a>
+                <a href="#faq" onclick="toggleMobileMenu()" class="block text-brand-dim hover:text-white text-left w-full">FAQ</a>
+                <a href="https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit" target="_blank" onclick="toggleMobileMenu()" class="block text-brand-accent w-full text-left font-bold">Book Demo</a>
             </div>
         </div>
     </nav>
@@ -1669,10 +1670,12 @@
                 </div>
                 
                 <div>
-                    <h4 class="text-white font-bold mb-3 text-sm">Platform</h4>
+                    <h4 class="text-white font-bold mb-3 text-sm">Product</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><button onclick="switchView('landing', 'plans')" class="text-brand-dim hover:text-white transition-colors">Core Plans</button></li>
-                        <li><button onclick="switchView('marketplace')" class="text-brand-dim hover:text-white transition-colors">Tools Catalog</button></li>
+                        <li><a href="growth-engine.html" class="text-brand-dim hover:text-white transition-colors">Growth Engine</a></li>
+                        <li><a href="admin-assassin.html" class="text-brand-dim hover:text-white transition-colors">Admin Assassin</a></li>
+                        <li><a href="reputation-defender.html" class="text-brand-dim hover:text-white transition-colors">Reputation Defender</a></li>
+                        <li><a href="#plans" class="text-brand-dim hover:text-white transition-colors">Pricing</a></li>
                         <li><a href="https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit" target="_blank" class="text-brand-dim hover:text-white transition-colors">Book Demo</a></li>
                     </ul>
                 </div>
@@ -1680,9 +1683,9 @@
                 <div>
                     <h4 class="text-white font-bold mb-3 text-sm">Company</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><button onclick="switchView('landing', 'engineers')" class="text-brand-dim hover:text-white transition-colors">About</button></li>
-                        <li><a href="https://github.com/Nxiss12/vexel-logic" target="_blank" class="text-brand-dim hover:text-white transition-colors">Open Source</a></li>
+                        <li><a href="#faq" class="text-brand-dim hover:text-white transition-colors">FAQ</a></li>
                         <li><a href="https://www.linkedin.com/in/benedict-anokye-davies/" target="_blank" class="text-brand-dim hover:text-white transition-colors">LinkedIn</a></li>
+                        <li><a href="mailto:benanokye577@gmail.com" class="text-brand-dim hover:text-white transition-colors">Contact</a></li>
                     </ul>
                 </div>
                 
@@ -1697,11 +1700,11 @@
             </div>
             
             <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="text-brand-dim text-sm">&copy; 2024 Vexel Logic. All rights reserved.</div>
+                <div class="text-brand-dim text-sm">&copy; 2025 Vexel Logic. All rights reserved.</div>
                 <div class="flex gap-6 text-xs text-brand-dim">
-                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-                    <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
+                    <a href="privacy-policy.html" target="_blank" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="terms-of-service.html" target="_blank" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" onclick="document.getElementById('cookie-banner').classList.remove('hidden'); return false;" class="hover:text-white transition-colors">Cookie Policy</a>
                 </div>
             </div>
         </div>
