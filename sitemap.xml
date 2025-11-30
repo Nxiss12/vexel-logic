@@ -5,14 +5,14 @@
     
     <!-- Homepage - Highest Priority -->
     <url>
-        <loc>https://vexellogic1.vercel.app/</loc>
+        <loc>https://vexellogic.com/</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/index.html</loc>
+        <loc>https://vexellogic.com/index.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
@@ -20,14 +20,14 @@
     
     <!-- Legal Pages - Important for Trust -->
     <url>
-        <loc>https://vexellogic1.vercel.app/privacy-policy.html</loc>
+        <loc>https://vexellogic.com/privacy-policy.html</loc>
         <lastmod>2025-11-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/terms-of-service.html</loc>
+        <loc>https://vexellogic.com/terms-of-service.html</loc>
         <lastmod>2025-11-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
@@ -35,7 +35,7 @@
     
     <!-- Tools Index Pages -->
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/index.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/index.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -43,210 +43,210 @@
     
     <!-- Core Marketing Tools (30 tools) -->
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/social_media_scheduler.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/social_media_scheduler.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/email_campaign_builder.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/email_campaign_builder.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/landing_page_builder.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/landing_page_builder.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/seo_analyzer.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/seo_analyzer.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/content_calendar.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/content_calendar.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/hashtag_generator.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/hashtag_generator.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/ad_performance_dashboard.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/ad_performance_dashboard.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/competitor_tracker.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/competitor_tracker.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/referral_program_manager.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/referral_program_manager.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/influencer_outreach_tool.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/influencer_outreach_tool.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/brand_monitoring.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/brand_monitoring.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/google_my_business_manager.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/google_my_business_manager.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/local_seo_tool.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/local_seo_tool.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/press_release_builder.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/press_release_builder.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/qr_code_generator.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/qr_code_generator.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/email_signature_generator.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/email_signature_generator.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/ab_test_manager.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/ab_test_manager.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/webinar_funnel_builder.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/webinar_funnel_builder.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/retargeting_pixel_manager.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/retargeting_pixel_manager.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/video_marketing_suite.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/video_marketing_suite.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/customer_survey_tool.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/customer_survey_tool.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/affiliate_dashboard.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/affiliate_dashboard.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/sms_marketing.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/sms_marketing.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/push_notification_system.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/push_notification_system.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/chatbot_builder.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/chatbot_builder.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/popup_creator.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/popup_creator.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/content_repurposer.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/content_repurposer.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/utm_link_builder.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/utm_link_builder.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/social_proof_widget.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/social_proof_widget.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/marketing_tools/review_aggregator.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/marketing_tools/review_aggregator.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
@@ -254,105 +254,105 @@
     
     <!-- Core Business Tools -->
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/missed_call_bot.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/missed_call_bot.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/review_engine.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/review_engine.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/unified_inbox.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/unified_inbox.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/ai_receptionist.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/ai_receptionist.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/database_reactivator.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/database_reactivator.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/invoice_generator.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/invoice_generator.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/appointment_scheduler.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/appointment_scheduler.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/project_tracker.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/project_tracker.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/time_tracker.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/time_tracker.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/client_portal.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/client_portal.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/expense_tracker.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/expense_tracker.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/quote_calculator.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/quote_calculator.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/lead_scoring_dashboard.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/lead_scoring_dashboard.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/contract_generator.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/contract_generator.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
-        <loc>https://vexellogic1.vercel.app/PRODUCT/tools/feedback_collector.html</loc>
+        <loc>https://vexellogic.com/PRODUCT/tools/feedback_collector.html</loc>
         <lastmod>2025-11-30</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>

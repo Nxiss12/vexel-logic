@@ -51,7 +51,7 @@ Allow: /
 # Crawl-delay: 1
 
 # Sitemap location (critical for indexing)
-Sitemap: https://vexellogic1.vercel.app/sitemap.xml
+Sitemap: https://vexellogic.com/sitemap.xml
 Sitemap: https://vexellogicc.netlify.app/sitemap.xml
 
 # Note: No resources are blocked
