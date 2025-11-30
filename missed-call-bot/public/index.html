@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missed Call Dashboard - Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-screen text-white">
+
+    <!-- Header -->
+    <header class="glass-panel border-b border-white/10 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-phone-volume text-cyan-400 text-2xl"></i>
+                <div>
+                    <h1 class="text-xl font-bold">Missed Call Dashboard</h1>
+                    <p class="text-xs text-gray-400">Powered by Vexel Logic</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span class="text-sm text-green-400 font-semibold">LIVE</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Cards -->
+    <section class="max-w-7xl mx-auto px-4 py-8">
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <!-- Total Missed Calls -->
+            <div class="glass-panel rounded-2xl p-6 border border-red-500/20">
+                <div class="flex items-center justify-between mb-4">
+                    <i class="fa-solid fa-phone-slash text-3xl text-red-400"></i>
+                    <span class="text-xs text-gray-400">Last 30 Days</span>
+                </div>
+                <div class="text-4xl font-bold mb-1" id="total-calls">0</div>
+                <p class="text-sm text-gray-400">Missed Calls</p>
+            </div>
+
+            <!-- Responses Received -->
+            <div class="glass-panel rounded-2xl p-6 border border-green-500/20">
+                <div class="flex items-center justify-between mb-4">
+                    <i class="fa-solid fa-message text-3xl text-green-400"></i>
+                    <span class="text-xs text-gray-400">SMS Replies</span>
+                </div>
+                <div class="text-4xl font-bold mb-1" id="total-responses">0</div>
+                <p class="text-sm text-gray-400">Customer Responses</p>
+            </div>
+
+            <!-- Recovery Rate -->
+            <div class="glass-panel rounded-2xl p-6 border border-cyan-500/20">
+                <div class="flex items-center justify-between mb-4">
+                    <i class="fa-solid fa-chart-line text-3xl text-cyan-400"></i>
+                    <span class="text-xs text-gray-400">Conversion</span>
+                </div>
+                <div class="text-4xl font-bold mb-1" id="recovery-rate">0%</div>
+                <p class="text-sm text-gray-400">Recovery Rate</p>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Missed Calls Log -->
+            <div class="glass-panel rounded-2xl p-6 border border-white/10">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-phone-slash text-red-400"></i>
+                        Recent Missed Calls
+                    </h2>
+                    <button onclick="refreshData()" class="text-cyan-400 hover:text-cyan-300 transition-colors">
+                        <i class="fa-solid fa-rotate text-sm"></i>
+                    </button>
+                </div>
+                <div id="missed-calls-list" class="space-y-3 max-h-[500px] overflow-y-auto">
+                    <div class="text-center text-gray-400 py-8">
+                        <i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i>
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Responses -->
+            <div class="glass-panel rounded-2xl p-6 border border-white/10">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-message text-green-400"></i>
+                        Customer Responses
+                    </h2>
+                    <button onclick="refreshData()" class="text-cyan-400 hover:text-cyan-300 transition-colors">
+                        <i class="fa-solid fa-rotate text-sm"></i>
+                    </button>
+                </div>
+                <div id="responses-list" class="space-y-3 max-h-[500px] overflow-y-auto">
+                    <div class="text-center text-gray-400 py-8">
+                        <i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i>
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Auto-refresh every 10 seconds
+        setInterval(refreshData, 10000);
+        
+        // Load data on page load
+        window.addEventListener('DOMContentLoaded', refreshData);
+
+        async function refreshData() {
+            try {
+                // Fetch stats
+                const statsRes = await fetch('/api/stats');
+                const stats = await statsRes.json();
+                
+                document.getElementById('total-calls').textContent = stats.totalCalls;
+                document.getElementById('total-responses').textContent = stats.totalResponses;
+                document.getElementById('recovery-rate').textContent = stats.recoveryRate;
+
+                // Fetch missed calls
+                const callsRes = await fetch('/api/missed-calls');
+                const callsData = await callsRes.json();
+                renderMissedCalls(callsData.calls);
+
+                // Fetch responses
+                const responsesRes = await fetch('/api/responses');
+                const responsesData = await responsesRes.json();
+                renderResponses(responsesData.responses);
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        function renderMissedCalls(calls) {
+            const container = document.getElementById('missed-calls-list');
+            
+            if (calls.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-400 py-8">
+                        <i class="fa-solid fa-inbox text-3xl mb-2"></i>
+                        <p>No missed calls yet</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = calls.map(call => `
+                <div class="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-mono text-cyan-400">${formatPhone(call.customer_phone)}</span>
+                        <span class="text-xs text-gray-400">${formatTime(call.timestamp)}</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs">
+                        ${call.sms_sent 
+                            ? '<span class="text-green-400"><i class="fa-solid fa-check-circle"></i> SMS Sent</span>' 
+                            : '<span class="text-red-400"><i class="fa-solid fa-xmark-circle"></i> Failed</span>'
+                        }
+                        <span class="text-gray-500">•</span>
+                        <span class="text-gray-400">${call.call_status}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderResponses(responses) {
+            const container = document.getElementById('responses-list');
+            
+            if (responses.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-400 py-8">
+                        <i class="fa-solid fa-inbox text-3xl mb-2"></i>
+                        <p>No responses yet</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = responses.map(response => `
+                <div class="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-mono text-green-400">${formatPhone(response.customer_phone)}</span>
+                        <span class="text-xs text-gray-400">${formatTime(response.timestamp)}</span>
+                    </div>
+                    <p class="text-sm text-white italic">"${response.message}"</p>
+                </div>
+            `).join('');
+        }
+
+        function formatPhone(phone) {
+            // Format UK phone: +44XXXXXXXXXX -> +44 XXXX XXX XXX
+            if (phone.startsWith('+44')) {
+                return phone.slice(0, 3) + ' ' + phone.slice(3, 7) + ' ' + phone.slice(7, 10) + ' ' + phone.slice(10);
+            }
+            return phone;
+        }
+
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffHours < 24) return `${diffHours}h ago`;
+            
+            return date.toLocaleDateString('en-GB', { 
+                day: 'numeric', 
+                month: 'short', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+        }
+    </script>
+
+</body>
+</html>
+
