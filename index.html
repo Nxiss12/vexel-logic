@@ -397,18 +397,52 @@
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#" onclick="switchView('landing', 'plans'); return false;" class="text-sm font-medium text-brand-dim hover:text-white transition-colors">Core Plans</a>
-                    <a href="#" onclick="switchView('landing', 'solutions'); return false;" class="text-sm font-medium text-brand-dim hover:text-white transition-colors">Capabilities</a>
-                    <button onclick="switchView('marketplace')" class="text-sm font-bold text-brand-accent hover:text-white transition-colors border border-brand-accent/20 px-4 py-1.5 rounded-full bg-brand-accent/5 hover:bg-brand-accent/10 backdrop-blur-md">
-                        <i class="fa-solid fa-microchip mr-2"></i>Systems Catalog
-                    </button>
+                    <!-- Products Dropdown -->
+                    <div class="relative group">
+                        <button class="text-sm font-medium text-brand-dim hover:text-white transition-colors flex items-center gap-1">
+                            Products <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="absolute top-full left-0 mt-2 w-56 glass-panel rounded-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                            <a href="growth-engine.html" class="block px-4 py-3 text-sm text-brand-light hover:text-white hover:bg-white/5 transition-colors">
+                                <i class="fa-solid fa-chart-line text-brand-accent mr-2"></i> Growth Engine
+                            </a>
+                            <a href="admin-assassin.html" class="block px-4 py-3 text-sm text-brand-light hover:text-white hover:bg-white/5 transition-colors">
+                                <i class="fa-solid fa-bolt text-purple-400 mr-2"></i> Admin Assassin
+                            </a>
+                            <a href="reputation-defender.html" class="block px-4 py-3 text-sm text-brand-light hover:text-white hover:bg-white/5 transition-colors">
+                                <i class="fa-solid fa-star text-brand-accent mr-2"></i> Reputation Defender
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Industries Dropdown -->
+                    <div class="relative group">
+                        <button class="text-sm font-medium text-brand-dim hover:text-white transition-colors flex items-center gap-1">
+                            Industries <i class="fa-solid fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="absolute top-full left-0 mt-2 w-56 glass-panel rounded-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                            <a href="tradesmen.html" class="block px-4 py-3 text-sm text-brand-light hover:text-white hover:bg-white/5 transition-colors">
+                                <i class="fa-solid fa-wrench text-brand-accent mr-2"></i> Tradesmen & Services
+                            </a>
+                            <a href="dental.html" class="block px-4 py-3 text-sm text-brand-light hover:text-white hover:bg-white/5 transition-colors">
+                                <i class="fa-solid fa-tooth text-brand-accent mr-2"></i> Medical & Dental
+                            </a>
+                            <a href="legal.html" class="block px-4 py-3 text-sm text-brand-light hover:text-white hover:bg-white/5 transition-colors">
+                                <i class="fa-solid fa-gavel text-brand-accent mr-2"></i> Legal Services
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <a href="#plans" class="text-sm font-medium text-brand-dim hover:text-white transition-colors">Pricing</a>
+                    <a href="#faq" class="text-sm font-medium text-brand-dim hover:text-white transition-colors">FAQ</a>
+                    
                     <div class="flex items-center gap-2 text-[10px] font-mono text-brand-success bg-brand-success/5 px-3 py-1 rounded-full border border-brand-success/20">
                         <div class="w-1.5 h-1.5 bg-brand-success rounded-full status-dot"></div>
                         SYSTEMS ONLINE
                     </div>
-                    <button onclick="openLoginModal()" class="text-sm font-bold text-white hover:text-brand-accent transition-colors flex items-center gap-2 opacity-80 hover:opacity-100">
-                        <i class="fa-regular fa-circle-user"></i> Portal
-                    </button>
+                    <a href="https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit" target="_blank" class="text-sm font-bold text-brand-accent hover:text-white transition-colors border border-brand-accent/20 px-4 py-1.5 rounded-full bg-brand-accent/5 hover:bg-brand-accent/10 backdrop-blur-md">
+                        <i class="fa-regular fa-calendar mr-2"></i> Book Demo
+                    </a>
                 </div>
                 <div class="md:hidden"><button id="mobile-menu-btn" class="text-white text-2xl" aria-label="Menu"><i class="fa-solid fa-bars-staggered"></i></button></div>
             </div>
@@ -589,6 +623,120 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Products Showcase Section -->
+            <section id="products" class="py-24 bg-brand-dark">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16" data-aos="fade-up">
+                        <h2 class="text-5xl font-bold text-white mb-4">Three Toolkits. One Operating System.</h2>
+                        <p class="text-xl text-brand-dim max-w-3xl mx-auto">Each toolkit solves a specific problem. Combined, they transform your entire business.</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-8 mb-12">
+                        <!-- Product 1: Growth Engine -->
+                        <div class="glass-panel p-8 rounded-2xl hover:border-brand-accent/50 transition-all group" data-aos="fade-up">
+                            <div class="w-20 h-20 bg-brand-accent/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-brand-accent/20 transition-colors">
+                                <i class="fa-solid fa-chart-line text-4xl text-brand-accent"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-brand-accent transition-colors">The Growth Engine</h3>
+                            <p class="text-brand-dim text-sm mb-4">Turn strangers into leads</p>
+                            <ul class="space-y-2 mb-6 text-brand-light text-sm">
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Missed call recovery (64% conversion)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Web chat capture</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Google Business integration</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Lead scoring dashboard</span>
+                                </li>
+                            </ul>
+                            <p class="text-brand-accent font-bold text-lg mb-6">"50% more leads guaranteed"</p>
+                            <a href="growth-engine.html" class="flex items-center gap-2 text-white hover:text-brand-accent transition-colors font-bold group">
+                                Learn More <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                        
+                        <!-- Product 2: Admin Assassin -->
+                        <div class="glass-panel p-8 rounded-2xl hover:border-purple-500/50 transition-all group" data-aos="fade-up" data-aos-delay="100">
+                            <div class="w-20 h-20 bg-purple-500/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-purple-500/20 transition-colors">
+                                <i class="fa-solid fa-bolt text-4xl text-purple-400"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">The Admin Assassin</h3>
+                            <p class="text-brand-dim text-sm mb-4">Get your evenings back</p>
+                            <ul class="space-y-2 mb-6 text-brand-light text-sm">
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Text-to-pay invoicing</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Automated booking</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Digital contracts</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Time & expense tracking</span>
+                                </li>
+                            </ul>
+                            <p class="text-purple-400 font-bold text-lg mb-6">"Save 10 hours/week"</p>
+                            <a href="admin-assassin.html" class="flex items-center gap-2 text-white hover:text-purple-400 transition-colors font-bold group">
+                                Learn More <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                        
+                        <!-- Product 3: Reputation Defender -->
+                        <div class="glass-panel p-8 rounded-2xl hover:border-brand-accent/50 transition-all group" data-aos="fade-up" data-aos-delay="200">
+                            <div class="w-20 h-20 bg-brand-accent/10 rounded-full flex items-center justify-center mb-6 group-hover:bg-brand-accent/20 transition-colors">
+                                <i class="fa-solid fa-star text-4xl text-brand-accent"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-brand-accent transition-colors">The Reputation Defender</h3>
+                            <p class="text-brand-dim text-sm mb-4">Dominate local search</p>
+                            <ul class="space-y-2 mb-6 text-brand-light text-sm">
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Auto-request 5-star reviews</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Social media automation</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Google Business management</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Brand monitoring & alerts</span>
+                                </li>
+                            </ul>
+                            <p class="text-brand-accent font-bold text-lg mb-6">"2x your reviews in 30 days"</p>
+                            <a href="reputation-defender.html" class="flex items-center gap-2 text-white hover:text-brand-accent transition-colors font-bold group">
+                                Learn More <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Bundle CTA -->
+                    <div class="text-center glass-panel p-10 rounded-2xl border-brand-accent/30" data-aos="fade-up" data-aos-delay="300">
+                        <h3 class="text-3xl font-bold text-white mb-4">Or get all 3 for less than buying 2 separately</h3>
+                        <p class="text-brand-dim mb-6 text-lg">Professional Bundle: All 3 toolkits for £249/mo (Save £198/mo)</p>
+                        <a href="#plans" class="inline-flex items-center gap-2 px-10 py-5 bg-brand-accent text-brand-dark font-bold text-lg rounded-lg hover:bg-white transition-all shadow-glow">
+                            See Bundle Pricing <i class="fa-solid fa-arrow-down"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
 
             <!-- Calculator -->
             <section id="calculator" class="py-24 bg-brand-dark relative overflow-hidden">
