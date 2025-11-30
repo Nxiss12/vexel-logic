@@ -295,6 +295,13 @@
             opacity: 1 !important;
         }
         
+        /* DISABLE AOS HIDING - Force all content visible */
+        [data-aos] {
+            opacity: 1 !important;
+            transform: none !important;
+            pointer-events: auto !important;
+        }
+        
         /* Mobile Touch Target Optimization (SEO - Mobile Usability) */
         a, button, input, select, textarea {
             min-height: 44px; /* iOS recommended touch target */
@@ -471,10 +478,10 @@
     </div>
 
     <!-- MAIN CONTENT -->
-    <main id="app-content" class="pt-24">
+    <main id="app-content" class="pt-32">
         
         <!-- Hero Section -->
-            <header id="hero-section" class="relative pt-20 pb-20 lg:pt-36 lg:pb-32 overflow-hidden">
+            <header id="hero-section" class="relative pt-20 pb-20 lg:pt-36 lg:pb-32 overflow-hidden bg-brand-dark">
                 <div class="absolute inset-0 bg-grid z-0 pointer-events-none"></div>
                 <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-accent/5 rounded-full blur-[120px] animate-blob pointer-events-none"></div>
                 <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
