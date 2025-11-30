@@ -2388,7 +2388,8 @@
             }
             
             // Calculate ROI (recovery / annual cost)
-            const annualCost = 99 * 12; // £99/month * 12 months
+            // Year 1: £697 setup + £249/mo × 12 = £3,685
+            const annualCost = 697 + (249 * 12); // £3,685 first year
             const roi = Math.round(potentialRecovery / annualCost);
             const roiEl = document.getElementById('roi-display');
             if (roiEl) {

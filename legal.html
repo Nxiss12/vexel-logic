@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vexel Logic for Law Firms - Turn Missed Calls Into New Clients</title>
+    
+    <!-- SEO Meta -->
+    <meta name="description" content="Stop losing high-value clients to voicemail. Automated client intake, missed call recovery, and billing reminders for UK law firms and solicitors.">
+    <link rel="canonical" href="https://vexellogic.com/legal.html">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0a1628',     
+                            navy: '#0f1e33',     
+                            panel: '#152238',    
+                            accent: '#00D9FF',   
+                            light: '#e2e8f0',    
+                            dim: '#64748b',
+                            success: '#10B981',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="bg-brand-dark text-brand-light">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel border-b-0 top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="assets/logo-icon.svg" alt="Vexel Logic" class="w-10 h-10 group-hover:scale-105 transition-transform">
+                    <div class="flex flex-col">
+                        <span class="font-bold text-lg tracking-tight text-white leading-none">VEXEL</span>
+                        <span class="text-[10px] text-brand-dim font-mono tracking-widest uppercase">LOGIC</span>
+                    </div>
+                </a>
+                <a href="index.html" class="text-sm text-brand-dim hover:text-white transition-colors">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent"></div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 mb-6">
+                    <i class="fa-solid fa-scale-balanced text-purple-400"></i>
+                    <span class="text-xs font-bold text-purple-400 uppercase tracking-wide">Built For Law Firms</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+                    Every Missed Call<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-brand-accent">Is a £5,000 Client Gone.</span>
+                </h1>
+                <p class="text-xl text-brand-light max-w-4xl mx-auto leading-relaxed mb-8">
+                    You're in court. A potential client calls. Voicemail. They call the next solicitor on Google. <strong class="text-white">You just lost £5,000 in billings.</strong>
+                </p>
+                <p class="text-2xl font-bold text-brand-accent mb-10">
+                    What if every inquiry was captured, qualified, and booked—automatically?
+                </p>
+                
+                <a href="https://calendly.com/ben-vexellogic/7-day-trial" target="_blank" class="inline-flex items-center gap-2 px-10 py-5 bg-brand-accent text-brand-dark font-bold text-lg rounded-lg hover:bg-white transition-all shadow-glow">
+                    <i class="fa-solid fa-rocket"></i> Start Free 7-Day Trial
+                </a>
+                <p class="text-brand-dim text-sm mt-4">Full access • No credit card • Cancel anytime</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The 3 Problems Law Firms Face -->
+    <section class="py-20 bg-brand-panel">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-white text-center mb-16" data-aos="fade-up">The 3 Problems Every Law Firm Faces</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-panel p-8 rounded-xl border-l-4 border-red-500" data-aos="fade-up">
+                    <i class="fa-solid fa-phone-slash text-4xl text-red-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-4">Missed Calls = Lost Clients</h3>
+                    <p class="text-brand-light mb-4">Someone calls during court, meetings, or after hours. Voicemail. They don't leave a message. They call the next firm. You lose the case before you even know it exists.</p>
+                    <div class="bg-red-500/10 border border-red-500/30 rounded-lg p-4 text-sm">
+                        <span class="text-red-400 font-bold">Average Client Value:</span>
+                        <span class="text-white"> £5,000-£15,000</span><br>
+                        <span class="text-red-400 font-bold">Missed calls/week:</span>
+                        <span class="text-white"> 10-15</span>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-8 rounded-xl border-l-4 border-orange-500" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fa-solid fa-clock-rotate-left text-4xl text-orange-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-4">Admin Is Drowning You</h3>
+                    <p class="text-brand-light mb-4">Friday 6pm: You're chasing unpaid invoices, manually scheduling client calls, and drowning in spreadsheets. This is NOT billable work. It's costing you £20k/year in lost billable hours.</p>
+                    <div class="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4 text-sm">
+                        <span class="text-orange-400 font-bold">Admin hours/week:</span>
+                        <span class="text-white"> 8-12 hours</span><br>
+                        <span class="text-orange-400 font-bold">Billable rate:</span>
+                        <span class="text-white"> £250/hour</span>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-8 rounded-xl border-l-4 border-yellow-500" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fa-solid fa-hourglass-end text-4xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-4">Clients Ghost You for Paperwork</h3>
+                    <p class="text-brand-light mb-4">"Can you sign this contract?" Email sent. No reply. You call. No answer. The case stalls. You spend billable time chasing signatures instead of lawyering.</p>
+                    <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 text-sm">
+                        <span class="text-yellow-400 font-bold">Time wasted per case:</span>
+                        <span class="text-white"> 3-6 hours</span><br>
+                        <span class="text-yellow-400 font-bold">Cost:</span>
+                        <span class="text-white"> £750-£1,500 per client</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How Vexel Logic Solves This -->
+    <section class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-white text-center mb-4" data-aos="fade-up">How Vexel Logic Automates Client Intake</h2>
+            <p class="text-brand-dim text-center mb-16 max-w-2xl mx-auto">Built for solicitors who bill by the hour. Every minute saved is money earned.</p>
+            
+            <div class="space-y-12">
+                <!-- Solution 1: Missed Call Recovery -->
+                <div class="grid md:grid-cols-2 gap-12 items-center" data-aos="fade-right">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-accent/10 border border-brand-accent/30 mb-4">
+                            <span class="text-xs font-bold text-brand-accent uppercase">Solution 1</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Missed Call Text-Back & Qualification</h3>
+                        <p class="text-brand-light text-lg mb-4">Phone rings, you're unavailable. System texts them in 60 seconds: <em>"Hi Sarah, we're in court—what area of law do you need help with? Reply or book a free consultation: [link]"</em></p>
+                        <p class="text-brand-accent font-bold text-lg mb-6">Result: 64% of missed calls respond. Pre-qualified before you call back.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-xl mt-1"></i>
+                                <span class="text-brand-light">Qualify by practice area (family, property, PI, etc.)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-xl mt-1"></i>
+                                <span class="text-brand-light">Collect initial details via automated form</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-xl mt-1"></i>
+                                <span class="text-brand-light">Direct link to Calendly for consultation booking</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="glass-panel p-8 rounded-2xl">
+                        <div class="bg-brand-navy/50 p-4 rounded-lg mb-4">
+                            <p class="text-white font-bold mb-2">📱 Automated Text:</p>
+                            <p class="text-brand-light text-sm italic">"Hi! We just missed your call while in a meeting. What legal issue can we help with? Reply with: FAMILY, PROPERTY, PI, or BUSINESS. Or book a free 15-min call: [link]"</p>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-brand-dim">Response Rate:</span>
+                            <span class="text-brand-accent font-bold text-2xl">64%</span>
+                        </div>
+                        <p class="text-brand-dim text-xs mt-2">Qualified leads ready for callback</p>
+                    </div>
+                </div>
+
+                <!-- Solution 2: Digital Contracts & E-Signatures -->
+                <div class="grid md:grid-cols-2 gap-12 items-center" data-aos="fade-left">
+                    <div class="glass-panel p-8 rounded-2xl order-2 md:order-1">
+                        <div class="space-y-4">
+                            <div class="bg-brand-navy/50 p-4 rounded-lg">
+                                <p class="text-xs text-brand-dim mb-1">Step 1: Send</p>
+                                <p class="text-white text-sm">"Your retainer agreement is ready. Sign here: [link]"</p>
+                            </div>
+                            <div class="bg-brand-navy/50 p-4 rounded-lg">
+                                <p class="text-xs text-brand-dim mb-1">Step 2: Reminder (24hrs)</p>
+                                <p class="text-white text-sm">"Just a reminder—please sign your agreement to proceed."</p>
+                            </div>
+                            <div class="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
+                                <p class="text-green-400 font-bold">Signed in 2 clicks. Saved 3 hours of chasing.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-accent/10 border border-brand-accent/30 mb-4">
+                            <span class="text-xs font-bold text-brand-accent uppercase">Solution 2</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Digital Contracts & E-Signatures</h3>
+                        <p class="text-brand-light text-lg mb-4">Send retainer agreements, engagement letters, and client forms via text/email. Clients sign on their phone in 2 minutes. Automated reminders if they don't sign within 24 hours.</p>
+                        <p class="text-brand-accent font-bold text-lg mb-6">Result: Cut contract turnaround from 5 days to 2 hours. Legally binding.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-xl mt-1"></i>
+                                <span class="text-brand-light">DocuSign & Adobe Sign integration</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-xl mt-1"></i>
+                                <span class="text-brand-light">Automated reminders until signed</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-xl mt-1"></i>
+                                <span class="text-brand-light">Secure, GDPR-compliant storage</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Solution 3: Text-to-Pay Invoicing -->
+                <div class="grid md:grid-cols-2 gap-12 items-center" data-aos="fade-right">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-accent/10 border border-brand-accent/30 mb-4">
+                            <span class="text-xs font-bold text-brand-accent uppercase">Solution 3</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Text-to-Pay Invoicing</h3>
+                        <p class="text-brand-light text-lg mb-4">Case closes. System texts: <em>"Your final invoice is £2,400. Pay here: [secure link]"</em> Client pays in 30 seconds from their phone.</p>
+                        <p class="text-brand-accent font-bold text-lg mb-6">Result: Get paid 3x faster. Cut late payments by 78%.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-xl mt-1"></i>
+                                <span class="text-brand-light">Integrates with Xero, QuickBooks, Clio</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-xl mt-1"></i>
+                                <span class="text-brand-light">Automated late payment reminders</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-xl mt-1"></i>
+                                <span class="text-brand-light">Payment plans for large invoices</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="glass-panel p-8 rounded-2xl">
+                        <div class="bg-brand-navy/50 p-4 rounded-lg mb-4">
+                            <p class="text-white font-bold mb-2">💳 Text-to-Pay Example:</p>
+                            <p class="text-brand-light text-sm mb-3">"Hi Sarah, your case is complete! Final invoice: £2,400. Pay securely here: [link]. Questions? Reply or call."</p>
+                            <div class="flex items-center gap-2 text-xs text-brand-dim">
+                                <i class="fa-solid fa-lock text-green-400"></i>
+                                <span>256-bit SSL encryption</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div>
+                                <p class="text-3xl font-bold text-brand-accent">78%</p>
+                                <p class="text-xs text-brand-dim">Fewer late payments</p>
+                            </div>
+                            <div>
+                                <p class="text-3xl font-bold text-brand-accent">2.1 days</p>
+                                <p class="text-xs text-brand-dim">Avg. payment time</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Study -->
+    <section class="py-20 bg-brand-panel">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel p-12 rounded-2xl" data-aos="zoom-in">
+                <div class="flex items-center gap-1 text-yellow-400 text-2xl mb-6">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <p class="text-white text-2xl font-bold mb-4">"We recovered 9 high-value clients in the first month who would have gone to competitors. ROI was instant."</p>
+                <p class="text-brand-light text-lg mb-6 italic">"Before Vexel Logic, we were missing 12-15 calls per week while in court or with clients. Now, every inquiry gets texted back in 60 seconds, qualified, and booked. We've added £54,000 in billings in 3 months just from calls we would have missed."</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold text-xl">DL</div>
+                    <div>
+                        <p class="text-white font-bold text-lg">David Langley, Senior Partner</p>
+                        <p class="text-brand-dim">Langley & Associates Solicitors, Birmingham</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-6 mt-8 pt-8 border-t border-white/10">
+                    <div class="text-center">
+                        <p class="text-3xl font-bold text-brand-accent">9</p>
+                        <p class="text-xs text-brand-dim uppercase tracking-wide">New clients/month</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-3xl font-bold text-brand-accent">£54K</p>
+                        <p class="text-xs text-brand-dim uppercase tracking-wide">Added billings (90 days)</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-3xl font-bold text-brand-accent">6 hrs</p>
+                        <p class="text-xs text-brand-dim uppercase tracking-wide">Saved per week</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing for Law Firms -->
+    <section class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-white text-center mb-4" data-aos="fade-up">Simple Pricing for Law Firms</h2>
+            <p class="text-brand-dim text-center mb-16">No per-client fees. No surprise charges. Just flat monthly pricing.</p>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Starter Plan -->
+                <div class="glass-panel rounded-2xl p-10 border border-white/10 flex flex-col h-full" data-aos="fade-up">
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-white mb-2">The Starter</h3>
+                        <p class="text-brand-dim text-sm">Pick the module you need most</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <span class="text-6xl font-bold text-white">£149</span>
+                        <span class="text-brand-dim text-xl">/mo</span>
+                        <div class="text-sm text-brand-dim mt-2">+ £697 setup fee</div>
+                    </div>
+                    
+                    <div class="mb-8 space-y-4">
+                        <p class="text-brand-light font-bold mb-3">Choose 1 Module:</p>
+                        <div class="space-y-3">
+                            <label class="flex items-start gap-3 cursor-pointer group">
+                                <input type="radio" name="module" class="mt-1">
+                                <div>
+                                    <p class="text-white font-bold group-hover:text-brand-accent">Missed Call Recovery</p>
+                                    <p class="text-brand-dim text-xs">Text back + qualify leads</p>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-3 cursor-pointer group">
+                                <input type="radio" name="module" class="mt-1">
+                                <div>
+                                    <p class="text-white font-bold group-hover:text-brand-accent">Digital Contracts</p>
+                                    <p class="text-brand-dim text-xs">E-signatures, automated reminders</p>
+                                </div>
+                            </label>
+                            <label class="flex items-start gap-3 cursor-pointer group">
+                                <input type="radio" name="module" class="mt-1">
+                                <div>
+                                    <p class="text-white font-bold group-hover:text-brand-accent">Text-to-Pay Invoicing</p>
+                                    <p class="text-brand-dim text-xs">Get paid 3x faster</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <a href="https://calendly.com/ben-vexellogic/7-day-trial" target="_blank" class="mt-auto w-full py-4 bg-white text-brand-dark rounded-lg font-bold hover:bg-brand-accent transition-all text-center">
+                        Start Free 7-Day Trial
+                    </a>
+                </div>
+
+                <!-- Professional Plan -->
+                <div class="glass-panel rounded-2xl p-10 border-brand-accent/50 relative transform md:-translate-y-4 shadow-2xl shadow-brand-accent/10 flex flex-col bg-gradient-to-br from-brand-navy to-brand-panel h-full" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10 min-w-max">
+                        <span class="inline-block bg-gradient-to-r from-brand-accent to-cyan-400 text-brand-dark px-8 py-2.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-lg whitespace-nowrap">
+                            Best Value • Most Popular
+                        </span>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold text-white mb-2">The Professional</h3>
+                        <p class="text-brand-accent text-sm font-bold uppercase tracking-wide">All 3 Modules Included</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <span class="text-6xl font-bold text-brand-accent">£249</span>
+                        <span class="text-brand-dim text-xl">/mo</span>
+                        <div class="text-sm text-brand-dim mt-2">+ £697 setup fee</div>
+                        <div class="inline-block mt-3 px-4 py-1.5 bg-brand-success/10 border border-brand-success/30 rounded-full">
+                            <span class="text-brand-success font-bold text-sm">SAVE £198/mo</span>
+                            <span class="text-brand-dim text-xs ml-2">(vs buying separately)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8 p-5 rounded-xl bg-brand-accent/10 border border-brand-accent/20">
+                        <p class="text-brand-light font-bold mb-4 text-sm">Everything Included:</p>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-lg mt-0.5"></i>
+                                <div>
+                                    <p class="text-white font-bold text-sm">Missed Call Recovery + Qualification</p>
+                                    <p class="text-brand-dim text-xs">64% response rate</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-lg mt-0.5"></i>
+                                <div>
+                                    <p class="text-white font-bold text-sm">Digital Contracts & E-Signatures</p>
+                                    <p class="text-brand-dim text-xs">2-hour turnaround</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-lg mt-0.5"></i>
+                                <div>
+                                    <p class="text-white font-bold text-sm">Text-to-Pay Invoicing</p>
+                                    <p class="text-brand-dim text-xs">78% fewer late payments</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-lg mt-0.5"></i>
+                                <div>
+                                    <p class="text-white font-bold text-sm">Client Portal & Case Updates</p>
+                                    <p class="text-brand-dim text-xs">Reduce 'where's my case' calls</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-check-circle text-brand-accent text-lg mt-0.5"></i>
+                                <div>
+                                    <p class="text-white font-bold text-sm">Priority Support</p>
+                                    <p class="text-brand-dim text-xs">2-hour response time</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="https://calendly.com/ben-vexellogic/7-day-trial" target="_blank" class="mt-auto w-full py-4 bg-brand-accent hover:bg-white text-brand-dark rounded-lg font-bold transition-all shadow-glow text-center">
+                        Get Full Bundle (Save £198/mo)
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <p class="text-brand-accent font-bold text-lg mb-2">7-Day Free Trial • No Credit Card Required</p>
+                <p class="text-brand-dim text-sm">Cancel anytime in the first 7 days and pay nothing</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-brand-panel relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-accent/10 to-purple-500/10"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10" data-aos="zoom-in">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Stop Losing High-Value Clients</h2>
+            <p class="text-xl text-brand-light mb-8">Join 150+ UK law firms using Vexel Logic to capture every inquiry, automate admin, and bill more hours.</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://calendly.com/ben-vexellogic/7-day-trial" target="_blank" class="inline-flex items-center justify-center gap-2 px-10 py-5 bg-brand-accent text-brand-dark font-bold text-lg rounded-lg hover:bg-white transition-all shadow-glow">
+                    <i class="fa-solid fa-rocket"></i> Start Free 7-Day Trial
+                </a>
+                <a href="https://calendly.com/ben-vexellogic/demo" target="_blank" class="inline-flex items-center justify-center gap-2 px-10 py-5 bg-white/10 text-white font-bold text-lg rounded-lg hover:bg-white/20 transition-all border border-white/20">
+                    <i class="fa-solid fa-calendar-days"></i> Book a Demo First
+                </a>
+            </div>
+            
+            <p class="text-brand-dim text-sm mt-6">Questions? Email <a href="mailto:ben@vexellogic.com" class="text-brand-accent hover:underline">ben@vexellogic.com</a></p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-navy border-t border-white/10 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white font-bold mb-4">Vexel Logic</h3>
+                    <p class="text-brand-dim text-sm">Business automation for UK service providers.</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-4">Product</h3>
+                    <ul class="space-y-2 text-brand-dim text-sm">
+                        <li><a href="growth-engine.html" class="hover:text-white transition-colors">Growth Engine</a></li>
+                        <li><a href="admin-assassin.html" class="hover:text-white transition-colors">Admin Assassin</a></li>
+                        <li><a href="reputation-defender.html" class="hover:text-white transition-colors">Reputation Defender</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-4">Industries</h3>
+                    <ul class="space-y-2 text-brand-dim text-sm">
+                        <li><a href="tradesmen.html" class="hover:text-white transition-colors">Tradesmen</a></li>
+                        <li><a href="dental.html" class="hover:text-white transition-colors">Dental Practices</a></li>
+                        <li><a href="legal.html" class="hover:text-white transition-colors">Legal Services</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-4">Company</h3>
+                    <ul class="space-y-2 text-brand-dim text-sm">
+                        <li><a href="privacy-policy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="mailto:ben@vexellogic.com" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-8 pt-8 text-center text-brand-dim text-sm">
+                <p>&copy; 2025 Vexel Logic. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
+    </script>
+
+</body>
+</html>
+
