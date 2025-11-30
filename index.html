@@ -259,15 +259,16 @@
                 extend: {
                     colors: {
                         brand: {
-                            dark: '#020305',     
-                            navy: '#0b0f19',     
-                            panel: '#111625',    
-                            accent: '#FBC02D',   
+                            dark: '#0a1628',     // Darker blue-black (matches logo background)
+                            navy: '#0f1e33',     // Navy blue
+                            panel: '#152238',    // Panel background
+                            accent: '#00D9FF',   // CYAN from logo (primary brand color)
+                            cyan: '#00D9FF',     // Alias for clarity
                             light: '#e2e8f0',    
                             dim: '#64748b',      
                             success: '#10B981',
                             danger: '#EF4444',
-                            border: 'rgba(255, 255, 255, 0.08)'
+                            border: 'rgba(0, 217, 255, 0.12)' // Cyan border
                         }
                     },
                     fontFamily: {
@@ -275,7 +276,8 @@
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     boxShadow: {
-                        'glow': '0 0 40px rgba(251, 192, 45, 0.15)',
+                        'glow': '0 0 40px rgba(0, 217, 255, 0.25)', // Cyan glow
+                        'glow-strong': '0 0 60px rgba(0, 217, 255, 0.4)',
                         'card': '0 20px 40px -10px rgba(0,0,0,0.5)',
                     },
                     animation: { 'scroll': 'scroll 40s linear infinite' },
@@ -286,7 +288,7 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #020305; }
+        body { font-family: 'Inter', sans-serif; background-color: #0a1628; }
         
         /* CRITICAL: Ensure content is visible immediately */
         #app-content, #hero-section, main { 
