@@ -288,6 +288,13 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #020305; }
         
+        /* CRITICAL: Ensure content is visible immediately */
+        #app-content, #hero-section, main { 
+            display: block !important; 
+            visibility: visible !important; 
+            opacity: 1 !important;
+        }
+        
         /* Mobile Touch Target Optimization (SEO - Mobile Usability) */
         a, button, input, select, textarea {
             min-height: 44px; /* iOS recommended touch target */
@@ -436,10 +443,6 @@
                     <a href="#plans" class="text-sm font-medium text-brand-dim hover:text-white transition-colors">Pricing</a>
                     <a href="#faq" class="text-sm font-medium text-brand-dim hover:text-white transition-colors">FAQ</a>
                     
-                    <div class="flex items-center gap-2 text-[10px] font-mono text-brand-success bg-brand-success/5 px-3 py-1 rounded-full border border-brand-success/20">
-                        <div class="w-1.5 h-1.5 bg-brand-success rounded-full status-dot"></div>
-                        SYSTEMS ONLINE
-                    </div>
                     <a href="https://calendly.com/benanokye577/vexel-demo-revenue-recovery-audit" target="_blank" class="text-sm font-bold text-brand-accent hover:text-white transition-colors border border-brand-accent/20 px-4 py-1.5 rounded-full bg-brand-accent/5 hover:bg-brand-accent/10 backdrop-blur-md">
                         <i class="fa-regular fa-calendar mr-2"></i> Book Demo
                     </a>
