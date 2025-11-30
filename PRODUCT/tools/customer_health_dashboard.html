@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Health Dashboard | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+        .glass { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .health-bar { height: 8px; border-radius: 4px; background: #334155; }
+        .health-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+    </style>
+</head>
+<body class="min-h-screen text-white p-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center gap-2 bg-teal-500/20 text-teal-400 px-4 py-2 rounded-full text-sm mb-4">
+                <i class="fa-solid fa-heart-pulse"></i> Customer Success
+            </div>
+            <h1 class="text-4xl font-bold mb-2">Customer Health Dashboard</h1>
+            <p class="text-slate-400">Monitor customer success and identify churn risks</p>
+        </div>
+
+        <!-- Overview Cards -->
+        <div class="grid md:grid-cols-4 gap-4 mb-8">
+            <div class="glass rounded-xl p-4 text-center">
+                <div class="text-3xl font-bold text-green-400">72%</div>
+                <div class="text-sm text-slate-400">Healthy</div>
+                <div class="text-xs text-green-400 mt-1">↑ 5% from last month</div>
+            </div>
+            <div class="glass rounded-xl p-4 text-center">
+                <div class="text-3xl font-bold text-amber-400">18%</div>
+                <div class="text-sm text-slate-400">At Risk</div>
+                <div class="text-xs text-amber-400 mt-1">→ Same as last month</div>
+            </div>
+            <div class="glass rounded-xl p-4 text-center">
+                <div class="text-3xl font-bold text-red-400">10%</div>
+                <div class="text-sm text-slate-400">Critical</div>
+                <div class="text-xs text-green-400 mt-1">↓ 3% from last month</div>
+            </div>
+            <div class="glass rounded-xl p-4 text-center">
+                <div class="text-3xl font-bold text-teal-400">4.2%</div>
+                <div class="text-sm text-slate-400">Churn Rate</div>
+                <div class="text-xs text-green-400 mt-1">↓ 1.1% from last month</div>
+            </div>
+        </div>
+
+        <!-- Customer List -->
+        <div class="glass rounded-2xl p-6 mb-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold"><i class="fa-solid fa-users text-teal-400 mr-2"></i> Customer Health Scores</h2>
+                <select class="bg-slate-800/50 border border-slate-600 rounded-lg p-2 text-white text-sm">
+                    <option value="all">All Customers</option>
+                    <option value="critical">Critical Only</option>
+                    <option value="at-risk">At Risk Only</option>
+                    <option value="healthy">Healthy Only</option>
+                </select>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Critical Customer -->
+                <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-exclamation-triangle text-red-400"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Quick Plumbers Ltd</div>
+                                <div class="text-sm text-slate-400">Last active: 14 days ago</div>
+                            </div>
+                        </div>
+                        <div class="flex-1 max-w-xs">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-red-400">Critical</span>
+                                <span class="text-red-400">25%</span>
+                            </div>
+                            <div class="health-bar">
+                                <div class="health-fill bg-red-500" style="width: 25%"></div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-phone mr-1"></i> Call Now
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-sm text-red-300 bg-red-500/10 p-2 rounded">
+                        ⚠️ No logins in 14 days, support ticket unresolved, payment overdue
+                    </div>
+                </div>
+
+                <!-- At Risk Customer -->
+                <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-exclamation text-amber-400"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold">BeautyBox Salon</div>
+                                <div class="text-sm text-slate-400">Last active: 5 days ago</div>
+                            </div>
+                        </div>
+                        <div class="flex-1 max-w-xs">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-amber-400">At Risk</span>
+                                <span class="text-amber-400">55%</span>
+                            </div>
+                            <div class="health-bar">
+                                <div class="health-fill bg-amber-500" style="width: 55%"></div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="bg-amber-500 hover:bg-amber-400 text-slate-900 px-4 py-2 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-envelope mr-1"></i> Send Check-in
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-sm text-amber-300 bg-amber-500/10 p-2 rounded">
+                        ⚡ Feature usage dropped 40%, hasn't opened emails in 2 weeks
+                    </div>
+                </div>
+
+                <!-- Healthy Customers -->
+                <div class="bg-slate-800/30 rounded-xl p-4">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-check text-green-400"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold">TechStart Ltd</div>
+                                <div class="text-sm text-slate-400">Last active: Today</div>
+                            </div>
+                        </div>
+                        <div class="flex-1 max-w-xs">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-green-400">Healthy</span>
+                                <span class="text-green-400">92%</span>
+                            </div>
+                            <div class="health-bar">
+                                <div class="health-fill bg-green-500" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-star mr-1"></i> Request Review
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800/30 rounded-xl p-4">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-check text-green-400"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold">BuildRight Construction</div>
+                                <div class="text-sm text-slate-400">Last active: Yesterday</div>
+                            </div>
+                        </div>
+                        <div class="flex-1 max-w-xs">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-green-400">Healthy</span>
+                                <span class="text-green-400">85%</span>
+                            </div>
+                            <div class="health-bar">
+                                <div class="health-fill bg-green-500" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                <i class="fa-solid fa-arrow-up mr-1"></i> Upsell
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Health Factors -->
+        <div class="glass rounded-2xl p-6">
+            <h3 class="text-lg font-semibold mb-4"><i class="fa-solid fa-chart-pie text-teal-400 mr-2"></i> Health Score Factors</h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-slate-800/50 rounded-lg p-4">
+                    <div class="text-2xl mb-2">📊</div>
+                    <div class="font-medium">Product Usage</div>
+                    <div class="text-sm text-slate-400">Daily/weekly login frequency</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-4">
+                    <div class="text-2xl mb-2">💬</div>
+                    <div class="font-medium">Support Tickets</div>
+                    <div class="text-sm text-slate-400">Open issues and resolution time</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-4">
+                    <div class="text-2xl mb-2">💳</div>
+                    <div class="font-medium">Payment Status</div>
+                    <div class="text-sm text-slate-400">On-time payments and renewals</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-4">
+                    <div class="text-2xl mb-2">📧</div>
+                    <div class="font-medium">Engagement</div>
+                    <div class="text-sm text-slate-400">Email opens and feature adoption</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Link -->
+        <div class="text-center mt-8">
+            <a href="../../index.html" class="text-slate-400 hover:text-teal-400 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Back to Vexel Logic
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

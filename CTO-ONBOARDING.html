@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vexel Logic - CTO Onboarding Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: #fff;
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        @media print {
+            body {
+                padding: 20px;
+                font-size: 11pt;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #FBC02D;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 14px;
+            color: #FBC02D;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #64748b;
+            font-size: 16px;
+        }
+        
+        .date {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+        
+        /* Table of Contents */
+        .toc {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 25px 30px;
+            margin-bottom: 40px;
+        }
+        
+        .toc h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #0f172a;
+        }
+        
+        .toc ol {
+            columns: 2;
+            column-gap: 40px;
+            padding-left: 20px;
+        }
+        
+        .toc li {
+            margin-bottom: 8px;
+            color: #475569;
+            font-size: 14px;
+        }
+        
+        /* Sections */
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        h2 {
+            font-size: 22px;
+            color: #0f172a;
+            border-bottom: 2px solid #FBC02D;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            font-size: 16px;
+            color: #334155;
+            margin: 25px 0 15px 0;
+        }
+        
+        h4 {
+            font-size: 14px;
+            color: #475569;
+            margin: 20px 0 10px 0;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            color: #475569;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0 25px 0;
+            font-size: 13px;
+        }
+        
+        th {
+            background: #0f172a;
+            color: #fff;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #475569;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        
+        /* Highlight boxes */
+        .highlight {
+            background: linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%);
+            border-left: 4px solid #FBC02D;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .highlight-blue {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+            border-left: 4px solid #0ea5e9;
+        }
+        
+        .highlight-green {
+            background: linear-gradient(135deg, #dcfce7 0%, #f0fdf4 100%);
+            border-left: 4px solid #10b981;
+        }
+        
+        /* Code blocks */
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin: 15px 0;
+            white-space: pre;
+        }
+        
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 12px;
+            color: #dc2626;
+        }
+        
+        /* Lists */
+        ul, ol {
+            margin: 10px 0 20px 25px;
+            color: #475569;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* Status badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .badge-complete {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .badge-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .badge-high {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        /* Architecture diagram */
+        .architecture {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .arch-box {
+            display: inline-block;
+            background: #fff;
+            border: 2px solid #0f172a;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 8px;
+            min-width: 200px;
+        }
+        
+        .arch-box h4 {
+            margin: 0 0 5px 0;
+            color: #0f172a;
+        }
+        
+        .arch-box p {
+            margin: 0;
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        .arch-arrow {
+            color: #94a3b8;
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        
+        /* Quick reference card */
+        .quick-ref {
+            background: #0f172a;
+            color: #fff;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+        
+        .quick-ref h3 {
+            color: #FBC02D;
+            margin-bottom: 15px;
+        }
+        
+        .quick-ref table {
+            margin: 0;
+        }
+        
+        .quick-ref th {
+            background: transparent;
+            color: #94a3b8;
+            border-bottom: 1px solid #334155;
+        }
+        
+        .quick-ref td {
+            color: #e2e8f0;
+            border-bottom: 1px solid #334155;
+        }
+        
+        .quick-ref tr:nth-child(even) {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 40px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+        
+        /* Print button */
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #FBC02D;
+            color: #0f172a;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .print-btn:hover {
+            background: #f59e0b;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="print-btn no-print" onclick="window.print()">
+        📄 Save as PDF
+    </button>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">VEXEL LOGIC</div>
+        <h1>CTO Onboarding Guide</h1>
+        <p class="subtitle">Everything you need to know about our business, technology, and roadmap</p>
+        <p class="date">Document Version 1.0 | November 2024</p>
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ol>
+            <li>Business Overview</li>
+            <li>Technical Architecture</li>
+            <li>Project Structure</li>
+            <li>Current Development Status</li>
+            <li>Tools Catalog</li>
+            <li>Database Schema</li>
+            <li>Development Roadmap</li>
+            <li>Getting Started</li>
+            <li>Contacts & Access</li>
+        </ol>
+    </div>
+
+    <!-- SECTION 1: BUSINESS OVERVIEW -->
+    <div class="section">
+        <h2>1. Business Overview</h2>
+        
+        <h3>What is Vexel Logic?</h3>
+        <p>Vexel Logic is a <strong>UK-focused B2B SaaS company</strong> providing business automation tools for small and medium enterprises (SMEs). We help service-based businesses recover lost revenue, eliminate manual admin, and scale operations through intelligent automation.</p>
+        
+        <div class="highlight">
+            <strong>Key Value Proposition:</strong> Enterprise-grade automation at SME-friendly prices. We provide 51+ ready-to-deploy tools that save businesses 20+ hours/week and recover £20,000+ in lost annual revenue.
+        </div>
+        
+        <h3>The Problem We Solve</h3>
+        <table>
+            <tr>
+                <th>Problem</th>
+                <th>Impact</th>
+                <th>Our Solution</th>
+            </tr>
+            <tr>
+                <td>Missed calls during jobs</td>
+                <td>40% of leads lost</td>
+                <td>Missed Call Bot - auto-texts in 30 seconds</td>
+            </tr>
+            <tr>
+                <td>Manual scheduling</td>
+                <td>8+ hours/week wasted</td>
+                <td>Meeting Scheduler Plus</td>
+            </tr>
+            <tr>
+                <td>Poor online reviews</td>
+                <td>23% fewer customers</td>
+                <td>Review Engine - automated requests</td>
+            </tr>
+            <tr>
+                <td>Scattered communications</td>
+                <td>Missed messages, lost sales</td>
+                <td>Unified Inbox</td>
+            </tr>
+            <tr>
+                <td>Manual invoicing</td>
+                <td>Cash flow issues</td>
+                <td>Invoice Generator</td>
+            </tr>
+        </table>
+        
+        <h3>Target Market</h3>
+        <h4>Primary: "Owen the Overwhelmed Plumber"</h4>
+        <ul>
+            <li>Solo tradesperson or 2-3 person team</li>
+            <li>Revenue: £50,000-£150,000</li>
+            <li>Budget: £100-£300/month for solutions</li>
+            <li>Channels: Facebook, Google search, local networking</li>
+        </ul>
+        
+        <h4>Secondary: "Sarah the Scaling Salon Owner"</h4>
+        <ul>
+            <li>Service business with 5-10 staff</li>
+            <li>Revenue: £200,000-£500,000</li>
+            <li>Budget: £300-£700/month for automation</li>
+            <li>Channels: Instagram, industry events, referrals</li>
+        </ul>
+        
+        <h3>Revenue Model</h3>
+        <table>
+            <tr>
+                <th>Offering</th>
+                <th>Price</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Individual Tools</td>
+                <td>£49-£299/month</td>
+                <td>Single tool subscription</td>
+            </tr>
+            <tr>
+                <td>Starter Package</td>
+                <td>£249/month</td>
+                <td>3 core tools</td>
+            </tr>
+            <tr>
+                <td>Growth Package</td>
+                <td>£497/month</td>
+                <td>5 tools + support</td>
+            </tr>
+            <tr>
+                <td>Scale Package</td>
+                <td>£697/month</td>
+                <td>10 tools + priority support</td>
+            </tr>
+            <tr>
+                <td>Enterprise</td>
+                <td>£1,000+/month</td>
+                <td>Custom selection</td>
+            </tr>
+        </table>
+        
+        <h3>Financial Targets</h3>
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Year 1</th>
+                <th>Year 2</th>
+                <th>Year 3</th>
+            </tr>
+            <tr>
+                <td>Customers</td>
+                <td>50</td>
+                <td>200</td>
+                <td>500</td>
+            </tr>
+            <tr>
+                <td>MRR</td>
+                <td>£15,000</td>
+                <td>£60,000</td>
+                <td>£150,000</td>
+            </tr>
+            <tr>
+                <td>ARR</td>
+                <td>£180,000</td>
+                <td>£720,000</td>
+                <td>£1.8M</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SECTION 2: TECHNICAL ARCHITECTURE -->
+    <div class="section page-break">
+        <h2>2. Technical Architecture</h2>
+        
+        <h3>Stack Overview</h3>
+        
+        <div class="architecture">
+            <div class="arch-box">
+                <h4>FRONTEND</h4>
+                <p>HTML5 + TailwindCSS + Vanilla JS</p>
+                <p><em>Static files, no build process</em></p>
+            </div>
+            <div class="arch-arrow">↓</div>
+            <div class="arch-box">
+                <h4>HOSTING</h4>
+                <p>Vercel</p>
+                <p><em>Auto-deploys from GitHub</em></p>
+            </div>
+            <div class="arch-arrow">↓</div>
+            <div class="arch-box">
+                <h4>BACKEND</h4>
+                <p>Supabase (PostgreSQL)</p>
+                <p><em>Database + Auth + REST API</em></p>
+            </div>
+        </div>
+        
+        <h3>Why This Stack?</h3>
+        <table>
+            <tr>
+                <th>Choice</th>
+                <th>Reason</th>
+            </tr>
+            <tr>
+                <td>No Build Process</td>
+                <td>Pure HTML/CSS/JS = zero complexity. Open in browser = working app.</td>
+            </tr>
+            <tr>
+                <td>TailwindCSS via CDN</td>
+                <td>Rapid UI development, consistent design system, no compilation.</td>
+            </tr>
+            <tr>
+                <td>Supabase</td>
+                <td>Firebase alternative with PostgreSQL. Generous free tier for MVP.</td>
+            </tr>
+            <tr>
+                <td>Vercel</td>
+                <td>Free hosting, automatic deployments, SSL included.</td>
+            </tr>
+        </table>
+        
+        <h3>Design System</h3>
+        <p>All tools follow a consistent brand with these colors:</p>
+        
+        <div class="code-block">colors: {
+    brand: {
+        dark:    '#020305'    // Page background
+        navy:    '#0b0f19'    // Panel backgrounds
+        panel:   '#111625'    // Card backgrounds
+        accent:  '#FBC02D'    // Yellow (CTAs, highlights)
+        light:   '#e2e8f0'    // Primary text
+        dim:     '#64748b'    // Secondary text
+        success: '#10B981'    // Green (positive states)
+        danger:  '#EF4444'    // Red (alerts, errors)
+    }
+}</div>
+    </div>
+
+    <!-- SECTION 3: PROJECT STRUCTURE -->
+    <div class="section page-break">
+        <h2>3. Project Structure</h2>
+        
+        <div class="code-block">Vexel project/
+│
+├── index.html                    # Main website/landing page
+├── privacy-policy.html           # Legal page
+├── terms-of-service.html         # Legal page
+├── CTO-ONBOARDING.html          # This document
+├── START-HERE.md                # Entry point for business operations
+│
+├── LAUNCH/                      # Launch & sales materials
+│   ├── Week-1-Actions.md        # Deployment checklist
+│   ├── Week-2-4-Marketing.md    # Customer acquisition plan
+│   ├── Quick-Setup-Guide.md     # Technical setup guide
+│   ├── Sales-Playbook.md        # How to sell
+│   ├── Supabase-Setup-Guide.md  # Database setup with SQL
+│   ├── BUSINESS-PLAN-1-PAGE.md  # Executive summary
+│   └── BUSINESS-PLAN-DETAILED.md# Full business plan
+│
+├── PRODUCT/                     # The actual product
+│   ├── tools/                   # All 51+ automation tools
+│   │   ├── index.html          # Tools marketplace
+│   │   ├── CATALOG.md          # Complete tool list
+│   │   └── *.html              # Individual tools
+│   ├── scripts/                # Tool generator scripts
+│   └── Tool-Generator.md       # How to build new tools
+│
+├── OPERATIONS/                  # Running the business
+│   ├── Customer-Onboarding.md  # New client process
+│   ├── Pricing-Guide.md        # Pricing decisions
+│   └── Support-Guide.md        # Customer support
+│
+├── RESOURCES/                   # Marketing & automation
+│   ├── ai_agent/               # LinkedIn automation scripts
+│   └── marketing_assets/       # Ready-to-post content
+│
+└── STRATEGY-VAULT/             # Archived strategic docs (READ LATER)
+    └── docs/                   # 20+ strategy documents</div>
+        
+        <div class="highlight highlight-blue">
+            <strong>Important:</strong> The <code>STRATEGY-VAULT/</code> folder contains extensive strategic analysis (SWOT, PESTLE, Porter's Five Forces, etc.). These are for long-term planning, NOT daily operations. Focus on <code>LAUNCH/</code> and <code>PRODUCT/</code> for now.
+        </div>
+    </div>
+
+    <!-- SECTION 4: CURRENT STATUS -->
+    <div class="section page-break">
+        <h2>4. Current Development Status</h2>
+        
+        <h3>What's Complete</h3>
+        <table>
+            <tr>
+                <th>Component</th>
+                <th>Status</th>
+                <th>Notes</th>
+            </tr>
+            <tr>
+                <td>Main Website</td>
+                <td><span class="badge badge-complete">Complete</span></td>
+                <td>Responsive, modern design in index.html</td>
+            </tr>
+            <tr>
+                <td>Tool Marketplace</td>
+                <td><span class="badge badge-complete">Complete</span></td>
+                <td>Dynamic tool loading with categories</td>
+            </tr>
+            <tr>
+                <td>51+ Automation Tools</td>
+                <td><span class="badge badge-complete">Complete</span></td>
+                <td>Fully functional HTML tools</td>
+            </tr>
+            <tr>
+                <td>Business Plans</td>
+                <td><span class="badge badge-complete">Complete</span></td>
+                <td>1-page and detailed versions</td>
+            </tr>
+            <tr>
+                <td>Database Schema</td>
+                <td><span class="badge badge-complete">Complete</span></td>
+                <td>SQL ready in Supabase-Setup-Guide.md</td>
+            </tr>
+            <tr>
+                <td>Design System</td>
+                <td><span class="badge badge-complete">Complete</span></td>
+                <td>Consistent brand across all tools</td>
+            </tr>
+        </table>
+        
+        <h3>Tools Built by Category</h3>
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Count</th>
+                <th>Key Examples</th>
+            </tr>
+            <tr>
+                <td>Automation</td>
+                <td>13</td>
+                <td>Missed Call Bot, Auto-Responder Pro, Task Automation Engine</td>
+            </tr>
+            <tr>
+                <td>Marketing</td>
+                <td>32+</td>
+                <td>Review Engine, Content Calendar, Landing Page Builder</td>
+            </tr>
+            <tr>
+                <td>Sales</td>
+                <td>10</td>
+                <td>CRM Lite, Pipeline Manager, Proposal Generator</td>
+            </tr>
+            <tr>
+                <td>Operations</td>
+                <td>5</td>
+                <td>Unified Inbox, Project Tracker, Inventory Tracker</td>
+            </tr>
+            <tr>
+                <td>Finance</td>
+                <td>5</td>
+                <td>Invoice Generator, Expense Tracker, P&L Tracker</td>
+            </tr>
+        </table>
+        
+        <h3>Not Yet Implemented</h3>
+        <table>
+            <tr>
+                <th>Component</th>
+                <th>Priority</th>
+                <th>Notes</th>
+            </tr>
+            <tr>
+                <td>Supabase Integration</td>
+                <td><span class="badge badge-high">High</span></td>
+                <td>Tools work standalone, need to connect to DB</td>
+            </tr>
+            <tr>
+                <td>User Authentication</td>
+                <td><span class="badge badge-high">High</span></td>
+                <td>Supabase Auth ready, needs frontend integration</td>
+            </tr>
+            <tr>
+                <td>Payment Processing</td>
+                <td><span class="badge badge-pending">Medium</span></td>
+                <td>Stripe integration for subscriptions</td>
+            </tr>
+            <tr>
+                <td>Customer Dashboard</td>
+                <td><span class="badge badge-pending">Medium</span></td>
+                <td>Central hub for customers to access tools</td>
+            </tr>
+            <tr>
+                <td>API Layer</td>
+                <td><span class="badge badge-pending">Low</span></td>
+                <td>For third-party integrations</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SECTION 5: TOOLS CATALOG -->
+    <div class="section page-break">
+        <h2>5. Tools Catalog</h2>
+        
+        <h3>Automation Tools</h3>
+        <table>
+            <tr>
+                <th>Tool</th>
+                <th>File</th>
+                <th>Function</th>
+            </tr>
+            <tr><td>Auto-Responder Pro</td><td>auto_responder_pro.html</td><td>AI-powered email responses</td></tr>
+            <tr><td>Backup Automator</td><td>backup_automator.html</td><td>Scheduled cloud backups</td></tr>
+            <tr><td>Data Entry Bot</td><td>data_entry_bot.html</td><td>OCR form population</td></tr>
+            <tr><td>Document Auto-Filer</td><td>document_auto_filer.html</td><td>AI document organization</td></tr>
+            <tr><td>Email Filter Pro</td><td>email_filter_pro.html</td><td>Smart email sorting</td></tr>
+            <tr><td>Missed Call Bot</td><td>missed_call_bot.html</td><td>Auto-texts missed callers</td></tr>
+            <tr><td>Task Automation Engine</td><td>task_automation_engine.html</td><td>Workflow builder</td></tr>
+        </table>
+        
+        <h3>Sales Tools</h3>
+        <table>
+            <tr>
+                <th>Tool</th>
+                <th>File</th>
+                <th>Function</th>
+            </tr>
+            <tr><td>AI Receptionist</td><td>ai_receptionist.html</td><td>24/7 booking agent</td></tr>
+            <tr><td>Call Logger</td><td>call_logger.html</td><td>Track all sales calls</td></tr>
+            <tr><td>Commission Calculator</td><td>commission_calculator.html</td><td>Sales commission tracking</td></tr>
+            <tr><td>CRM Lite</td><td>crm_lite.html</td><td>Customer management</td></tr>
+            <tr><td>Database Reactivator</td><td>database_reactivator.html</td><td>Win-back campaigns</td></tr>
+            <tr><td>Pipeline Manager</td><td>pipeline_manager.html</td><td>Visual deal tracking</td></tr>
+            <tr><td>Proposal Generator</td><td>proposal_generator.html</td><td>Professional proposals</td></tr>
+        </table>
+        
+        <h3>Finance Tools</h3>
+        <table>
+            <tr>
+                <th>Tool</th>
+                <th>File</th>
+                <th>Function</th>
+            </tr>
+            <tr><td>Invoice Generator</td><td>invoice_generator.html</td><td>Professional PDF invoices</td></tr>
+            <tr><td>Expense Tracker</td><td>expense_tracker.html</td><td>Receipt scanning & tracking</td></tr>
+            <tr><td>Quote Calculator</td><td>quote_calculator.html</td><td>Interactive pricing</td></tr>
+            <tr><td>Profit & Loss Tracker</td><td>profit_loss_tracker.html</td><td>Real-time P&L</td></tr>
+        </table>
+        
+        <p><strong>Marketing Tools:</strong> 32+ tools in the <code>marketing_tools/</code> subfolder including Content Calendar, A/B Test Manager, Landing Page Builder, Competitor Monitor, and more.</p>
+    </div>
+
+    <!-- SECTION 6: DATABASE -->
+    <div class="section page-break">
+        <h2>6. Database Schema</h2>
+        
+        <p>The database is designed for Supabase (PostgreSQL). Full SQL is in <code>LAUNCH/Supabase-Setup-Guide.md</code>.</p>
+        
+        <h3>Core Tables</h3>
+        
+        <div class="code-block">-- Leads from website
+leads (
+    id UUID PRIMARY KEY,
+    name TEXT,
+    email TEXT,
+    phone TEXT,
+    company TEXT,
+    source TEXT,
+    status TEXT DEFAULT 'new',
+    selected_tools JSONB,
+    estimated_value NUMERIC
+)
+
+-- Paying customers
+customers (
+    id UUID PRIMARY KEY,
+    business_name TEXT,
+    contact_name TEXT,
+    email TEXT UNIQUE,
+    plan_tier TEXT,
+    monthly_price NUMERIC,
+    mrr NUMERIC,
+    health_score INTEGER,
+    churn_risk BOOLEAN
+)
+
+-- Tool usage tracking
+tools_usage (
+    id UUID PRIMARY KEY,
+    customer_id UUID REFERENCES customers,
+    tool_name TEXT,
+    usage_count INTEGER,
+    last_used TIMESTAMP
+)
+
+-- Support tickets
+support_tickets (
+    id UUID PRIMARY KEY,
+    customer_id UUID REFERENCES customers,
+    subject TEXT,
+    status TEXT DEFAULT 'open',
+    priority TEXT
+)</div>
+        
+        <div class="highlight highlight-green">
+            <strong>Note:</strong> All tables have Row Level Security (RLS) enabled with permissive policies for the MVP phase. Security policies will need to be tightened for production.
+        </div>
+    </div>
+
+    <!-- SECTION 7: ROADMAP -->
+    <div class="section page-break">
+        <h2>7. Development Roadmap</h2>
+        
+        <table>
+            <tr>
+                <th>Phase</th>
+                <th>Status</th>
+                <th>Key Deliverables</th>
+            </tr>
+            <tr>
+                <td><strong>Phase 1: Foundation</strong></td>
+                <td><span class="badge badge-complete">Complete</span></td>
+                <td>Website, 51+ tools, business plans, database schema, documentation</td>
+            </tr>
+            <tr>
+                <td><strong>Phase 2: Backend Integration</strong></td>
+                <td><span class="badge badge-high">Next</span></td>
+                <td>Connect tools to Supabase, lead capture to DB, analytics tracking</td>
+            </tr>
+            <tr>
+                <td><strong>Phase 3: Authentication</strong></td>
+                <td><span class="badge badge-pending">Pending</span></td>
+                <td>Supabase Auth, user registration, login/logout, password reset</td>
+            </tr>
+            <tr>
+                <td><strong>Phase 4: Customer Dashboard</strong></td>
+                <td><span class="badge badge-pending">Pending</span></td>
+                <td>Central hub, tool access management, usage stats, billing view</td>
+            </tr>
+            <tr>
+                <td><strong>Phase 5: Payments</strong></td>
+                <td><span class="badge badge-pending">Pending</span></td>
+                <td>Stripe integration, subscriptions, invoice generation</td>
+            </tr>
+            <tr>
+                <td><strong>Phase 6: Scale</strong></td>
+                <td><span class="badge badge-pending">Future</span></td>
+                <td>API marketplace, white-label solution, mobile app</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SECTION 8: GETTING STARTED -->
+    <div class="section">
+        <h2>8. Getting Started</h2>
+        
+        <h3>Local Development</h3>
+        <div class="code-block"># Clone the repository
+git clone https://github.com/[repo]/vexel-logic.git
+cd vexel-logic
+
+# No build process needed - just open the file
+open index.html
+
+# Or use a local server for better dev experience
+npx serve .</div>
+        
+        <h3>Deployment</h3>
+        <div class="code-block"># Push to GitHub
+git add .
+git commit -m "Your changes"
+git push origin main
+
+# Vercel auto-deploys on every push to main
+# Live in ~30 seconds</div>
+        
+        <h3>Adding a New Tool</h3>
+        <ol>
+            <li>Copy an existing tool HTML file as template</li>
+            <li>Update the content and functionality</li>
+            <li>Add entry to <code>PRODUCT/tools/CATALOG.md</code></li>
+            <li>Update <code>index.html</code> toolFileMap if needed</li>
+            <li>Push to deploy</li>
+        </ol>
+    </div>
+
+    <!-- SECTION 9: CONTACTS -->
+    <div class="section page-break">
+        <h2>9. Contacts & Access</h2>
+        
+        <h3>Team</h3>
+        <table>
+            <tr>
+                <th>Role</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+            <tr>
+                <td>Founder/CEO</td>
+                <td>Benedict Anokye-Davies</td>
+                <td>benanokye577@gmail.com</td>
+            </tr>
+            <tr>
+                <td>CTO</td>
+                <td>[Your Name]</td>
+                <td>[Your Email]</td>
+            </tr>
+        </table>
+        
+        <h3>Access Needed</h3>
+        <table>
+            <tr>
+                <th>Service</th>
+                <th>Purpose</th>
+                <th>How to Get Access</th>
+            </tr>
+            <tr>
+                <td>GitHub</td>
+                <td>Code repository</td>
+                <td>Request invite from Founder</td>
+            </tr>
+            <tr>
+                <td>Vercel</td>
+                <td>Hosting/deployment</td>
+                <td>Request team invite</td>
+            </tr>
+            <tr>
+                <td>Supabase</td>
+                <td>Database</td>
+                <td>Request project access</td>
+            </tr>
+            <tr>
+                <td>Domain Registrar</td>
+                <td>DNS management</td>
+                <td>Credentials from Founder</td>
+            </tr>
+        </table>
+        
+        <h3>Key URLs</h3>
+        <table>
+            <tr>
+                <th>Resource</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td>Live Website</td>
+                <td>https://vexellogic.com</td>
+            </tr>
+            <tr>
+                <td>Supabase Dashboard</td>
+                <td>https://app.supabase.com</td>
+            </tr>
+            <tr>
+                <td>Vercel Dashboard</td>
+                <td>https://vercel.com</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- QUICK REFERENCE -->
+    <div class="quick-ref">
+        <h3>Quick Reference Card</h3>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Details</th>
+            </tr>
+            <tr>
+                <td>What We Do</td>
+                <td>Business automation tools for UK SMEs</td>
+            </tr>
+            <tr>
+                <td>Target Market</td>
+                <td>Trades, healthcare, professional services</td>
+            </tr>
+            <tr>
+                <td>Pricing</td>
+                <td>£49-£697/month</td>
+            </tr>
+            <tr>
+                <td>Tech Stack</td>
+                <td>HTML + Tailwind + Supabase + Vercel</td>
+            </tr>
+            <tr>
+                <td>Tools Built</td>
+                <td>51+</td>
+            </tr>
+            <tr>
+                <td>Current Phase</td>
+                <td>Development complete, backend integration next</td>
+            </tr>
+            <tr>
+                <td>Priority</td>
+                <td>Supabase integration → Auth → Payments</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p><strong>Vexel Logic</strong> | CTO Onboarding Guide</p>
+        <p>Document Version 1.0 | Created November 2024</p>
+        <p class="no-print" style="margin-top: 15px; color: #FBC02D;">
+            Click the yellow "Save as PDF" button in the bottom-right corner to download this document.
+        </p>
+    </div>
+
+</body>
+</html>
+
+

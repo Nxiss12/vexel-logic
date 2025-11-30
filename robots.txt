@@ -1,0 +1,60 @@
+# Robots.txt for Vexel Logic - SEO Optimized
+# Last Updated: 2025-11-30
+
+# Allow all bots to crawl all content
+User-agent: *
+Allow: /
+
+# Specifically allow Googlebot (redundant but explicit)
+User-agent: Googlebot
+Allow: /
+Allow: /index.html
+Allow: /privacy-policy.html
+Allow: /terms-of-service.html
+Allow: /PRODUCT/
+Allow: /tools/
+Allow: /marketing_assets/
+Allow: /docs/
+Allow: /scripts/
+
+# Allow Bingbot
+User-agent: Bingbot
+Allow: /
+
+# Block AI scrapers that don't respect copyright
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+# Allow social media bots for OG previews
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Crawl delay (optional, prevents server overload)
+# Crawl-delay: 1
+
+# Sitemap location (critical for indexing)
+Sitemap: https://vexellogic1.vercel.app/sitemap.xml
+Sitemap: https://vexellogicc.netlify.app/sitemap.xml
+
+# Note: No resources are blocked
+# All CSS, JS, images, and content are crawlable
+# This ensures Google can fully render and index pages
+

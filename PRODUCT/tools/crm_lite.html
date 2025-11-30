@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Lite | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+        .glass { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body class="min-h-screen text-white p-6">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold">CRM Lite</h1>
+                <p class="text-slate-400">Lightweight customer relationship manager</p>
+            </div>
+            <button onclick="openAddContact()" class="bg-blue-500 hover:bg-blue-400 text-white font-bold px-6 py-3 rounded-xl transition-all">
+                <i class="fa-solid fa-plus mr-2"></i> Add Contact
+            </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid md:grid-cols-4 gap-4 mb-8">
+            <div class="glass rounded-xl p-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-users text-blue-400"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold">247</div>
+                        <div class="text-sm text-slate-400">Total Contacts</div>
+                    </div>
+                </div>
+            </div>
+            <div class="glass rounded-xl p-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-handshake text-green-400"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold">45</div>
+                        <div class="text-sm text-slate-400">Active Deals</div>
+                    </div>
+                </div>
+            </div>
+            <div class="glass rounded-xl p-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-clock text-amber-400"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold">12</div>
+                        <div class="text-sm text-slate-400">Follow-ups Today</div>
+                    </div>
+                </div>
+            </div>
+            <div class="glass rounded-xl p-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-sterling-sign text-purple-400"></i>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold">£142k</div>
+                        <div class="text-sm text-slate-400">Pipeline Value</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="glass rounded-xl p-4 mb-6">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1 relative">
+                    <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchContacts" placeholder="Search contacts..." 
+                           class="w-full bg-slate-800/50 border border-slate-600 rounded-lg p-3 pl-10 text-white focus:border-blue-400 focus:outline-none"
+                           oninput="filterContacts()">
+                </div>
+                <select id="filterStatus" onchange="filterContacts()" class="bg-slate-800/50 border border-slate-600 rounded-lg p-3 text-white">
+                    <option value="all">All Status</option>
+                    <option value="lead">Lead</option>
+                    <option value="prospect">Prospect</option>
+                    <option value="customer">Customer</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Contacts List -->
+        <div class="glass rounded-2xl overflow-hidden">
+            <table class="w-full">
+                <thead class="bg-slate-800/50">
+                    <tr>
+                        <th class="text-left p-4 text-sm font-medium text-slate-400">Contact</th>
+                        <th class="text-left p-4 text-sm font-medium text-slate-400 hidden md:table-cell">Company</th>
+                        <th class="text-left p-4 text-sm font-medium text-slate-400 hidden md:table-cell">Status</th>
+                        <th class="text-left p-4 text-sm font-medium text-slate-400 hidden md:table-cell">Deal Value</th>
+                        <th class="text-left p-4 text-sm font-medium text-slate-400">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="contactsList">
+                    <tr class="border-t border-slate-700/50 hover:bg-slate-800/30">
+                        <td class="p-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-bold">SJ</div>
+                                <div>
+                                    <div class="font-medium">Sarah Johnson</div>
+                                    <div class="text-sm text-slate-400">sarah@techstart.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-4 hidden md:table-cell text-slate-300">TechStart Ltd</td>
+                        <td class="p-4 hidden md:table-cell"><span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs">Customer</span></td>
+                        <td class="p-4 hidden md:table-cell text-slate-300">£5,400</td>
+                        <td class="p-4">
+                            <div class="flex gap-2">
+                                <button class="p-2 hover:bg-slate-700 rounded" title="Call"><i class="fa-solid fa-phone text-green-400"></i></button>
+                                <button class="p-2 hover:bg-slate-700 rounded" title="Email"><i class="fa-solid fa-envelope text-blue-400"></i></button>
+                                <button class="p-2 hover:bg-slate-700 rounded" title="Edit"><i class="fa-solid fa-pen text-slate-400"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="border-t border-slate-700/50 hover:bg-slate-800/30">
+                        <td class="p-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center font-bold">MP</div>
+                                <div>
+                                    <div class="font-medium">Mike Peters</div>
+                                    <div class="text-sm text-slate-400">mike@buildright.co.uk</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-4 hidden md:table-cell text-slate-300">BuildRight Construction</td>
+                        <td class="p-4 hidden md:table-cell"><span class="bg-amber-500/20 text-amber-400 px-2 py-1 rounded text-xs">Prospect</span></td>
+                        <td class="p-4 hidden md:table-cell text-slate-300">£12,000</td>
+                        <td class="p-4">
+                            <div class="flex gap-2">
+                                <button class="p-2 hover:bg-slate-700 rounded" title="Call"><i class="fa-solid fa-phone text-green-400"></i></button>
+                                <button class="p-2 hover:bg-slate-700 rounded" title="Email"><i class="fa-solid fa-envelope text-blue-400"></i></button>
+                                <button class="p-2 hover:bg-slate-700 rounded" title="Edit"><i class="fa-solid fa-pen text-slate-400"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="border-t border-slate-700/50 hover:bg-slate-800/30">
+                        <td class="p-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center font-bold">LW</div>
+                                <div>
+                                    <div class="font-medium">Lisa Williams</div>
+                                    <div class="text-sm text-slate-400">lisa@beautybox.com</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-4 hidden md:table-cell text-slate-300">BeautyBox Salon</td>
+                        <td class="p-4 hidden md:table-cell"><span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs">Lead</span></td>
+                        <td class="p-4 hidden md:table-cell text-slate-300">£3,200</td>
+                        <td class="p-4">
+                            <div class="flex gap-2">
+                                <button class="p-2 hover:bg-slate-700 rounded" title="Call"><i class="fa-solid fa-phone text-green-400"></i></button>
+                                <button class="p-2 hover:bg-slate-700 rounded" title="Email"><i class="fa-solid fa-envelope text-blue-400"></i></button>
+                                <button class="p-2 hover:bg-slate-700 rounded" title="Edit"><i class="fa-solid fa-pen text-slate-400"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Back Link -->
+        <div class="text-center mt-8">
+            <a href="../../index.html" class="text-slate-400 hover:text-blue-400 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Back to Vexel Logic
+            </a>
+        </div>
+    </div>
+
+    <!-- Add Contact Modal -->
+    <div id="addContactModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center z-50">
+        <div class="glass rounded-2xl p-8 max-w-md w-full mx-4">
+            <h2 class="text-xl font-bold mb-6">Add New Contact</h2>
+            <div class="space-y-4">
+                <input type="text" placeholder="Full Name" class="w-full bg-slate-800/50 border border-slate-600 rounded-lg p-3 text-white">
+                <input type="email" placeholder="Email" class="w-full bg-slate-800/50 border border-slate-600 rounded-lg p-3 text-white">
+                <input type="text" placeholder="Company" class="w-full bg-slate-800/50 border border-slate-600 rounded-lg p-3 text-white">
+                <input type="tel" placeholder="Phone" class="w-full bg-slate-800/50 border border-slate-600 rounded-lg p-3 text-white">
+                <select class="w-full bg-slate-800/50 border border-slate-600 rounded-lg p-3 text-white">
+                    <option value="lead">Lead</option>
+                    <option value="prospect">Prospect</option>
+                    <option value="customer">Customer</option>
+                </select>
+            </div>
+            <div class="flex gap-4 mt-6">
+                <button onclick="closeAddContact()" class="flex-1 bg-slate-700 hover:bg-slate-600 py-3 rounded-lg">Cancel</button>
+                <button onclick="saveContact()" class="flex-1 bg-blue-500 hover:bg-blue-400 py-3 rounded-lg font-bold">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openAddContact() {
+            document.getElementById('addContactModal').classList.remove('hidden');
+        }
+
+        function closeAddContact() {
+            document.getElementById('addContactModal').classList.add('hidden');
+        }
+
+        function saveContact() {
+            alert('✅ Contact saved successfully!');
+            closeAddContact();
+        }
+
+        function filterContacts() {
+            // Filter logic would go here
+            console.log('Filtering contacts...');
+        }
+    </script>
+</body>
+</html>
+
+
+

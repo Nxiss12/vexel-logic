@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Entry Bot | Vexel Logic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+        .glass { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .upload-zone { border: 2px dashed #475569; transition: all 0.3s; }
+        .upload-zone:hover, .upload-zone.dragover { border-color: #f59e0b; background: rgba(245, 158, 11, 0.1); }
+    </style>
+</head>
+<body class="min-h-screen text-white p-6">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center gap-2 bg-violet-500/20 text-violet-400 px-4 py-2 rounded-full text-sm mb-4">
+                <i class="fa-solid fa-robot"></i> Automation Tool
+            </div>
+            <h1 class="text-4xl font-bold mb-2">Data Entry Bot</h1>
+            <p class="text-slate-400">OCR and auto-population of forms from documents</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid md:grid-cols-3 gap-4 mb-8">
+            <div class="glass rounded-xl p-4 text-center">
+                <div class="text-3xl font-bold text-violet-400">1,247</div>
+                <div class="text-sm text-slate-400">Documents Processed</div>
+            </div>
+            <div class="glass rounded-xl p-4 text-center">
+                <div class="text-3xl font-bold text-green-400">99.2%</div>
+                <div class="text-sm text-slate-400">Accuracy Rate</div>
+            </div>
+            <div class="glass rounded-xl p-4 text-center">
+                <div class="text-3xl font-bold text-amber-400">847 hrs</div>
+                <div class="text-sm text-slate-400">Time Saved</div>
+            </div>
+        </div>
+
+        <!-- Upload Zone -->
+        <div class="glass rounded-2xl p-8 mb-6">
+            <h2 class="text-xl font-semibold mb-6"><i class="fa-solid fa-upload text-violet-400 mr-2"></i> Upload Document</h2>
+            
+            <div id="uploadZone" class="upload-zone rounded-xl p-12 text-center cursor-pointer"
+                 onclick="document.getElementById('fileInput').click()"
+                 ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+                <input type="file" id="fileInput" class="hidden" accept=".pdf,.png,.jpg,.jpeg" onchange="handleFileSelect(event)">
+                <div class="text-5xl mb-4">📄</div>
+                <div class="text-lg font-medium mb-2">Drop document here or click to upload</div>
+                <div class="text-sm text-slate-400">Supports: Invoices, Receipts, Business Cards, Forms</div>
+                <div class="text-xs text-slate-500 mt-2">PDF, PNG, JPG up to 10MB</div>
+            </div>
+
+            <!-- Document Type -->
+            <div class="mt-6">
+                <label class="block text-sm text-slate-400 mb-2">Document Type</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <button class="doc-type-btn bg-violet-500/20 border border-violet-400 text-violet-400 p-3 rounded-lg text-sm" onclick="selectDocType(this, 'invoice')">
+                        <i class="fa-solid fa-file-invoice mr-1"></i> Invoice
+                    </button>
+                    <button class="doc-type-btn bg-slate-800/50 border border-slate-600 p-3 rounded-lg text-sm" onclick="selectDocType(this, 'receipt')">
+                        <i class="fa-solid fa-receipt mr-1"></i> Receipt
+                    </button>
+                    <button class="doc-type-btn bg-slate-800/50 border border-slate-600 p-3 rounded-lg text-sm" onclick="selectDocType(this, 'card')">
+                        <i class="fa-solid fa-id-card mr-1"></i> Business Card
+                    </button>
+                    <button class="doc-type-btn bg-slate-800/50 border border-slate-600 p-3 rounded-lg text-sm" onclick="selectDocType(this, 'form')">
+                        <i class="fa-solid fa-file-lines mr-1"></i> Form
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Extracted Data Preview -->
+        <div id="extractedData" class="glass rounded-2xl p-6 mb-6 hidden">
+            <h3 class="text-lg font-semibold mb-4"><i class="fa-solid fa-magic-wand-sparkles text-green-400 mr-2"></i> Extracted Data</h3>
+            
+            <div class="bg-slate-800/50 rounded-xl p-6 space-y-4">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">Vendor Name</label>
+                        <input type="text" value="Office Supplies Co" class="w-full bg-slate-700/50 border border-slate-600 rounded-lg p-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">Invoice Number</label>
+                        <input type="text" value="INV-2024-0847" class="w-full bg-slate-700/50 border border-slate-600 rounded-lg p-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">Date</label>
+                        <input type="text" value="29/11/2024" class="w-full bg-slate-700/50 border border-slate-600 rounded-lg p-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1">Total Amount</label>
+                        <input type="text" value="£847.50" class="w-full bg-slate-700/50 border border-slate-600 rounded-lg p-2 text-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm text-slate-400 mb-1">Line Items</label>
+                    <div class="bg-slate-700/30 rounded-lg p-3 text-sm">
+                        <div class="flex justify-between py-1 border-b border-slate-600">
+                            <span>Printer Paper (5 boxes)</span>
+                            <span>£125.00</span>
+                        </div>
+                        <div class="flex justify-between py-1 border-b border-slate-600">
+                            <span>Ink Cartridges (4 pack)</span>
+                            <span>£89.50</span>
+                        </div>
+                        <div class="flex justify-between py-1">
+                            <span>Office Chairs (2)</span>
+                            <span>£633.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 text-sm text-green-400 bg-green-500/10 p-3 rounded-lg">
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span>Confidence: 98.7% - All fields extracted successfully</span>
+                </div>
+            </div>
+
+            <div class="flex gap-4 mt-6">
+                <button onclick="exportData()" class="flex-1 bg-violet-500 hover:bg-violet-400 text-white font-bold py-3 rounded-xl transition-all">
+                    <i class="fa-solid fa-file-export mr-2"></i> Export to Spreadsheet
+                </button>
+                <button onclick="addToSystem()" class="flex-1 bg-green-500 hover:bg-green-400 text-white font-bold py-3 rounded-xl transition-all">
+                    <i class="fa-solid fa-plus mr-2"></i> Add to Accounting
+                </button>
+            </div>
+        </div>
+
+        <!-- Recent Extractions -->
+        <div class="glass rounded-2xl p-6">
+            <h3 class="text-lg font-semibold mb-4"><i class="fa-solid fa-clock-rotate-left text-blue-400 mr-2"></i> Recent Extractions</h3>
+            <div class="space-y-3">
+                <div class="bg-slate-800/50 rounded-lg p-4 flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-500/20 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-file-invoice text-violet-400"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium">Supplier Invoice #4521</div>
+                            <div class="text-sm text-slate-400">Today, 2:34 PM • £1,234.00</div>
+                        </div>
+                    </div>
+                    <span class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded">99.1% accuracy</span>
+                </div>
+                <div class="bg-slate-800/50 rounded-lg p-4 flex justify-between items-center">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-receipt text-amber-400"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium">Fuel Receipt</div>
+                            <div class="text-sm text-slate-400">Today, 11:20 AM • £67.50</div>
+                        </div>
+                    </div>
+                    <span class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded">99.8% accuracy</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Link -->
+        <div class="text-center mt-8">
+            <a href="../../index.html" class="text-slate-400 hover:text-violet-400 transition-colors">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Back to Vexel Logic
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function handleDragOver(e) {
+            e.preventDefault();
+            document.getElementById('uploadZone').classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            document.getElementById('uploadZone').classList.remove('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            document.getElementById('uploadZone').classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length) processFile(files[0]);
+        }
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            if (files.length) processFile(files[0]);
+        }
+
+        function processFile(file) {
+            // Simulate processing
+            setTimeout(() => {
+                document.getElementById('extractedData').classList.remove('hidden');
+                alert('✅ Document processed successfully! Review extracted data below.');
+            }, 1500);
+        }
+
+        function selectDocType(btn, type) {
+            document.querySelectorAll('.doc-type-btn').forEach(b => {
+                b.classList.remove('bg-violet-500/20', 'border-violet-400', 'text-violet-400');
+                b.classList.add('bg-slate-800/50', 'border-slate-600');
+            });
+            btn.classList.remove('bg-slate-800/50', 'border-slate-600');
+            btn.classList.add('bg-violet-500/20', 'border-violet-400', 'text-violet-400');
+        }
+
+        function exportData() {
+            alert('📊 Data exported to spreadsheet!');
+        }
+
+        function addToSystem() {
+            alert('✅ Added to accounting system!');
+        }
+    </script>
+</body>
+</html>
+
+
+
