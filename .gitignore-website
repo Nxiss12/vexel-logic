@@ -1,0 +1,44 @@
+# Vexel Logic Website - Public Repo
+# This excludes all sensitive automation files
+
+# Exclude n8n automation (goes in private repo)
+n8n-automation/
+missed-call-bot/
+
+# Exclude sensitive files
+.env
+.env.local
+*.env
+.env.*
+
+# Exclude node modules
+node_modules/
+
+# Exclude build files
+dist/
+build/
+.vercel/
+
+# Exclude OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Exclude editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Exclude logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Exclude temp files
+*.tmp
+*.temp
+.cache/
+
