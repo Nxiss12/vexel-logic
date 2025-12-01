@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Custom Workflow | Vexel Logic Pro</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0a1628',     
+                            navy: '#0f1e33',     
+                            panel: '#152238',    
+                            accent: '#00D9FF',   
+                            light: '#e2e8f0',    
+                            dim: '#64748b',
+                            success: '#10B981',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(17, 22, 37, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="bg-brand-dark text-brand-light min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel border-b-0 top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-layer-group text-white text-xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-lg tracking-tight text-white leading-none">VEXEL</span>
+                        <span class="text-[10px] text-brand-dim font-mono tracking-widest uppercase">LOGIC</span>
+                    </div>
+                </a>
+                <a href="pro-dashboard.html" class="text-sm text-brand-dim hover:text-white transition-colors">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-32 pb-20">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 mb-6">
+                    <i class="fa-solid fa-wand-magic-sparkles text-purple-400"></i>
+                    <span class="text-xs font-bold text-purple-400 uppercase tracking-wide">Pro Feature</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4">
+                    Request Custom Workflow
+                </h1>
+                <p class="text-xl text-brand-dim max-w-2xl mx-auto">
+                    Tell us what you want to automate. We'll build it and deploy it within 48 hours.
+                </p>
+            </div>
+
+            <!-- Workflows Remaining -->
+            <div class="glass-panel p-6 rounded-2xl mb-8 border-l-4 border-purple-500">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white font-bold text-lg mb-1">Workflows Remaining</p>
+                        <p class="text-brand-dim text-sm">You have <strong class="text-purple-400">3 of 5</strong> custom workflows remaining this month</p>
+                    </div>
+                    <div class="text-5xl font-bold text-purple-400">3</div>
+                </div>
+            </div>
+
+            <!-- Request Form -->
+            <form id="workflowRequestForm" class="glass-panel p-8 rounded-2xl space-y-6">
+                
+                <!-- Workflow Name -->
+                <div>
+                    <label class="block text-white font-bold mb-2">
+                        <i class="fa-solid fa-tag text-brand-accent mr-2"></i>
+                        Workflow Name
+                    </label>
+                    <input 
+                        type="text" 
+                        name="workflow_name" 
+                        placeholder="e.g., Auto-Invoice After Job Complete"
+                        class="w-full px-4 py-3 bg-brand-dark border border-white/10 rounded-lg text-white placeholder-brand-dim focus:border-brand-accent focus:outline-none transition-colors"
+                        required
+                    >
+                    <p class="text-brand-dim text-xs mt-2">Give your workflow a descriptive name</p>
+                </div>
+
+                <!-- What to Automate -->
+                <div>
+                    <label class="block text-white font-bold mb-2">
+                        <i class="fa-solid fa-lightbulb text-brand-accent mr-2"></i>
+                        What do you want to automate?
+                    </label>
+                    <textarea 
+                        name="description" 
+                        rows="4"
+                        placeholder="Describe the process you want to automate. Be as detailed as possible.
+
+Example: 'When I mark a job as complete in my system, I want to automatically create an invoice in Xero, send it to the customer via email, and log the invoice number in my Google Sheet.'"
+                        class="w-full px-4 py-3 bg-brand-dark border border-white/10 rounded-lg text-white placeholder-brand-dim focus:border-brand-accent focus:outline-none transition-colors resize-none"
+                        required
+                    ></textarea>
+                </div>
+
+                <!-- Trigger -->
+                <div>
+                    <label class="block text-white font-bold mb-2">
+                        <i class="fa-solid fa-bolt text-brand-accent mr-2"></i>
+                        What triggers this workflow?
+                    </label>
+                    <select 
+                        name="trigger" 
+                        class="w-full px-4 py-3 bg-brand-dark border border-white/10 rounded-lg text-white focus:border-brand-accent focus:outline-none transition-colors"
+                        required
+                    >
+                        <option value="">Select a trigger...</option>
+                        <option value="missed_call">Missed call received</option>
+                        <option value="new_booking">New booking made</option>
+                        <option value="job_complete">Job marked as complete</option>
+                        <option value="invoice_paid">Invoice paid</option>
+                        <option value="new_customer">New customer added</option>
+                        <option value="review_received">Review received</option>
+                        <option value="scheduled_time">Scheduled time (daily, weekly, etc.)</option>
+                        <option value="manual">Manual trigger (I start it)</option>
+                        <option value="other">Other (explain in description)</option>
+                    </select>
+                </div>
+
+                <!-- Tools/Apps -->
+                <div>
+                    <label class="block text-white font-bold mb-2">
+                        <i class="fa-solid fa-plug text-brand-accent mr-2"></i>
+                        What tools/apps do you want to connect?
+                    </label>
+                    <input 
+                        type="text" 
+                        name="tools" 
+                        placeholder="e.g., Xero, QuickBooks, Google Sheets, Slack, Gmail"
+                        class="w-full px-4 py-3 bg-brand-dark border border-white/10 rounded-lg text-white placeholder-brand-dim focus:border-brand-accent focus:outline-none transition-colors"
+                        required
+                    >
+                    <p class="text-brand-dim text-xs mt-2">List all the tools this workflow needs to connect to</p>
+                </div>
+
+                <!-- Actions -->
+                <div>
+                    <label class="block text-white font-bold mb-2">
+                        <i class="fa-solid fa-list-check text-brand-accent mr-2"></i>
+                        What should happen? (Step by step)
+                    </label>
+                    <textarea 
+                        name="actions" 
+                        rows="6"
+                        placeholder="List the actions in order:
+
+1. Create invoice in Xero with customer details
+2. Send invoice via email to customer
+3. Log invoice number in Google Sheet (row with customer name)
+4. Send me a Slack notification: 'Invoice #123 sent to [Customer]'
+5. If customer doesn't pay within 7 days, send reminder email"
+                        class="w-full px-4 py-3 bg-brand-dark border border-white/10 rounded-lg text-white placeholder-brand-dim focus:border-brand-accent focus:outline-none transition-colors resize-none"
+                        required
+                    ></textarea>
+                </div>
+
+                <!-- Priority -->
+                <div>
+                    <label class="block text-white font-bold mb-2">
+                        <i class="fa-solid fa-flag text-brand-accent mr-2"></i>
+                        How urgent is this?
+                    </label>
+                    <div class="grid grid-cols-3 gap-4">
+                        <label class="glass-panel p-4 rounded-lg cursor-pointer hover:border-brand-accent/30 transition-all">
+                            <input type="radio" name="priority" value="low" class="mr-2">
+                            <span class="text-white font-medium">Low</span>
+                            <p class="text-brand-dim text-xs mt-1">Nice to have</p>
+                        </label>
+                        <label class="glass-panel p-4 rounded-lg cursor-pointer hover:border-brand-accent/30 transition-all">
+                            <input type="radio" name="priority" value="medium" class="mr-2" checked>
+                            <span class="text-white font-medium">Medium</span>
+                            <p class="text-brand-dim text-xs mt-1">Important</p>
+                        </label>
+                        <label class="glass-panel p-4 rounded-lg cursor-pointer hover:border-purple-500/30 transition-all">
+                            <input type="radio" name="priority" value="high" class="mr-2">
+                            <span class="text-purple-400 font-medium">High</span>
+                            <p class="text-brand-dim text-xs mt-1">Urgent</p>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Additional Notes -->
+                <div>
+                    <label class="block text-white font-bold mb-2">
+                        <i class="fa-solid fa-comment text-brand-accent mr-2"></i>
+                        Additional Notes (Optional)
+                    </label>
+                    <textarea 
+                        name="notes" 
+                        rows="3"
+                        placeholder="Any other details we should know? Special requirements? Edge cases to handle?"
+                        class="w-full px-4 py-3 bg-brand-dark border border-white/10 rounded-lg text-white placeholder-brand-dim focus:border-brand-accent focus:outline-none transition-colors resize-none"
+                    ></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex gap-4 pt-4">
+                    <button 
+                        type="submit" 
+                        class="flex-1 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-bold rounded-lg transition-all shadow-lg shadow-purple-500/30 flex items-center justify-center gap-2"
+                    >
+                        <i class="fa-solid fa-paper-plane"></i>
+                        Submit Workflow Request
+                    </button>
+                    <a 
+                        href="pro-dashboard.html" 
+                        class="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-lg transition-colors border border-white/10"
+                    >
+                        Cancel
+                    </a>
+                </div>
+
+                <p class="text-center text-brand-dim text-sm">
+                    <i class="fa-solid fa-clock mr-1"></i>
+                    We'll build and deploy your workflow within <strong class="text-white">48 hours</strong>
+                </p>
+            </form>
+
+            <!-- What Happens Next -->
+            <div class="mt-12 glass-panel p-8 rounded-2xl">
+                <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                    <i class="fa-solid fa-timeline text-brand-accent"></i>
+                    What Happens Next?
+                </h3>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center flex-shrink-0">
+                            <span class="text-brand-accent font-bold">1</span>
+                        </div>
+                        <div>
+                            <p class="text-white font-bold mb-1">We Review Your Request</p>
+                            <p class="text-brand-dim text-sm">Within 2 hours, we'll confirm we received your request and ask any clarifying questions.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center flex-shrink-0">
+                            <span class="text-brand-accent font-bold">2</span>
+                        </div>
+                        <div>
+                            <p class="text-white font-bold mb-1">We Build Your Workflow</p>
+                            <p class="text-brand-dim text-sm">Our team builds, tests, and deploys your custom workflow. You'll get progress updates via email.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-success/10 flex items-center justify-center flex-shrink-0">
+                            <span class="text-brand-success font-bold">3</span>
+                        </div>
+                        <div>
+                            <p class="text-white font-bold mb-1">Your Workflow Goes Live</p>
+                            <p class="text-brand-dim text-sm">Within 48 hours, your workflow is live! You'll see it in your dashboard and can start using it immediately.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('workflowRequestForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // In production, this would send to your API
+            console.log('Workflow Request:', data);
+            
+            // Show success message
+            alert('✅ Workflow request submitted!\n\nWe\'ll review your request and get back to you within 2 hours.\n\nCheck your email for updates.');
+            
+            // Redirect to dashboard
+            window.location.href = 'pro-dashboard.html';
+        });
+    </script>
+</body>
+</html>
+
