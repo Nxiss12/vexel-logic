@@ -42,3 +42,4 @@ GRANT ALL ON public.customer_responses TO anon, authenticated;
 GRANT USAGE, SELECT ON SEQUENCE missed_calls_id_seq TO anon, authenticated;
 GRANT USAGE, SELECT ON SEQUENCE customer_responses_id_seq TO anon, authenticated;
 
+

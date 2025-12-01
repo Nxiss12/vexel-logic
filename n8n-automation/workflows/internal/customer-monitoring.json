@@ -1,0 +1,212 @@
+{
+  "name": "Customer Health Monitoring",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": "customers",
+        "filterType": "manual",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "status",
+              "keyValue": "active"
+            }
+          ]
+        }
+      },
+      "id": "get-active-customers",
+      "name": "Get Active Customers",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [450, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": "missed_calls",
+        "filterType": "manual",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "business_phone",
+              "keyValue": "={{$json.phone}}"
+            },
+            {
+              "keyName": "created_at",
+              "keyValue": ">=now() - interval '7 days'"
+            }
+          ]
+        }
+      },
+      "id": "check-call-activity",
+      "name": "Check Call Activity (Last 7 Days)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [650, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{$json.call_count}}",
+              "operation": "equal",
+              "value2": 0
+            }
+          ]
+        }
+      },
+      "id": "is-inactive",
+      "name": "Is Inactive? (0 calls)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{$env.EMAIL_FROM}}",
+        "toEmail": "={{$json.email}}",
+        "subject": "Quick Check-In: Is Everything Working? 🔧",
+        "emailType": "html",
+        "message": "<h2>Hi {{$json.name}},</h2><p>I noticed we haven't received any missed calls for your business in the last 7 days.</p><p><strong>Just checking:</strong></p><ul><li>Is your phone forwarding set up correctly?</li><li>Are you receiving the SMS notifications?</li><li>Do you need any help with the setup?</li></ul><p>Reply to this email or <a href='https://calendly.com/ben-vexellogic/support'>book a quick 15-min call</a>.</p><p>I'm here to help!</p><p>- Ben @ Vexel Logic</p>"
+      },
+      "id": "send-check-in-email",
+      "name": "Send Check-In Email",
+      "type": "n8n-nodes-base.sendGrid",
+      "typeVersion": 1,
+      "position": [1050, 200],
+      "credentials": {
+        "sendGridApi": {
+          "id": "2",
+          "name": "SendGrid account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{$env.SLACK_WEBHOOK_URL}}",
+        "options": {},
+        "bodyParametersJson": "={\n  \"text\": \"⚠️ INACTIVE CUSTOMER ALERT\",\n  \"blocks\": [\n    {\n      \"type\": \"section\",\n      \"text\": {\n        \"type\": \"mrkdwn\",\n        \"text\": \"*Inactive Customer (0 calls in 7 days)*\\n*Name:* {{$json.name}}\\n*Email:* {{$json.email}}\\n*Phone:* {{$json.phone}}\\n*Status:* {{$json.status}}\\n\\n⚠️ Potential churn risk - follow up ASAP!\"\n      }\n    },\n    {\n      \"type\": \"actions\",\n      \"elements\": [\n        {\n          \"type\": \"button\",\n          \"text\": {\n            \"type\": \"plain_text\",\n            \"text\": \"Email Sent ✅\"\n          },\n          \"style\": \"primary\"\n        }\n      ]\n    }\n  ]\n}"
+      },
+      "id": "alert-slack",
+      "name": "Alert Slack (Churn Risk)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1050, 400],
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "jsCode": "// Count calls for this customer\nconst items = $input.all();\nconst callCount = items.length;\n\n// Get customer data from first item\nconst customer = items[0]?.json || {};\n\nreturn {\n  ...customer,\n  call_count: callCount,\n  last_check: new Date().toISOString()\n};"
+      },
+      "id": "aggregate-calls",
+      "name": "Aggregate Call Count",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [750, 300]
+    }
+  ],
+  "connections": {
+    "Every 6 Hours": {
+      "main": [
+        [
+          {
+            "node": "Get Active Customers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Active Customers": {
+      "main": [
+        [
+          {
+            "node": "Check Call Activity (Last 7 Days)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Call Activity (Last 7 Days)": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Call Count",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Call Count": {
+      "main": [
+        [
+          {
+            "node": "Is Inactive? (0 calls)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Inactive? (0 calls)": {
+      "main": [
+        [
+          {
+            "node": "Send Check-In Email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Alert Slack (Churn Risk)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-01T00:00:00.000Z",
+  "versionId": "1"
+}
+

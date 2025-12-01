@@ -861,3 +861,4 @@ Supabase has 24-hour outage → Vexel Logic inaccessible → customers miss call
 
 
 
+

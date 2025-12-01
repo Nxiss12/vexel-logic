@@ -1,0 +1,247 @@
+{
+  "name": "Plumber: Lead to Booking (Customer Template)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "missed-call",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "missed-call-trigger",
+      "name": "Missed Call Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "plumber-missed-call"
+    },
+    {
+      "parameters": {
+        "fromNumber": "={{$env.TWILIO_PHONE_NUMBER}}",
+        "toNumber": "={{$json.customer_phone}}",
+        "message": "Hi! We just missed your call. We're with a customer right now. What plumbing issue can we help with? Reply here or call back anytime. 🔧",
+        "options": {}
+      },
+      "id": "send-sms-reply",
+      "name": "Send Auto-Reply SMS",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [450, 300],
+      "credentials": {
+        "twilioApi": {
+          "id": "3",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "sms-reply",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "customer-reply-trigger",
+      "name": "Customer Replies (SMS)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 500],
+      "webhookId": "plumber-sms-reply"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.Body.toLowerCase()}}",
+              "operation": "contains",
+              "value2": "emergency"
+            },
+            {
+              "value1": "={{$json.Body.toLowerCase()}}",
+              "operation": "contains",
+              "value2": "urgent"
+            },
+            {
+              "value1": "={{$json.Body.toLowerCase()}}",
+              "operation": "contains",
+              "value2": "leak"
+            }
+          ]
+        },
+        "combineOperation": "any"
+      },
+      "id": "is-urgent",
+      "name": "Is Urgent?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [450, 500]
+    },
+    {
+      "parameters": {
+        "fromNumber": "={{$env.TWILIO_PHONE_NUMBER}}",
+        "toNumber": "={{$json.From}}",
+        "message": "🚨 Got it - this sounds urgent! We'll call you back within 30 minutes. If it's a burst pipe, turn off your main water valve now.",
+        "options": {}
+      },
+      "id": "urgent-response",
+      "name": "Send Urgent Response",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [650, 400],
+      "credentials": {
+        "twilioApi": {
+          "id": "3",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{$env.SLACK_WEBHOOK_URL}}",
+        "options": {},
+        "bodyParametersJson": "={\n  \"text\": \"🚨 URGENT PLUMBING JOB!\",\n  \"blocks\": [\n    {\n      \"type\": \"section\",\n      \"text\": {\n        \"type\": \"mrkdwn\",\n        \"text\": \"*URGENT JOB ALERT*\\n*Customer:* {{$json.From}}\\n*Message:* {{$json.Body}}\\n\\n⚠️ Call back within 30 minutes!\"\n      }\n    },\n    {\n      \"type\": \"actions\",\n      \"elements\": [\n        {\n          \"type\": \"button\",\n          \"text\": {\n            \"type\": \"plain_text\",\n            \"text\": \"Call Now 📞\"\n          },\n          \"url\": \"tel:{{$json.From}}\",\n          \"style\": \"danger\"\n        }\n      ]\n    }\n  ]\n}"
+      },
+      "id": "notify-urgent",
+      "name": "Notify Team (Urgent)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [850, 400],
+      "credentials": {}
+    },
+    {
+      "parameters": {
+        "fromNumber": "={{$env.TWILIO_PHONE_NUMBER}}",
+        "toNumber": "={{$json.From}}",
+        "message": "Thanks for the details! We can usually get to you within 2-4 hours. Book a time that works for you: [YOUR_BOOKING_LINK]. Or we'll call you back shortly to schedule.",
+        "options": {}
+      },
+      "id": "standard-response",
+      "name": "Send Standard Response + Booking Link",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [650, 600],
+      "credentials": {
+        "twilioApi": {
+          "id": "3",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "leads",
+        "columns": "customer_phone,message,urgency,status,created_at",
+        "additionalFields": {}
+      },
+      "id": "save-lead",
+      "name": "Save Lead to Database",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [850, 600],
+      "credentials": {
+        "supabaseApi": {
+          "id": "1",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"success\": true}",
+        "options": {}
+      },
+      "id": "respond-webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [650, 300]
+    }
+  ],
+  "connections": {
+    "Missed Call Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send Auto-Reply SMS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Auto-Reply SMS": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Replies (SMS)": {
+      "main": [
+        [
+          {
+            "node": "Is Urgent?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Urgent?": {
+      "main": [
+        [
+          {
+            "node": "Send Urgent Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Standard Response + Booking Link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Urgent Response": {
+      "main": [
+        [
+          {
+            "node": "Notify Team (Urgent)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Standard Response + Booking Link": {
+      "main": [
+        [
+          {
+            "node": "Save Lead to Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": ["customer-template", "plumber", "lead-generation"],
+  "triggerCount": 2,
+  "updatedAt": "2025-12-01T00:00:00.000Z",
+  "versionId": "1"
+}
+
