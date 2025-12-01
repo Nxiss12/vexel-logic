@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Vexel Logic - Business Automation for UK SMEs
 
 **Launch your business in 4 weeks. Everything you need is included.**
@@ -86,3 +87,7 @@ The `STRATEGY-VAULT/` folder has 80,000+ words of strategy docs. Ignore them for
 ---
 
 **Ready?** Open [START-HERE.md](START-HERE.md) and launch your business. 🚀
+=======
+# vexel-logic-automation
+Vexel Logic - Internal Automation &amp; Workflows 
+>>>>>>> 7c2d5a8598f7136c935a8f48dc9335d9c7cd2821
