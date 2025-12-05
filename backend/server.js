@@ -24,7 +24,54 @@ const emailTransporter = nodemailer.createTransport({
     }
 });
 
-// Package configuration
+// Service Package configuration (Done-For-You Services)
+const SERVICE_PACKAGES = {
+    starter: {
+        name: 'Starter System',
+        price: 299700, // £2,997 in pence
+        description: '1 custom automation system built for your business',
+        deliverables: [
+            '1 core automation system (your choice)',
+            'Custom-built for your business',
+            'All integrations included',
+            '30-day build + deployment',
+            '60 days post-launch support',
+            'Training for your team',
+            '100% Done-For-You'
+        ]
+    },
+    growth: {
+        name: 'Growth System',
+        price: 699700, // £6,997 in pence
+        description: '3 integrated automation systems for scaling businesses',
+        deliverables: [
+            '3 integrated automation systems',
+            'Advanced AI capabilities',
+            'Custom dashboard & analytics',
+            'Priority 30-day deployment',
+            '90 days premium support',
+            'Monthly optimization calls',
+            'Unlimited system updates',
+            'ROI Guarantee'
+        ]
+    },
+    enterprise: {
+        name: 'Enterprise Solution',
+        price: 1500000, // £15,000+ in pence (starting price)
+        description: 'Full business transformation with unlimited systems',
+        deliverables: [
+            'Unlimited automation systems',
+            'Dedicated automation team',
+            'Custom AI models',
+            'White-glove deployment',
+            '12 months premium support',
+            'Weekly strategy calls',
+            'Revenue guarantee included'
+        ]
+    }
+};
+
+// Product Package configuration (Legacy - for n8n workflow sales)
 const PACKAGES = {
     starter: {
         name: 'Starter Package',
@@ -63,6 +110,210 @@ const emailSubscribers = new Set();
 // API Routes
 
 // Create Stripe Checkout Session
+// ============================================
+// CONSULTATION BOOKING ENDPOINT (Service-Based Business)
+// ============================================
+
+app.post('/api/book-consultation', async (req, res) => {
+    try {
+        const {
+            name,
+            email,
+            phone,
+            company,
+            website,
+            interested_package,
+            system,
+            challenge,
+            revenue,
+            package: selectedPackage
+        } = req.body;
+
+        // Validation
+        if (!name || !email || !phone || !company || !interested_package || !system || !challenge) {
+            return res.status(400).json({
+                success: false,
+                message: 'Missing required fields'
+            });
+        }
+
+        // Get package details
+        const packageDetails = SERVICE_PACKAGES[interested_package] || {
+            name: 'Custom Package',
+            price: 0,
+            description: 'Custom solution'
+        };
+
+        // Store consultation request in database or send notification
+        // For now, we'll send emails
+
+        // 1. Send confirmation email to customer
+        const customerEmailHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #b026ff, #00f3ff); color: white; padding: 40px 20px; text-align: center; border-radius: 10px 10px 0 0; }
+        .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+        .highlight { background: #fff; padding: 20px; border-radius: 8px; border-left: 4px solid #b026ff; margin: 20px 0; }
+        .button { display: inline-block; background: #b026ff; color: white !important; padding: 15px 30px; text-decoration: none; border-radius: 8px; margin: 20px 0; }
+        .footer { text-align: center; padding: 20px; color: #666; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 style="margin: 0;">🎉 Consultation Booked!</h1>
+            <p style="margin: 10px 0 0; font-size: 18px;">We're excited to transform your business, ${name}!</p>
+        </div>
+        <div class="content">
+            <p>Thank you for your interest in <strong>${packageDetails.name}</strong>!</p>
+            
+            <div class="highlight">
+                <h3 style="margin-top: 0;">📋 Your Consultation Details:</h3>
+                <p><strong>Package:</strong> ${packageDetails.name}</p>
+                <p><strong>System Interest:</strong> ${system.charAt(0).toUpperCase() + system.slice(1)}</p>
+                <p><strong>Company:</strong> ${company}</p>
+                ${website ? `<p><strong>Website:</strong> ${website}</p>` : ''}
+            </div>
+
+            <h3>🚀 What Happens Next?</h3>
+            <ol>
+                <li><strong>Within 24 hours:</strong> Our team will review your information</li>
+                <li><strong>You'll receive:</strong> A calendar invite to book your free 30-minute consultation call</li>
+                <li><strong>Before the call:</strong> You'll get a preparation guide to maximize our time together</li>
+                <li><strong>On the call:</strong> We'll map out exactly which automations will save you 10-20 hours per week</li>
+            </ol>
+
+            <div class="highlight">
+                <h3 style="margin-top: 0;">💡 Prepare for Your Call</h3>
+                <p>Think about:</p>
+                <ul>
+                    <li>Tasks you do repeatedly every week</li>
+                    <li>Leads or customers you're currently losing</li>
+                    <li>Bottlenecks preventing your business from scaling</li>
+                    <li>Your biggest time-wasters</li>
+                </ul>
+            </div>
+
+            <p><strong>Challenge you mentioned:</strong><br>
+            <em>"${challenge}"</em></p>
+
+            <p>We'll show you exactly how to solve this with automation.</p>
+
+            <center>
+                <a href="mailto:hello@vexellogic.com" class="button">Questions? Email Us</a>
+            </center>
+        </div>
+        <div class="footer">
+            <p>📧 <strong>Vexel Logic</strong> - Done-For-You Business Automation</p>
+            <p>+44 7700 900000 | hello@vexellogic.com</p>
+            <p style="font-size: 12px; color: #999;">You're receiving this because you requested a consultation at vexellogic.com</p>
+        </div>
+    </div>
+</body>
+</html>
+        `;
+
+        await emailTransporter.sendMail({
+            from: `"Vexel Logic" <${process.env.SMTP_USER}>`,
+            to: email,
+            subject: `✅ Consultation Booked - ${packageDetails.name}`,
+            html: customerEmailHtml
+        });
+
+        // 2. Send notification to admin/sales team
+        const adminEmailHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: monospace; background: #000; color: #0f0; padding: 20px; }
+        .alert { border: 2px solid #0f0; padding: 20px; }
+        h2 { color: #0ff; }
+        .data { background: #111; padding: 15px; margin: 10px 0; border-left: 3px solid #0f0; }
+    </style>
+</head>
+<body>
+    <div class="alert">
+        <h2>🚨 NEW CONSULTATION REQUEST 🚨</h2>
+        
+        <div class="data">
+            <p><strong>NAME:</strong> ${name}</p>
+            <p><strong>EMAIL:</strong> ${email}</p>
+            <p><strong>PHONE:</strong> ${phone}</p>
+            <p><strong>COMPANY:</strong> ${company}</p>
+            ${website ? `<p><strong>WEBSITE:</strong> ${website}</p>` : ''}
+            ${revenue ? `<p><strong>MONTHLY REVENUE:</strong> ${revenue}</p>` : ''}
+        </div>
+
+        <div class="data">
+            <h3>💰 PACKAGE INTEREST:</h3>
+            <p><strong>${packageDetails.name}</strong></p>
+            <p>Price: £${(packageDetails.price / 100).toLocaleString()}</p>
+        </div>
+
+        <div class="data">
+            <h3>🎯 SYSTEM INTEREST:</h3>
+            <p>${system}</p>
+        </div>
+
+        <div class="data">
+            <h3>❗ CHALLENGE:</h3>
+            <p>${challenge}</p>
+        </div>
+
+        <div class="data">
+            <h3>⚡ ACTION REQUIRED:</h3>
+            <ol>
+                <li>Review their website: ${website || 'Not provided'}</li>
+                <li>Send calendar invite within 24 hours</li>
+                <li>Prepare consultation based on their challenge</li>
+                <li>Add to CRM/tracking system</li>
+            </ol>
+        </div>
+
+        <p><strong>LEAD RECEIVED:</strong> ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}</p>
+    </div>
+</body>
+</html>
+        `;
+
+        await emailTransporter.sendMail({
+            from: `"Vexel Logic Leads" <${process.env.SMTP_USER}>`,
+            to: process.env.ADMIN_EMAIL || process.env.SMTP_USER,
+            subject: `🚨 NEW ${interested_package.toUpperCase()} CONSULTATION - ${name} (${company})`,
+            html: adminEmailHtml
+        });
+
+        // Log for analytics
+        console.log(`[CONSULTATION] ${new Date().toISOString()} - ${name} (${email}) - ${interested_package} - ${system}`);
+
+        res.json({
+            success: true,
+            message: 'Consultation booked successfully',
+            data: {
+                package: packageDetails.name,
+                email: email
+            }
+        });
+
+    } catch (error) {
+        console.error('Consultation booking error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to book consultation',
+            error: error.message
+        });
+    }
+});
+
+// ============================================
+// LEGACY ROUTES (Product Sales - n8n workflows)
+// ============================================
+
 app.post('/api/create-checkout-session', async (req, res) => {
     try {
         const { priceId, packageType, successUrl, cancelUrl } = req.body;

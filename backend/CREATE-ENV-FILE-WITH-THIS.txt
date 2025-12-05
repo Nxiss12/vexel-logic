@@ -1,0 +1,23 @@
+# QUICK START .ENV FILE
+# Copy this content to backend/.env to test locally
+
+PORT=3000
+NODE_ENV=development
+
+# OPTIONAL: Leave blank for consultation testing
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+STRIPE_PRICE_STARTER=
+STRIPE_PRICE_PROFESSIONAL=
+STRIPE_PRICE_ENTERPRISE=
+
+# REQUIRED FOR TESTING: Update these with your Gmail
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-gmail-app-password
+ADMIN_EMAIL=your-email@gmail.com
+
+SESSION_SECRET=test-secret-123
+FRONTEND_URL=http://localhost:3000
+

@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vexel Logic - Done-For-You Business Automation | We Build Your Growth Systems</title>
+    <meta name="description" content="Stop wasting time on tasks. We build custom AI automation systems that run your business operations 24/7. No setup required - we do everything.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            padding: 20px 0;
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #b026ff, #00f3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #b026ff, #00f3ff);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 150px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(176, 38, 255, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: rgba(176, 38, 255, 0.2);
+            border: 1px solid rgba(176, 38, 255, 0.5);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #b026ff, #00f3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 24px;
+            color: #a0a0a0;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            line-height: 1.6;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #b026ff, #00f3ff);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            display: inline-block;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(176, 38, 255, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .btn-secondary:hover {
+            border-color: #b026ff;
+            background: rgba(176, 38, 255, 0.1);
+        }
+        
+        .trust-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 80px;
+        }
+        
+        .trust-item {
+            text-align: center;
+        }
+        
+        .trust-number {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #b026ff, #00f3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .trust-label {
+            color: #808080;
+            font-size: 14px;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 100px 0;
+            background: linear-gradient(180deg, #000000, #0a0014);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .section-header h2 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        
+        .section-header p {
+            font-size: 20px;
+            color: #a0a0a0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 50px;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #b026ff, #00f3ff);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            background: rgba(176, 38, 255, 0.05);
+            border-color: #b026ff;
+            transform: translateY(-5px);
+        }
+        
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .service-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        .service-card p {
+            color: #a0a0a0;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+        
+        .service-deliverables {
+            list-style: none;
+        }
+        
+        .service-deliverables li {
+            padding: 10px 0;
+            color: #c0c0c0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .service-deliverables li:last-child {
+            border-bottom: none;
+        }
+        
+        .service-deliverables li::before {
+            content: '✓ ';
+            color: #00f3ff;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 100px 0;
+            background: #000000;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #b026ff, #00f3ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0 auto 20px;
+        }
+        
+        .step h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .step p {
+            color: #a0a0a0;
+            font-size: 14px;
+        }
+        
+        /* Results Section */
+        .results {
+            padding: 100px 0;
+            background: linear-gradient(180deg, #000000, #0a0014);
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .result-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .result-metric {
+            font-size: 64px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #b026ff, #00f3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+        
+        .result-label {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        
+        .result-description {
+            font-size: 14px;
+            color: #808080;
+        }
+        
+        /* Pricing */
+        .pricing {
+            padding: 100px 0;
+            background: #000000;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 50px 40px;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: #b026ff;
+        }
+        
+        .pricing-card.featured {
+            background: linear-gradient(135deg, rgba(176, 38, 255, 0.1), rgba(0, 243, 255, 0.1));
+            border: 2px solid #b026ff;
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #b026ff, #00f3ff);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .pricing-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-card .subtitle {
+            color: #808080;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        
+        .price {
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 30px;
+        }
+        
+        .price span {
+            font-size: 20px;
+            color: #808080;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+        
+        .pricing-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .pricing-features li::before {
+            content: '✓ ';
+            color: #00f3ff;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        /* CTA Section */
+        .final-cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #b026ff, #00f3ff);
+            text-align: center;
+        }
+        
+        .final-cta h2 {
+            font-size: 56px;
+            margin-bottom: 20px;
+        }
+        
+        .final-cta p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .final-cta .btn-primary {
+            background: #000000;
+            color: white;
+        }
+        
+        .final-cta .btn-primary:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: #0a0014;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 60px;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+        }
+        
+        .modal h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .modal p {
+            color: #a0a0a0;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        @media (max-width: 968px) {
+            h1 {
+                font-size: 48px;
+            }
+            
+            .services-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="logo">VEXEL LOGIC</div>
+            <a href="#" class="nav-btn" onclick="openConsultation()">Book Free Consultation</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">🚀 Done-For-You Business Automation</div>
+                <h1>
+                    We Build Your <span class="gradient-text">AI Growth Systems</span><br>
+                    You Focus on Revenue
+                </h1>
+                <p class="hero-subtitle">
+                    Stop wasting time on repetitive tasks. Our team builds custom automation systems that handle your operations 24/7. No setup, no learning curve—we do everything for you.
+                </p>
+                <div class="cta-buttons">
+                    <button class="btn-primary" onclick="openConsultation()">Get Your Custom System</button>
+                    <button class="btn-secondary" onclick="document.getElementById('results').scrollIntoView({behavior: 'smooth'})">See Results</button>
+                </div>
+                <div class="trust-indicators">
+                    <div class="trust-item">
+                        <div class="trust-number">15hrs</div>
+                        <div class="trust-label">Saved Per Week</div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-number">98%</div>
+                        <div class="trust-label">Tasks Automated</div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-number">30 days</div>
+                        <div class="trust-label">To Full Automation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>What We Build For You</h2>
+                <p>Complete automation systems, custom-built for your business. We handle everything from strategy to deployment.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" onclick="showServiceDetails('lead')">
+                    <div class="service-icon">🎯</div>
+                    <h3>Lead Generation System</h3>
+                    <p>We build an AI-powered system that finds, qualifies, and nurtures leads automatically—while you sleep.</p>
+                    <ul class="service-deliverables">
+                        <li>AI prospect finder targeting your ideal customers</li>
+                        <li>Automated outreach sequences (email + LinkedIn)</li>
+                        <li>Lead scoring and qualification system</li>
+                        <li>CRM integration and data enrichment</li>
+                        <li>Real-time notifications for hot leads</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card" onclick="showServiceDetails('revenue')">
+                    <div class="service-icon">💰</div>
+                    <h3>Revenue Recovery System</h3>
+                    <p>Automatically follow up with lost customers, abandoned carts, and missed opportunities. We recover revenue you're currently losing.</p>
+                    <ul class="service-deliverables">
+                        <li>Abandoned cart recovery automation</li>
+                        <li>Win-back campaigns for lost customers</li>
+                        <li>Upsell/cross-sell automation</li>
+                        <li>Payment reminder system</li>
+                        <li>Review request automation</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card" onclick="showServiceDetails('operations')">
+                    <div class="service-icon">⚙️</div>
+                    <h3>Operations Automation</h3>
+                    <p>Eliminate manual administrative work. We automate scheduling, invoicing, reporting, and everything in between.</p>
+                    <ul class="service-deliverables">
+                        <li>Automated appointment scheduling</li>
+                        <li>Invoice generation and payment tracking</li>
+                        <li>Customer onboarding workflows</li>
+                        <li>Document generation and management</li>
+                        <li>Daily/weekly reporting dashboards</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card" onclick="showServiceDetails('intelligence')">
+                    <div class="service-icon">🧠</div>
+                    <h3>Business Intelligence System</h3>
+                    <p>Get AI-powered insights delivered daily. We track your metrics, spot trends, and alert you to opportunities before your competitors.</p>
+                    <ul class="service-deliverables">
+                        <li>Automated competitor monitoring</li>
+                        <li>Market trend analysis</li>
+                        <li>Custom KPI dashboards</li>
+                        <li>Predictive analytics and forecasting</li>
+                        <li>AI-generated weekly insights reports</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>From discovery to deployment in 30 days. Zero effort required from you.</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Discovery Call</h3>
+                    <p>We analyze your business and identify automation opportunities worth $10K-50K/year</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>We Build It</h3>
+                    <p>Our team designs and builds your custom automation system. No input needed from you.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>We Deploy It</h3>
+                    <p>We connect everything to your existing tools and test until it's perfect.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>You Profit</h3>
+                    <p>Watch your systems run 24/7 while we monitor and optimize. You focus on growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section id="results" class="results">
+        <div class="container">
+            <div class="section-header">
+                <h2>Real Results, Real Businesses</h2>
+                <p>Our clients don't just save time—they transform their operations.</p>
+            </div>
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-metric">£24K</div>
+                    <div class="result-label">Additional Annual Revenue</div>
+                    <div class="result-description">Recovered from automated follow-ups and win-back campaigns</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-metric">15hrs</div>
+                    <div class="result-label">Saved Per Week</div>
+                    <div class="result-description">Previously spent on manual admin and data entry</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-metric">3x</div>
+                    <div class="result-label">More Qualified Leads</div>
+                    <div class="result-description">From automated prospecting and lead nurturing</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Investment</h2>
+                <p>Choose the system that matches your growth goals</p>
+            </div>
+            <div class="pricing-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 900px; margin: 60px auto 0;">
+                <div class="pricing-card">
+                    <h3>Starter System</h3>
+                    <div class="subtitle">Perfect for small businesses</div>
+                    <div class="price">£2,997<span>/one-time</span></div>
+                    <ul class="pricing-features">
+                        <li>1 core automation system (your choice)</li>
+                        <li>Custom-built for your business</li>
+                        <li>All integrations included</li>
+                        <li>30-day build + deployment</li>
+                        <li>60 days post-launch support</li>
+                        <li>Training for your team</li>
+                        <li>100% Done-For-You</li>
+                    </ul>
+                    <button class="btn-primary" onclick="selectPackage('starter')" style="width: 100%">Get Started - £2,997</button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="popular-badge">MOST POPULAR - BEST VALUE</div>
+                    <h3>Growth System</h3>
+                    <div class="subtitle">For scaling businesses</div>
+                    <div class="price">£6,997<span>/one-time</span></div>
+                    <ul class="pricing-features">
+                        <li>3 integrated automation systems</li>
+                        <li>Advanced AI capabilities</li>
+                        <li>Custom dashboard & analytics</li>
+                        <li>Priority 30-day deployment</li>
+                        <li>90 days premium support</li>
+                        <li>Monthly optimization calls</li>
+                        <li>Unlimited system updates</li>
+                        <li>ROI Guarantee</li>
+                    </ul>
+                    <button class="btn-primary" onclick="selectPackage('growth')" style="width: 100%">Get Growth System - £6,997</button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 60px; padding: 40px; background: rgba(255, 255, 255, 0.02); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                <p style="font-size: 18px; color: #a0a0a0; margin-bottom: 20px;">
+                    Need more than 3 systems? <strong style="color: white;">Enterprise packages available from £15K+</strong>
+                </p>
+                <button class="btn-secondary" onclick="selectPackage('enterprise')" style="display: inline-block;">Discuss Enterprise Solution</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Stop Doing. Start Growing.</h2>
+            <p>Book a free consultation. We'll show you exactly what we can automate in your business.</p>
+            <button class="btn-primary btn-lg" onclick="openConsultation()">Book Free Consultation (Worth £500)</button>
+        </div>
+    </section>
+
+    <!-- Consultation Modal -->
+    <div id="consultation-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeConsultation()">&times;</button>
+            <h2 id="modal-title">Book Your Free Consultation</h2>
+            <p id="modal-subtitle">Tell us about your business. We'll show you exactly how we can help.</p>
+            <form id="consultation-form" onsubmit="submitConsultation(event)">
+                <input type="hidden" id="selected-package" name="package" value="">
+                
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" name="name" required placeholder="John Smith">
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" name="email" required placeholder="john@company.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone *</label>
+                    <input type="tel" name="phone" required placeholder="+44 7700 900000">
+                </div>
+                <div class="form-group">
+                    <label>Company Name *</label>
+                    <input type="text" name="company" required placeholder="Your Company Ltd">
+                </div>
+                <div class="form-group">
+                    <label>Company Website</label>
+                    <input type="url" name="website" placeholder="https://yourcompany.com">
+                </div>
+                <div class="form-group" id="package-select-group">
+                    <label>Which package interests you? *</label>
+                    <select name="interested_package" required id="package-selector">
+                        <option value="">Select one...</option>
+                        <option value="starter">Starter System - £2,997</option>
+                        <option value="growth">Growth System - £6,997 (Most Popular)</option>
+                        <option value="enterprise">Enterprise - £15K+ (Custom)</option>
+                        <option value="undecided">Not sure yet</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>What system interests you most? *</label>
+                    <select name="system" required>
+                        <option value="">Select one...</option>
+                        <option value="lead">Lead Generation System</option>
+                        <option value="revenue">Revenue Recovery System</option>
+                        <option value="operations">Operations Automation</option>
+                        <option value="intelligence">Business Intelligence</option>
+                        <option value="all">All of the above</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>What's your biggest challenge right now? *</label>
+                    <textarea name="challenge" required placeholder="e.g., Spending 10 hours/week on manual follow-ups, losing leads, can't scale operations..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Estimated monthly revenue (helps us tailor the call)</label>
+                    <select name="revenue">
+                        <option value="">Prefer not to say</option>
+                        <option value="0-10k">£0 - £10K/month</option>
+                        <option value="10k-50k">£10K - £50K/month</option>
+                        <option value="50k-100k">£50K - £100K/month</option>
+                        <option value="100k+">£100K+/month</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%">Book My Free Consultation</button>
+                <p style="text-align: center; font-size: 12px; color: #808080; margin-top: 15px;">
+                    🔒 Your information is secure. We'll never spam you.
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let selectedPackageGlobal = '';
+        
+        function openConsultation(preselectedPackage = '') {
+            const modal = document.getElementById('consultation-modal');
+            modal.classList.add('active');
+            
+            if (preselectedPackage) {
+                selectedPackageGlobal = preselectedPackage;
+                document.getElementById('selected-package').value = preselectedPackage;
+                
+                // Pre-select in dropdown
+                const packageSelector = document.getElementById('package-selector');
+                packageSelector.value = preselectedPackage;
+                
+                // Update modal title based on package
+                const modalTitle = document.getElementById('modal-title');
+                const modalSubtitle = document.getElementById('modal-subtitle');
+                
+                if (preselectedPackage === 'starter') {
+                    modalTitle.textContent = 'Get Your Starter System - £2,997';
+                    modalSubtitle.textContent = 'Let\'s discuss which automation system would transform your business.';
+                } else if (preselectedPackage === 'growth') {
+                    modalTitle.textContent = 'Get Your Growth System - £6,997';
+                    modalSubtitle.textContent = 'Let\'s map out your 3 automation systems for maximum impact.';
+                } else if (preselectedPackage === 'enterprise') {
+                    modalTitle.textContent = 'Enterprise Solution - Custom Pricing';
+                    modalSubtitle.textContent = 'Let\'s discuss your full business transformation needs.';
+                }
+            } else {
+                document.getElementById('modal-title').textContent = 'Book Your Free Consultation';
+                document.getElementById('modal-subtitle').textContent = 'Tell us about your business. We\'ll show you exactly how we can help.';
+            }
+            
+            // Track event
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'open_consultation_form', {
+                    package: preselectedPackage || 'none'
+                });
+            }
+        }
+        
+        function closeConsultation() {
+            document.getElementById('consultation-modal').classList.remove('active');
+            document.getElementById('consultation-form').reset();
+        }
+        
+        function selectPackage(packageType) {
+            // Track selection
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'select_package', { 
+                    package: packageType,
+                    value: packageType === 'starter' ? 2997 : packageType === 'growth' ? 6997 : 15000
+                });
+            }
+            openConsultation(packageType);
+        }
+        
+        function showServiceDetails(service) {
+            // Track interest
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'view_service', { service: service });
+            }
+            
+            // Service details mapping
+            const serviceInfo = {
+                lead: {
+                    title: 'Lead Generation System',
+                    description: 'This system finds and qualifies your ideal customers automatically, reaching out with personalized messages while you focus on closing deals.',
+                    examples: [
+                        'Auto-finds 50+ qualified prospects per week matching your ideal customer profile',
+                        'Sends personalized LinkedIn + email outreach sequences',
+                        'Scores leads based on engagement and company fit',
+                        'Alerts you when a hot lead is ready to talk',
+                        'Integrates with your CRM to keep everything organized'
+                    ]
+                },
+                revenue: {
+                    title: 'Revenue Recovery System',
+                    description: 'Recover thousands in lost revenue every month by automatically following up with customers who slipped through the cracks.',
+                    examples: [
+                        'Recovers 20-30% of abandoned carts with smart follow-ups',
+                        'Brings back inactive customers with personalized win-back campaigns',
+                        'Automatically suggests upsells/cross-sells at the right time',
+                        'Sends payment reminders before accounts become overdue',
+                        'Requests reviews from happy customers at peak satisfaction'
+                    ]
+                },
+                operations: {
+                    title: 'Operations Automation',
+                    description: 'Eliminate 15+ hours per week of repetitive admin work. Your team focuses on customers, not paperwork.',
+                    examples: [
+                        'Customers book appointments instantly without back-and-forth',
+                        'Invoices generated and sent automatically after work completion',
+                        'New customers get perfectly onboarded with zero manual work',
+                        'Documents (contracts, agreements, reports) created automatically',
+                        'Daily/weekly reports delivered to your inbox every morning'
+                    ]
+                },
+                intelligence: {
+                    title: 'Business Intelligence System',
+                    description: 'Get AI-powered insights delivered daily. Know what your competitors are doing, spot trends, and make data-driven decisions.',
+                    examples: [
+                        'Daily competitor monitoring (pricing, offers, content)',
+                        'Market trend alerts for your industry',
+                        'Custom dashboards showing your key metrics in real-time',
+                        'Predictive analytics: "You\'ll hit £50K revenue this month"',
+                        'Weekly insights report written by AI analyzing your business data'
+                    ]
+                }
+            };
+            
+            const info = serviceInfo[service];
+            let examplesList = info.examples.map(ex => `  • ${ex}`).join('\n');
+            
+            alert(`${info.title}\n\n${info.description}\n\nWhat you get:\n${examplesList}\n\nReady to get started? Click any package below!`);
+        }
+        
+        async function submitConsultation(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Booking Your Consultation...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Send to your backend
+                const response = await fetch('http://localhost:3000/api/book-consultation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    
+                    // Success!
+                    alert(`✅ Consultation Booked!\n\nThank you ${data.name}! We've received your request for ${data.interested_package === 'starter' ? 'the Starter System' : data.interested_package === 'growth' ? 'the Growth System' : 'an Enterprise solution'}.\n\nCheck ${data.email} for:\n• Confirmation email\n• Calendar invite to book your call\n• Preparation guide\n\nWe'll reach out within 24 hours!`);
+                    
+                    closeConsultation();
+                    form.reset();
+                    
+                    // Track conversion
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'consultation_booked', {
+                            package: data.interested_package,
+                            system: data.system,
+                            value: 500
+                        });
+                    }
+                    
+                    // Redirect to thank you page (optional)
+                    // window.location.href = '/thank-you.html';
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Booking failed');
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert(`Something went wrong: ${error.message}\n\nPlease email us directly at:\nhello@vexellogic.com\n\nOr call: +44 7700 900000`);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+        
+        // Close modal on outside click
+        document.getElementById('consultation-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'consultation-modal') {
+                closeConsultation();
+            }
+        });
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeConsultation();
+            }
+        });
+    </script>
+</body>
+</html>
+
