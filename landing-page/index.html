@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vexel Logic Business OS - Your AI-Powered Executive Assistant for Business Growth. Automate research, emails, calculations, and more.">
+    <meta name="keywords" content="AI business assistant, automation, n8n workflow, business intelligence, ROI calculator">
+    <title>Vexel Logic Business OS - AI Executive Assistant</title>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vexellogic.com/">
+    <meta property="og:title" content="Vexel Logic Business OS - AI Executive Assistant">
+    <meta property="og:description" content="Automate your business with AI. Research, emails, calculations, and calendar management - all in one intelligent assistant.">
+    <meta property="og:image" content="https://vexellogic.com/og-image.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M20 5L5 15L20 25L35 15L20 5Z" fill="#b026ff"/>
+                        <path d="M20 25L5 15V25L20 35L35 25V15L20 25Z" fill="#00f3ff" opacity="0.6"/>
+                    </svg>
+                    <span>Vexel Logic</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#testimonials">Testimonials</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#demo" class="btn-demo">Try Demo</a>
+                </div>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="gradient-blob blob-1"></div>
+            <div class="gradient-blob blob-2"></div>
+            <div class="grid-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="badge">🚀 Powered by GPT-4o & n8n</div>
+                    <h1>Your AI Executive Assistant for <span class="gradient-text">Business Growth</span></h1>
+                    <p class="hero-subtitle">Automate research, draft emails, calculate ROI, and manage calendars—all with one intelligent AI agent. Import into your n8n instance and start saving 10+ hours per week.</p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-number">60%</div>
+                            <div class="stat-label">Time Saved</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">$0.003</div>
+                            <div class="stat-label">Cost per Query</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">10 min</div>
+                            <div class="stat-label">Setup Time</div>
+                        </div>
+                    </div>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary" onclick="scrollToPricing()">Get Started Now</button>
+                        <button class="btn btn-secondary" onclick="openDemo()">Watch Demo</button>
+                    </div>
+                    <div class="trust-badges">
+                        <span>✓ Instant Download</span>
+                        <span>✓ No Subscription</span>
+                        <span>✓ Lifetime Updates</span>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="demo-window">
+                        <div class="demo-header">
+                            <div class="demo-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="demo-title">Vexel Logic Business OS</div>
+                        </div>
+                        <div class="demo-chat">
+                            <div class="chat-message user">Calculate my profit margin with revenue $100,000 and costs $65,000</div>
+                            <div class="chat-message ai typing">
+                                <div class="typing-indicator">
+                                    <span></span><span></span><span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="social-proof">
+        <div class="container">
+            <p class="trust-text">Trusted by business owners, agencies, and entrepreneurs</p>
+            <div class="metrics">
+                <div class="metric">
+                    <strong>500+</strong> Customers
+                </div>
+                <div class="metric">
+                    <strong>10,000+</strong> Hours Saved
+                </div>
+                <div class="metric">
+                    <strong>4.9/5</strong> Rating
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Everything Your Business Needs</h2>
+                <p>Four powerful AI tools that work together seamlessly</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Web Research</h3>
+                    <p>Analyze competitors, discover market trends, and gather business intelligence in seconds—not hours.</p>
+                    <ul class="feature-list">
+                        <li>Competitor analysis</li>
+                        <li>Market trend research</li>
+                        <li>Customer pain point discovery</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📧</div>
+                    <h3>Email Drafter</h3>
+                    <p>Generate high-converting sales emails, customer replies, and partnership proposals with AI precision.</p>
+                    <ul class="feature-list">
+                        <li>Sales outreach templates</li>
+                        <li>Follow-up sequences</li>
+                        <li>Professional tone matching</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧮</div>
+                    <h3>Business Calculator</h3>
+                    <p>Instantly calculate profit margins, ROI, break-even points, CAC, LTV, and more—no spreadsheets needed.</p>
+                    <ul class="feature-list">
+                        <li>Profit margin & ROI</li>
+                        <li>Break-even analysis</li>
+                        <li>CAC & LTV calculations</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Calendar Manager</h3>
+                    <p>Check availability, find meeting slots, and schedule appointments automatically with buffer time rules.</p>
+                    <ul class="feature-list">
+                        <li>Availability checking</li>
+                        <li>Smart slot finding</li>
+                        <li>Automated booking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <div class="benefits-grid">
+                <div class="benefit-content">
+                    <h2>Replace a $2,000/month Virtual Assistant for $40</h2>
+                    <p>The Vexel Logic Business OS delivers professional-grade assistance at a fraction of the cost.</p>
+                    <div class="benefit-comparison">
+                        <div class="comparison-item">
+                            <div class="comparison-label">Virtual Assistant</div>
+                            <div class="comparison-value old">$2,000/mo</div>
+                        </div>
+                        <div class="comparison-arrow">→</div>
+                        <div class="comparison-item">
+                            <div class="comparison-label">Vexel Logic + OpenAI</div>
+                            <div class="comparison-value new">$40/mo</div>
+                        </div>
+                    </div>
+                    <ul class="benefit-list">
+                        <li>✓ 24/7 availability (never sleeps)</li>
+                        <li>✓ Instant responses (no waiting)</li>
+                        <li>✓ Scales infinitely (no hiring bottleneck)</li>
+                        <li>✓ Never forgets context (perfect memory)</li>
+                        <li>✓ Works with your existing tools</li>
+                    </ul>
+                </div>
+                <div class="benefit-visual">
+                    <div class="stat-card">
+                        <h3>Time Saved Per Week</h3>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" data-value="75">
+                                <span>15 hours</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Cost Reduction</h3>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" data-value="98">
+                                <span>98%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Productivity Increase</h3>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" data-value="60">
+                                <span>60%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple, Transparent Pricing</h2>
+                <p>One-time payment. Lifetime access. No subscriptions.</p>
+            </div>
+            <div class="pricing-grid">
+                <!-- Starter Package -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Starter</h3>
+                        <p>Perfect for solo entrepreneurs</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="currency">$</span>
+                        <span class="amount">99</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Complete n8n workflow</li>
+                        <li>✓ Business Calculator tool</li>
+                        <li>✓ Installation guide</li>
+                        <li>✓ Quick reference card</li>
+                        <li>✓ Basic email support</li>
+                        <li>✗ Code examples</li>
+                        <li>✗ Use case library</li>
+                        <li>✗ Priority support</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="checkout('starter')">Get Started</button>
+                </div>
+
+                <!-- Professional Package (Most Popular) -->
+                <div class="pricing-card featured">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="pricing-header">
+                        <h3>Professional</h3>
+                        <p>Best for growing businesses</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="currency">$</span>
+                        <span class="amount">199</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Everything in Starter</li>
+                        <li>✓ All 4 AI tools configured</li>
+                        <li>✓ Complete documentation suite</li>
+                        <li>✓ 10+ code integration examples</li>
+                        <li>✓ 6 business use cases</li>
+                        <li>✓ Beautiful demo UI</li>
+                        <li>✓ Email automation templates</li>
+                        <li>✓ Priority email support</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="checkout('professional')">Get Professional</button>
+                </div>
+
+                <!-- Enterprise Package -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Enterprise</h3>
+                        <p>For agencies and teams</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="currency">$</span>
+                        <span class="amount">499</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Everything in Professional</li>
+                        <li>✓ Industry-specific variants</li>
+                        <li>✓ Custom tool development</li>
+                        <li>✓ 1-hour setup consultation</li>
+                        <li>✓ White-label license</li>
+                        <li>✓ Reseller documentation</li>
+                        <li>✓ Priority Slack support</li>
+                        <li>✓ Lifetime updates</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="checkout('enterprise')">Contact Sales</button>
+                </div>
+            </div>
+            <div class="pricing-guarantee">
+                <p>💯 <strong>30-Day Money-Back Guarantee</strong> - If you're not satisfied, we'll refund you. No questions asked.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Customers Say</h2>
+                <p>Real results from real business owners</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Saved me 15 hours per week on market research. I redirected that time to client work and increased revenue by 40%. This paid for itself in 3 days."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SJ</div>
+                        <div class="author-info">
+                            <div class="author-name">Sarah Johnson</div>
+                            <div class="author-title">Marketing Consultant</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"The business calculator alone caught a pricing error that would've cost us $50K. The ROI tool helps me evaluate every investment decision now."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MT</div>
+                        <div class="author-info">
+                            <div class="author-name">Mike Thompson</div>
+                            <div class="author-title">E-commerce Store Owner</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Our sales emails now convert 3x better. The AI knows exactly how to position value propositions. We've closed 12 deals in 2 months that we wouldn't have otherwise."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">LR</div>
+                        <div class="author-info">
+                            <div class="author-name">Lisa Rodriguez</div>
+                            <div class="author-title">SaaS Founder</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2>Real-World Use Cases</h2>
+                <p>See how businesses use Vexel Logic every day</p>
+            </div>
+            <div class="use-cases-tabs">
+                <button class="tab-btn active" onclick="showUseCase('research')">Market Research</button>
+                <button class="tab-btn" onclick="showUseCase('email')">Email Automation</button>
+                <button class="tab-btn" onclick="showUseCase('finance')">Financial Analysis</button>
+                <button class="tab-btn" onclick="showUseCase('strategy')">Growth Strategy</button>
+            </div>
+            <div class="use-case-content">
+                <div class="use-case active" id="research">
+                    <div class="use-case-text">
+                        <h3>Competitive Intelligence</h3>
+                        <p class="use-case-prompt"><strong>You ask:</strong> "Research the top 5 competitors in the online education space and compare their pricing strategies."</p>
+                        <p class="use-case-result"><strong>Agent delivers:</strong> Structured competitive analysis with pricing models, unique selling points, customer complaints, and market gaps.</p>
+                        <div class="use-case-impact">
+                            <div class="impact-item">
+                                <span class="impact-label">Time Saved:</span>
+                                <span class="impact-value">4-6 hours</span>
+                            </div>
+                            <div class="impact-item">
+                                <span class="impact-label">Cost Avoided:</span>
+                                <span class="impact-value">$500-1,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="use-case-visual">
+                        <div class="code-block">
+                            <div class="code-header">Example Output</div>
+                            <pre><code>{
+  "competitors": [
+    {
+      "name": "Competitor A",
+      "pricing": "$29/mo",
+      "strengths": [...],
+      "weaknesses": [...]
+    }
+  ],
+  "market_gaps": [...],
+  "recommendations": [...]
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <!-- Other use cases will be similar structure -->
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Do I need coding skills?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>No! Import the JSON file into n8n, add your OpenAI API key, and it works. The documentation walks you through every step. Setup takes about 10 minutes.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>What do I need to run this?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>You need: (1) A self-hosted or cloud n8n instance, (2) An OpenAI API key. That's it. Both are easy to set up and we provide detailed instructions.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>How much does it cost to operate?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>OpenAI API costs about $0.003 per query (less than half a cent). For 10,000 queries per month, you'll pay roughly $40 in API fees. Compare that to a $2,000/month virtual assistant!</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Can I use this for client projects?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! The license allows you to use it for client work, white-label it, and charge for services. You just can't resell the exact workflow as-is.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>What if I need help?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We provide comprehensive documentation that answers 99% of questions. Professional and Enterprise plans include email support. Enterprise gets priority Slack support.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Do you offer refunds?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Absolutely! We offer a 30-day money-back guarantee. If you're not satisfied for any reason, email us and we'll refund you immediately. No questions asked.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Email Capture -->
+    <section class="email-capture">
+        <div class="container">
+            <div class="email-capture-content">
+                <h2>Get Free Business Automation Tips</h2>
+                <p>Join 1,000+ entrepreneurs receiving weekly automation strategies</p>
+                <form class="email-form" onsubmit="submitEmail(event)">
+                    <input type="email" placeholder="Enter your email" required id="email-input">
+                    <button type="submit" class="btn btn-primary">Subscribe Free</button>
+                </form>
+                <p class="email-privacy">We respect your privacy. Unsubscribe anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Ready to 10x Your Productivity?</h2>
+            <p>Join hundreds of business owners who automated their operations with Vexel Logic</p>
+            <button class="btn btn-primary btn-lg" onclick="scrollToPricing()">Get Started Now</button>
+            <p class="cta-guarantee">30-day money-back guarantee • Instant download • Lifetime updates</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                            <path d="M20 5L5 15L20 25L35 15L20 5Z" fill="#b026ff"/>
+                            <path d="M20 25L5 15V25L20 35L35 25V15L20 25Z" fill="#00f3ff" opacity="0.6"/>
+                        </svg>
+                        <span>Vexel Logic</span>
+                    </div>
+                    <p>Your AI-powered business operations system</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="#features">Features</a>
+                        <a href="#pricing">Pricing</a>
+                        <a href="#demo">Demo</a>
+                        <a href="/documentation">Documentation</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="/help">Help Center</a>
+                        <a href="/contact">Contact Us</a>
+                        <a href="/refund">Refund Policy</a>
+                        <a href="/terms">Terms of Service</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="/about">About Us</a>
+                        <a href="/affiliate">Affiliate Program</a>
+                        <a href="/blog">Blog</a>
+                        <a href="/privacy">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Vexel Logic. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="https://twitter.com/vexellogic" aria-label="Twitter">𝕏</a>
+                    <a href="https://linkedin.com/company/vexellogic" aria-label="LinkedIn">in</a>
+                    <a href="https://github.com/vexellogic" aria-label="GitHub">GH</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Demo Modal -->
+    <div id="demo-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDemo()">&times;</button>
+            <h2>Watch Demo Video</h2>
+            <div class="video-container">
+                <iframe width="100%" height="500" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    
+    <!-- Analytics -->
+    <script>
+        // Google Analytics
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+        
+        // Track page view
+        gtag('event', 'page_view', {
+            page_title: document.title,
+            page_location: window.location.href
+        });
+    </script>
+</body>
+</html>
+

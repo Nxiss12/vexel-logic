@@ -1,0 +1,133 @@
+{
+  "name": "Vexel Logic - Web Research Tool (Tavily)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "workflow-trigger",
+      "name": "When called by another workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.tavily.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "={{ $json.query }}"
+            },
+            {
+              "name": "search_depth",
+              "value": "={{ $json.depth || 'basic' }}"
+            },
+            {
+              "name": "max_results",
+              "value": "={{ $json.depth === 'advanced' ? 10 : 5 }}"
+            },
+            {
+              "name": "include_answer",
+              "value": true
+            },
+            {
+              "name": "include_images",
+              "value": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "tavily-api-call",
+      "name": "Tavily Search API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_WITH_YOUR_TAVILY_CREDENTIAL_ID",
+          "name": "Tavily API Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process Tavily API response into structured format\nconst tavilyResponse = $input.first().json;\n\n// Extract the results\nconst results = tavilyResponse.results || [];\nconst answer = tavilyResponse.answer || '';\n\n// Format results for AI agent\nconst formattedResults = results.map((result, index) => ({\n  position: index + 1,\n  title: result.title,\n  url: result.url,\n  content: result.content,\n  score: result.score\n}));\n\n// Create comprehensive summary\nconst summary = {\n  query: $('When called by another workflow').item.json.query,\n  answer: answer,\n  results_count: results.length,\n  top_results: formattedResults.slice(0, 3),\n  all_results: formattedResults,\n  search_depth: $('When called by another workflow').item.json.depth || 'basic',\n  timestamp: new Date().toISOString()\n};\n\n// Create a formatted text response for the AI agent\nlet formattedText = `**Web Research Results**\\n\\n`;\nformattedText += `**Query:** ${summary.query}\\n\\n`;\n\nif (answer) {\n  formattedText += `**Quick Answer:** ${answer}\\n\\n`;\n}\n\nformattedText += `**Top ${Math.min(3, results.length)} Results:**\\n\\n`;\n\nformattedResults.slice(0, 3).forEach((result, index) => {\n  formattedText += `${index + 1}. **${result.title}**\\n`;\n  formattedText += `   ${result.content.substring(0, 200)}...\\n`;\n  formattedText += `   Source: ${result.url}\\n\\n`;\n});\n\nif (results.length > 3) {\n  formattedText += `\\n*Found ${results.length} total results*\\n`;\n}\n\n// Return both structured data and formatted text\nreturn {\n  json: {\n    formatted_response: formattedText,\n    structured_data: summary,\n    raw_results: formattedResults\n  }\n};"
+      },
+      "id": "format-results",
+      "name": "Format Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.formatted_response }}"
+      },
+      "id": "return-results",
+      "name": "Return Results",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "When called by another workflow": {
+      "main": [
+        [
+          {
+            "node": "Tavily Search API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily Search API": {
+      "main": [
+        [
+          {
+            "node": "Format Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Results": {
+      "main": [
+        [
+          {
+            "node": "Return Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-04T00:00:00.000Z",
+  "versionId": "1.0.0"
+}
+

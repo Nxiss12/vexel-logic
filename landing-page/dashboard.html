@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - Vexel Logic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-purple: #b026ff;
+            --secondary-cyan: #00f3ff;
+            --dark-bg: #05050a;
+            --card-bg: #0a0a12;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --success-green: #10b981;
+            --warning-yellow: #f59e0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-purple), var(--secondary-cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .welcome {
+            margin-bottom: 40px;
+        }
+        
+        .welcome h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .welcome p {
+            color: var(--text-secondary);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .card-icon {
+            font-size: 32px;
+        }
+        
+        .package-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--secondary-cyan));
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .download-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--secondary-cyan));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(176, 38, 255, 0.4);
+        }
+        
+        .file-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .file-item {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .file-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .file-size {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .resource-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+        
+        .resource-link:hover {
+            background: rgba(176, 38, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .resource-icon {
+            font-size: 24px;
+        }
+        
+        .purchase-info {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            color: var(--text-secondary);
+        }
+        
+        .info-row strong {
+            color: var(--text-primary);
+        }
+        
+        .support-chat {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--secondary-cyan));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(176, 38, 255, 0.4);
+            transition: transform 0.3s;
+        }
+        
+        .support-chat:hover {
+            transform: scale(1.1);
+        }
+        
+        .quick-start {
+            background: linear-gradient(135deg, rgba(176, 38, 255, 0.1), rgba(0, 243, 255, 0.1));
+            border: 1px solid var(--primary-purple);
+        }
+        
+        .step {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: var(--primary-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            margin-bottom: 5px;
+        }
+        
+        .step-content p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 100px 20px;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary-purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Loading your dashboard...</p>
+    </div>
+    
+    <div id="dashboard" style="display: none;">
+        <div class="container">
+            <div class="header">
+                <div class="logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M20 5L5 15L20 25L35 15L20 5Z" fill="#b026ff"/>
+                        <path d="M20 25L5 15V25L20 35L35 25V15L20 25Z" fill="#00f3ff" opacity="0.6"/>
+                    </svg>
+                    <span>Vexel Logic</span>
+                </div>
+                <div class="user-info">
+                    <div class="avatar" id="avatar">VL</div>
+                    <div id="user-email"></div>
+                </div>
+            </div>
+            
+            <div class="welcome">
+                <h1>Welcome Back! 👋</h1>
+                <p>Your Vexel Logic Business OS is ready to download and deploy.</p>
+            </div>
+            
+            <div class="dashboard-grid">
+                <!-- Download Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Your Package</div>
+                        <div class="card-icon">📦</div>
+                    </div>
+                    <div class="package-badge" id="package-type">Professional</div>
+                    <button class="download-button" onclick="downloadPackage()">
+                        ⬇️ Download Package
+                    </button>
+                    <ul class="file-list" id="file-list">
+                        <!-- Files will be dynamically loaded -->
+                    </ul>
+                    <div class="purchase-info">
+                        <div class="info-row">
+                            <span>Purchase Date:</span>
+                            <strong id="purchase-date">-</strong>
+                        </div>
+                        <div class="info-row">
+                            <span>Transaction ID:</span>
+                            <strong id="transaction-id">-</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Start Card -->
+                <div class="card quick-start">
+                    <div class="card-header">
+                        <div class="card-title">Quick Start Guide</div>
+                        <div class="card-icon">🚀</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Download Package</h4>
+                            <p>Click the download button above</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Extract Files</h4>
+                            <p>Unzip the downloaded package</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Import to n8n</h4>
+                            <p>Follow INSTALLATION_GUIDE.md</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Add OpenAI Key</h4>
+                            <p>Configure your API credentials</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Resources Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Resources</div>
+                        <div class="card-icon">📚</div>
+                    </div>
+                    <a href="/docs/installation" class="resource-link">
+                        <span class="resource-icon">📖</span>
+                        <span>Installation Guide</span>
+                    </a>
+                    <a href="/docs/use-cases" class="resource-link">
+                        <span class="resource-icon">💡</span>
+                        <span>Use Cases Library</span>
+                    </a>
+                    <a href="/docs/technical" class="resource-link">
+                        <span class="resource-icon">🔧</span>
+                        <span>Technical Documentation</span>
+                    </a>
+                    <a href="/docs/integrations" class="resource-link">
+                        <span class="resource-icon">🔌</span>
+                        <span>Code Examples</span>
+                    </a>
+                    <a href="/community" class="resource-link">
+                        <span class="resource-icon">👥</span>
+                        <span>Join Community</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Support Section -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Need Help?</div>
+                    <div class="card-icon">💬</div>
+                </div>
+                <p style="margin-bottom: 20px; color: var(--text-secondary);">
+                    Have questions? We're here to help you get up and running.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <button onclick="openSupport('email')" style="padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: white; cursor: pointer;">
+                        📧 Email Support
+                    </button>
+                    <button onclick="openSupport('docs')" style="padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: white; cursor: pointer;">
+                        📚 Documentation
+                    </button>
+                    <button onclick="openSupport('community')" style="padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; color: white; cursor: pointer;">
+                        👥 Community
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="support-chat" onclick="openChatbot()" title="Chat with Support">
+        💬
+    </div>
+    
+    <script>
+        const API_ENDPOINT = '/api';
+        
+        // Get email from URL parameter or localStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        const userEmail = urlParams.get('email') || localStorage.getItem('customer_email');
+        
+        // File lists for each package
+        const packageFiles = {
+            starter: [
+                { name: 'vexel-logic-business-os-agent.json', size: '12 KB' },
+                { name: 'INSTALLATION_GUIDE.md', size: '18 KB' },
+                { name: 'QUICK_REFERENCE.md', size: '14 KB' }
+            ],
+            professional: [
+                { name: 'vexel-logic-business-os-agent.json', size: '12 KB' },
+                { name: 'README.md', size: '15 KB' },
+                { name: 'INSTALLATION_GUIDE.md', size: '18 KB' },
+                { name: 'BUSINESS_USE_CASES.md', size: '22 KB' },
+                { name: 'TECHNICAL_DOCUMENTATION.md', size: '28 KB' },
+                { name: 'EXAMPLE_INTEGRATIONS.md', size: '25 KB' },
+                { name: 'QUICK_REFERENCE.md', size: '14 KB' },
+                { name: 'LICENSE.txt', size: '5 KB' },
+                { name: 'index.html', size: '35 KB' }
+            ],
+            enterprise: [
+                { name: 'Complete Package', size: '150+ KB' },
+                { name: '+ Industry Variants', size: 'Included' },
+                { name: '+ Setup Consultation', size: '1 hour' }
+            ]
+        };
+        
+        // Load customer data
+        async function loadDashboard() {
+            if (!userEmail) {
+                showError('No email found. Please check your email for the dashboard link.');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_ENDPOINT}/customer/dashboard/${encodeURIComponent(userEmail)}`);
+                
+                if (!response.ok) {
+                    throw new Error('Customer not found');
+                }
+                
+                const data = await response.json();
+                
+                // Update UI with customer data
+                document.getElementById('user-email').textContent = data.email;
+                document.getElementById('avatar').textContent = data.email.substring(0, 2).toUpperCase();
+                document.getElementById('package-type').textContent = capitalize(data.package) + ' Package';
+                document.getElementById('purchase-date').textContent = new Date(data.purchaseDate).toLocaleDateString();
+                document.getElementById('transaction-id').textContent = data.transactionId.substring(0, 20) + '...';
+                
+                // Load file list
+                const fileListEl = document.getElementById('file-list');
+                const files = packageFiles[data.package] || [];
+                fileListEl.innerHTML = files.map(file => `
+                    <li class="file-item">
+                        <div class="file-name">
+                            <span>📄</span>
+                            <span>${file.name}</span>
+                        </div>
+                        <span class="file-size">${file.size}</span>
+                    </li>
+                `).join('');
+                
+                // Store download link
+                window.downloadLink = data.downloadLink;
+                
+                // Show dashboard
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                
+                // Store email for future visits
+                localStorage.setItem('customer_email', data.email);
+                
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                showError('Unable to load your dashboard. Please contact support.');
+            }
+        }
+        
+        function downloadPackage() {
+            if (window.downloadLink) {
+                window.location.href = window.downloadLink;
+                
+                // Track download
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'download_package', {
+                        package_type: document.getElementById('package-type').textContent
+                    });
+                }
+            } else {
+                alert('Download link not available. Please contact support.');
+            }
+        }
+        
+        function openSupport(type) {
+            const urls = {
+                email: 'mailto:support@vexellogic.com',
+                docs: '/docs',
+                community: '/community'
+            };
+            window.open(urls[type], '_blank');
+        }
+        
+        function openChatbot() {
+            // Integrate with your chatbot solution (Intercom, Crisp, etc.)
+            alert('Chat support coming soon! For now, please email support@vexellogic.com');
+        }
+        
+        function showError(message) {
+            document.getElementById('loading').innerHTML = `
+                <div class="error">
+                    <h2>⚠️ Error</h2>
+                    <p>${message}</p>
+                    <button onclick="location.reload()" style="margin-top: 20px; padding: 12px 24px; background: var(--primary-purple); border: none; border-radius: 8px; color: white; cursor: pointer;">
+                        Reload Page
+                    </button>
+                </div>
+            `;
+        }
+        
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+        
+        // Load dashboard on page load
+        loadDashboard();
+    </script>
+</body>
+</html>
+

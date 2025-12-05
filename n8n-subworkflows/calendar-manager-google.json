@@ -1,0 +1,285 @@
+{
+  "name": "Vexel Logic - Calendar Manager Tool (Google Calendar)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "workflow-trigger",
+      "name": "When called by another workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "check-availability",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "check_availability",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "switch-action",
+      "name": "Switch: Action Type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "primary",
+          "mode": "list",
+          "cachedResultName": "Primary"
+        },
+        "returnAll": false,
+        "limit": 50,
+        "options": {
+          "timeMin": "={{ $('When called by another workflow').item.json.date }}T00:00:00Z",
+          "timeMax": "={{ $('When called by another workflow').item.json.date }}T23:59:59Z",
+          "query": "",
+          "singleEvents": true,
+          "orderBy": "startTime"
+        }
+      },
+      "id": "get-events",
+      "name": "Get Calendar Events",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.2,
+      "position": [680, 140],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "REPLACE_WITH_YOUR_GOOGLE_CALENDAR_CREDENTIAL_ID",
+          "name": "Google Calendar OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Analyze calendar events to find available slots\nconst events = $input.all();\nconst inputData = $('When called by another workflow').item.json;\n\nconst date = inputData.date;\nconst duration = inputData.duration || 60; // minutes\nconst bufferTime = 30; // default 30 min buffer\n\n// Working hours (9 AM to 5 PM)\nconst workStart = 9 * 60; // 9:00 AM in minutes\nconst workEnd = 17 * 60; // 5:00 PM in minutes\n\n// Convert events to time blocks (in minutes from midnight)\nconst busyBlocks = events.map(event => {\n  const start = new Date(event.json.start.dateTime);\n  const end = new Date(event.json.end.dateTime);\n  \n  return {\n    start: start.getHours() * 60 + start.getMinutes(),\n    end: end.getHours() * 60 + end.getMinutes(),\n    title: event.json.summary\n  };\n}).sort((a, b) => a.start - b.start);\n\n// Find available slots\nconst availableSlots = [];\nlet currentTime = workStart;\n\nfor (const busy of busyBlocks) {\n  // Check if there's enough time before this busy block\n  const gapBefore = busy.start - currentTime;\n  \n  if (gapBefore >= (duration + bufferTime)) {\n    availableSlots.push({\n      start: minutesToTime(currentTime),\n      end: minutesToTime(currentTime + duration),\n      duration: duration,\n      bufferAfter: bufferTime\n    });\n  }\n  \n  // Move current time to end of busy block + buffer\n  currentTime = Math.max(currentTime, busy.end + bufferTime);\n}\n\n// Check for slot after last event\nif (currentTime + duration + bufferTime <= workEnd) {\n  availableSlots.push({\n    start: minutesToTime(currentTime),\n    end: minutesToTime(currentTime + duration),\n    duration: duration,\n    bufferAfter: bufferTime\n  });\n}\n\n// Helper function\nfunction minutesToTime(minutes) {\n  const hours = Math.floor(minutes / 60);\n  const mins = minutes % 60;\n  return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;\n}\n\n// Format response\nlet response = `**Calendar Availability for ${date}**\\n\\n`;\n\nif (busyBlocks.length === 0) {\n  response += `✅ You're completely free on this day!\\n\\n`;\n  response += `Available: 9:00 AM - 5:00 PM\\n`;\n} else {\n  response += `**Scheduled Events:**\\n`;\n  busyBlocks.forEach(block => {\n    response += `- ${minutesToTime(block.start)} - ${minutesToTime(block.end)}: ${block.title}\\n`;\n  });\n  response += `\\n**Available Time Slots (${duration} min + ${bufferTime} min buffer):**\\n\\n`;\n  \n  if (availableSlots.length > 0) {\n    availableSlots.slice(0, 5).forEach((slot, index) => {\n      response += `${index + 1}. ${slot.start} - ${slot.end}\\n`;\n    });\n  } else {\n    response += `❌ No available slots found with the requested duration and buffer time.\\n`;\n  }\n}\n\nreturn {\n  json: {\n    formatted_response: response,\n    available_slots: availableSlots,\n    busy_blocks: busyBlocks,\n    date: date,\n    total_free_slots: availableSlots.length\n  }\n};"
+      },
+      "id": "analyze-availability",
+      "name": "Analyze Availability",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 140]
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "primary",
+          "mode": "list"
+        },
+        "start": "={{ $('When called by another workflow').item.json.date }}T{{ $('When called by another workflow').item.json.startTime }}:00",
+        "end": "={{ $('When called by another workflow').item.json.date }}T{{ DateTime.fromISO($('When called by another workflow').item.json.date + 'T' + $('When called by another workflow').item.json.startTime).plus({ minutes: $('When called by another workflow').item.json.duration || 60 }).toFormat('HH:mm') }}:00",
+        "summary": "={{ $('When called by another workflow').item.json.title || 'Meeting' }}",
+        "options": {
+          "description": "Scheduled via Vexel Logic Business OS",
+          "attendees": "={{ $('When called by another workflow').item.json.attendees ? $('When called by another workflow').item.json.attendees.split(',').map(e => e.trim()) : [] }}",
+          "sendUpdates": "all"
+        }
+      },
+      "id": "create-event",
+      "name": "Create Calendar Event",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.2,
+      "position": [680, 300],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "REPLACE_WITH_YOUR_GOOGLE_CALENDAR_CREDENTIAL_ID",
+          "name": "Google Calendar OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Format the created event response\nconst event = $input.first().json;\nconst inputData = $('When called by another workflow').item.json;\n\nconst response = `**✅ Meeting Scheduled Successfully**\\n\\n` +\n  `**Title:** ${event.summary}\\n` +\n  `**Date:** ${inputData.date}\\n` +\n  `**Time:** ${inputData.startTime}\\n` +\n  `**Duration:** ${inputData.duration || 60} minutes\\n` +\n  `**Attendees:** ${inputData.attendees || 'None'}\\n\\n` +\n  `**Calendar Link:** ${event.htmlLink}\\n\\n` +\n  `Calendar invitations have been sent to all attendees.`;\n\nreturn {\n  json: {\n    formatted_response: response,\n    event_id: event.id,\n    event_link: event.htmlLink,\n    created_at: new Date().toISOString()\n  }\n};"
+      },
+      "id": "format-booking",
+      "name": "Format Booking Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Find optimal meeting slots\nconst events = $input.all();\nconst inputData = $('When called by another workflow').item.json;\n\nconst date = inputData.date;\nconst duration = inputData.duration || 60;\nconst numberOfSlots = 3; // Return top 3 slots\n\n// Same logic as check_availability but return best slots\nconst workStart = 9 * 60;\nconst workEnd = 17 * 60;\nconst bufferTime = 30;\n\nconst busyBlocks = events.map(event => {\n  const start = new Date(event.json.start.dateTime);\n  const end = new Date(event.json.end.dateTime);\n  \n  return {\n    start: start.getHours() * 60 + start.getMinutes(),\n    end: end.getHours() * 60 + end.getMinutes()\n  };\n}).sort((a, b) => a.start - b.start);\n\nconst availableSlots = [];\nlet currentTime = workStart;\n\nfor (const busy of busyBlocks) {\n  const gapBefore = busy.start - currentTime;\n  \n  if (gapBefore >= (duration + bufferTime)) {\n    // Calculate a \"quality score\" for this slot\n    // Prefer mid-morning and mid-afternoon\n    const slotMidpoint = currentTime + (duration / 2);\n    const distanceFrom10AM = Math.abs(slotMidpoint - (10 * 60));\n    const distanceFrom2PM = Math.abs(slotMidpoint - (14 * 60));\n    const qualityScore = 1000 - Math.min(distanceFrom10AM, distanceFrom2PM);\n    \n    availableSlots.push({\n      start: minutesToTime(currentTime),\n      end: minutesToTime(currentTime + duration),\n      duration: duration,\n      qualityScore: qualityScore\n    });\n  }\n  \n  currentTime = Math.max(currentTime, busy.end + bufferTime);\n}\n\nif (currentTime + duration + bufferTime <= workEnd) {\n  const slotMidpoint = currentTime + (duration / 2);\n  const distanceFrom10AM = Math.abs(slotMidpoint - (10 * 60));\n  const distanceFrom2PM = Math.abs(slotMidpoint - (14 * 60));\n  const qualityScore = 1000 - Math.min(distanceFrom10AM, distanceFrom2PM);\n  \n  availableSlots.push({\n    start: minutesToTime(currentTime),\n    end: minutesToTime(currentTime + duration),\n    duration: duration,\n    qualityScore: qualityScore\n  });\n}\n\nfunction minutesToTime(minutes) {\n  const hours = Math.floor(minutes / 60);\n  const mins = minutes % 60;\n  return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;\n}\n\n// Sort by quality and take top N\nconst topSlots = availableSlots\n  .sort((a, b) => b.qualityScore - a.qualityScore)\n  .slice(0, numberOfSlots);\n\nlet response = `**Top ${topSlots.length} Meeting Slots for ${date}**\\n\\n`;\n\nif (topSlots.length > 0) {\n  topSlots.forEach((slot, index) => {\n    response += `**Option ${index + 1}:** ${slot.start} - ${slot.end}\\n`;\n    response += `   Duration: ${duration} minutes\\n`;\n    response += `   Buffer time: ${bufferTime} minutes after\\n\\n`;\n  });\n  response += `Would you like me to book one of these slots?`;\n} else {\n  response += `❌ No suitable slots found on this date.\\n\\n`;\n  response += `Consider:\\n- Choosing a different date\\n- Reducing meeting duration\\n- Accepting shorter buffer times`;\n}\n\nreturn {\n  json: {\n    formatted_response: response,\n    suggested_slots: topSlots,\n    date: date\n  }\n};"
+      },
+      "id": "find-slots",
+      "name": "Find Best Slots",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 460]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "primary",
+          "mode": "list"
+        },
+        "returnAll": false,
+        "limit": 50,
+        "options": {
+          "timeMin": "={{ $('When called by another workflow').item.json.date }}T00:00:00Z",
+          "timeMax": "={{ $('When called by another workflow').item.json.date }}T23:59:59Z",
+          "singleEvents": true,
+          "orderBy": "startTime"
+        }
+      },
+      "id": "get-events-for-slots",
+      "name": "Get Events (for slots)",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.2,
+      "position": [680, 460],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "REPLACE_WITH_YOUR_GOOGLE_CALENDAR_CREDENTIAL_ID",
+          "name": "Google Calendar OAuth2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.formatted_response }}"
+      },
+      "id": "return-result",
+      "name": "Return Result",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "When called by another workflow": {
+      "main": [
+        [
+          {
+            "node": "Switch: Action Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch: Action Type": {
+      "main": [
+        [
+          {
+            "node": "Get Calendar Events",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Calendar Event",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Events (for slots)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Calendar Events": {
+      "main": [
+        [
+          {
+            "node": "Analyze Availability",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze Availability": {
+      "main": [
+        [
+          {
+            "node": "Return Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Calendar Event": {
+      "main": [
+        [
+          {
+            "node": "Format Booking Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Booking Response": {
+      "main": [
+        [
+          {
+            "node": "Return Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Events (for slots)": {
+      "main": [
+        [
+          {
+            "node": "Find Best Slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Best Slots": {
+      "main": [
+        [
+          {
+            "node": "Return Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-04T00:00:00.000Z",
+  "versionId": "1.0.0"
+}
+

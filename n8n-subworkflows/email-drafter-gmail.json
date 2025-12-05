@@ -1,0 +1,177 @@
+{
+  "name": "Vexel Logic - Email Drafter Tool (Gmail)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "workflow-trigger",
+      "name": "When called by another workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {
+          "temperature": 0.7,
+          "maxTokens": 1000
+        }
+      },
+      "id": "openai-model",
+      "name": "OpenAI GPT-4o Mini",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [460, 480],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.emailPrompt }}",
+        "hasOutputParser": false,
+        "options": {
+          "systemMessage": "You are an expert business email copywriter. Your emails are:\n\n1. **Professional yet personable** - Strike the right tone for business communication\n2. **Concise and clear** - Get to the point quickly, respect the reader's time\n3. **Action-oriented** - Include clear CTAs that drive responses\n4. **Value-focused** - Lead with benefits, not features\n5. **Properly formatted** - Include subject line, greeting, body, CTA, and signature\n\n**Output Format:**\nAlways structure your response as:\n\nSubject: [Compelling subject line]\n\nHi [Name/Placeholder],\n\n[Email body - 2-4 paragraphs maximum]\n\n[Clear call-to-action]\n\n[Professional sign-off]\n\n**Tone Guidelines:**\n- Sales outreach: Confident but not pushy, focus on mutual value\n- Customer reply: Empathetic and helpful, solve their problem\n- Partnership: Professional and collaborative, win-win mindset\n- Follow-up: Persistent but respectful, add new value\n\n**Best Practices:**\n- Subject lines under 60 characters\n- Emails under 150 words when possible\n- One clear primary CTA\n- Personalization placeholders like [Name], [Company]\n- Avoid spam triggers (!!!!, FREE, URGENT, etc.)"
+        }
+      },
+      "id": "ai-agent",
+      "name": "Email Draft Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Construct the email drafting prompt\nconst input = $input.first().json;\n\nconst emailType = input.emailType || 'general';\nconst recipientInfo = input.recipientInfo || '[Recipient Name]';\nconst keyPoints = input.keyPoints || '';\nconst tone = input.tone || 'professional';\n\n// Build comprehensive prompt\nlet prompt = `Draft a ${emailType.replace('_', ' ')} email.\\n\\n`;\nprompt += `**Recipient Information:** ${recipientInfo}\\n`;\nprompt += `**Key Points to Include:** ${keyPoints}\\n`;\nprompt += `**Desired Tone:** ${tone}\\n\\n`;\n\n// Add type-specific guidance\nswitch(emailType) {\n  case 'sales_outreach':\n    prompt += `This is a cold outreach email. Focus on:  \\n- Catching attention in first line\\n- Demonstrating you've researched them\\n- Leading with value, not features\\n- Including social proof if relevant\\n- Making it easy to respond`;\n    break;\n  case 'customer_reply':\n    prompt += `This is a customer service response. Focus on:\\n- Acknowledging their concern\\n- Providing clear solution\\n- Being empathetic and helpful\\n- Inviting further questions`;\n    break;\n  case 'partnership':\n    prompt += `This is a partnership proposal. Focus on:\\n- Highlighting mutual benefits\\n- Demonstrating credibility\\n- Proposing concrete next steps\\n- Professional yet collaborative tone`;\n    break;\n  case 'follow_up':\n    prompt += `This is a follow-up email. Focus on:\\n- Referencing previous conversation\\n- Adding new value or insight\\n- Being persistent but not annoying\\n- Clear ask or next step`;\n    break;\n  default:\n    prompt += `Create a professional business email addressing the key points.`;\n}\n\nreturn {\n  json: {\n    emailPrompt: prompt,\n    originalInput: input\n  }\n};"
+      },
+      "id": "build-prompt",
+      "name": "Build Email Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 140]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Format the AI-generated email for output\nconst aiOutput = $('Email Draft Agent').first().json.output;\nconst originalInput = $json.originalInput;\n\n// Parse the email (subject, body, etc.)\nconst emailParts = aiOutput.split('\\n\\n');\nconst subjectLine = emailParts[0].replace('Subject: ', '').trim();\nconst emailBody = emailParts.slice(1).join('\\n\\n').trim();\n\n// Return formatted response\nreturn {\n  json: {\n    email_draft: aiOutput,\n    subject: subjectLine,\n    body: emailBody,\n    metadata: {\n      email_type: originalInput.emailType,\n      tone: originalInput.tone,\n      recipient: originalInput.recipientInfo,\n      generated_at: new Date().toISOString()\n    }\n  }\n};"
+      },
+      "id": "format-email",
+      "name": "Format Email Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "message": "={{ $json.body }}",
+        "subject": "={{ $json.subject }}",
+        "toRecipients": "DRAFT",
+        "options": {
+          "attachments": [],
+          "bccRecipients": "",
+          "ccRecipients": ""
+        }
+      },
+      "id": "create-gmail-draft",
+      "name": "Create Gmail Draft",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [680, 480],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_WITH_YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail OAuth2"
+        }
+      },
+      "disabled": true,
+      "notes": "Optional: Enable this to automatically create drafts in Gmail"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.email_draft }}"
+      },
+      "id": "return-draft",
+      "name": "Return Draft",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "When called by another workflow": {
+      "main": [
+        [
+          {
+            "node": "Build Email Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Email Prompt": {
+      "main": [
+        [
+          {
+            "node": "Email Draft Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI GPT-4o Mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Email Draft Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Draft Agent": {
+      "main": [
+        [
+          {
+            "node": "Format Email Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Email Output": {
+      "main": [
+        [
+          {
+            "node": "Return Draft",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create Gmail Draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-04T00:00:00.000Z",
+  "versionId": "1.0.0"
+}
+

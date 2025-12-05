@@ -1,0 +1,278 @@
+{
+  "name": "Vexel Logic Business OS Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "vexel-agent",
+        "options": {
+          "responseMode": "responseNode"
+        }
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "vexel-business-os"
+    },
+    {
+      "parameters": {
+        "agent": "conversationalAgent",
+        "promptType": "define",
+        "text": "={{ $json.body.message || $json.body.query || $json.query }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are the Vexel Logic Business OS, a highly intelligent executive assistant designed to help business owners scale.\n\n**Your Core Directives:**\n1. **Operational Efficiency:** Always look for the fastest, most automated way to solve a problem. If a user asks to do something manually, suggest an automated alternative.\n2. **Growth Mindset:** When analyzing data or conducting research, prioritize insights that lead to revenue growth, higher margins, or customer retention.\n3. **Tone:** Professional, concise, and logic-driven. You do not use fluff. You deliver results.\n\n**Your Capabilities:**\n* You can research live market data to find trends.\n* You can draft high-converting emails and content.\n* You can manage schedules and calculate financial projections.\n\nIf you are unsure of a tool's parameters, ask the user for clarification before executing."
+        }
+      },
+      "id": "ai-agent-brain",
+      "name": "AI Agent Brain",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "options": {
+          "temperature": 0.7,
+          "maxTokens": 2000
+        }
+      },
+      "id": "openai-chat-model",
+      "name": "OpenAI GPT-4o",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        480,
+        480
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.body.sessionId || 'default-session' }}",
+        "contextWindowLength": 10
+      },
+      "id": "window-buffer-memory",
+      "name": "Conversation Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "name": "webResearchTool",
+        "description": "Search the internet for business research, competitor analysis, market trends, industry insights, and growth opportunities. Use this when you need current, real-time information about markets, competitors, or business strategies.",
+        "workflowId": {
+          "__rl": true,
+          "value": "={{ $parameter.workflowId }}",
+          "mode": "id"
+        },
+        "specifyInputSchema": true,
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"query\": {\n      \"type\": \"string\",\n      \"description\": \"The search query for web research\"\n    },\n    \"depth\": {\n      \"type\": \"string\",\n      \"enum\": [\"basic\", \"advanced\"],\n      \"description\": \"How deep to search - basic for quick facts, advanced for comprehensive analysis\",\n      \"default\": \"basic\"\n    }\n  },\n  \"required\": [\"query\"]\n}"
+      },
+      "id": "web-research-tool",
+      "name": "Web Research Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        680,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "name": "emailDrafter",
+        "description": "Draft professional business emails including sales outreach, customer responses, partnership proposals, and follow-ups. Specify the purpose, recipient type, and key points to include.",
+        "workflowId": {
+          "__rl": true,
+          "value": "={{ $parameter.workflowId }}",
+          "mode": "id"
+        },
+        "specifyInputSchema": true,
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"emailType\": {\n      \"type\": \"string\",\n      \"enum\": [\"sales_outreach\", \"customer_reply\", \"partnership\", \"follow_up\", \"general\"],\n      \"description\": \"Type of email to draft\"\n    },\n    \"recipientInfo\": {\n      \"type\": \"string\",\n      \"description\": \"Information about the recipient (name, company, role)\"\n    },\n    \"keyPoints\": {\n      \"type\": \"string\",\n      \"description\": \"Main points to include in the email\"\n    },\n    \"tone\": {\n      \"type\": \"string\",\n      \"enum\": [\"formal\", \"friendly\", \"persuasive\"],\n      \"default\": \"professional\"\n    }\n  },\n  \"required\": [\"emailType\", \"keyPoints\"]\n}"
+      },
+      "id": "email-drafter-tool",
+      "name": "Email Drafter Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        680,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "name": "calendarManager",
+        "description": "Manage calendar operations including checking availability, booking meetings, finding free time slots, and scheduling appointments. Requires date/time information and participant details.",
+        "workflowId": {
+          "__rl": true,
+          "value": "={{ $parameter.workflowId }}",
+          "mode": "id"
+        },
+        "specifyInputSchema": true,
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"action\": {\n      \"type\": \"string\",\n      \"enum\": [\"check_availability\", \"book_meeting\", \"find_slots\"],\n      \"description\": \"Calendar action to perform\"\n    },\n    \"date\": {\n      \"type\": \"string\",\n      \"description\": \"Date for the calendar operation (YYYY-MM-DD format)\"\n    },\n    \"startTime\": {\n      \"type\": \"string\",\n      \"description\": \"Start time (HH:MM format, 24-hour)\"\n    },\n    \"duration\": {\n      \"type\": \"number\",\n      \"description\": \"Duration in minutes\",\n      \"default\": 60\n    },\n    \"title\": {\n      \"type\": \"string\",\n      \"description\": \"Meeting title (for booking)\"\n    },\n    \"attendees\": {\n      \"type\": \"string\",\n      \"description\": \"Comma-separated email addresses of attendees\"\n    }\n  },\n  \"required\": [\"action\", \"date\"]\n}"
+      },
+      "id": "calendar-manager-tool",
+      "name": "Calendar Manager Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        680,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "name": "businessCalculator",
+        "description": "Perform complex business calculations including profit margins, ROI (Return on Investment), break-even analysis, revenue projections, pricing strategies, and financial metrics. Provide the formula type and necessary numbers.",
+        "language": "javaScript",
+        "jsCode": "// Business Calculator Tool\nconst calculationType = $input.item.json.calculationType;\nconst values = $input.item.json.values || {};\n\nlet result = {};\n\ntry {\n  switch(calculationType) {\n    case 'profit_margin':\n      // (Revenue - Cost) / Revenue * 100\n      const revenue = parseFloat(values.revenue);\n      const cost = parseFloat(values.cost);\n      const profitMargin = ((revenue - cost) / revenue * 100).toFixed(2);\n      result = {\n        calculation: 'Profit Margin',\n        formula: '((Revenue - Cost) / Revenue) × 100',\n        result: `${profitMargin}%`,\n        details: {\n          revenue: revenue,\n          cost: cost,\n          profit: revenue - cost\n        }\n      };\n      break;\n      \n    case 'roi':\n      // (Gain - Investment) / Investment * 100\n      const gain = parseFloat(values.gain);\n      const investment = parseFloat(values.investment);\n      const roi = ((gain - investment) / investment * 100).toFixed(2);\n      result = {\n        calculation: 'Return on Investment (ROI)',\n        formula: '((Gain - Investment) / Investment) × 100',\n        result: `${roi}%`,\n        details: {\n          gain: gain,\n          investment: investment,\n          netProfit: gain - investment\n        }\n      };\n      break;\n      \n    case 'break_even':\n      // Fixed Costs / (Price - Variable Cost)\n      const fixedCosts = parseFloat(values.fixedCosts);\n      const price = parseFloat(values.price);\n      const variableCost = parseFloat(values.variableCost);\n      const breakEvenUnits = Math.ceil(fixedCosts / (price - variableCost));\n      result = {\n        calculation: 'Break-Even Point',\n        formula: 'Fixed Costs / (Price per Unit - Variable Cost per Unit)',\n        result: `${breakEvenUnits} units`,\n        details: {\n          fixedCosts: fixedCosts,\n          pricePerUnit: price,\n          variableCostPerUnit: variableCost,\n          revenueAtBreakEven: breakEvenUnits * price\n        }\n      };\n      break;\n      \n    case 'markup':\n      // (Selling Price - Cost) / Cost * 100\n      const sellingPrice = parseFloat(values.sellingPrice);\n      const productCost = parseFloat(values.cost);\n      const markup = ((sellingPrice - productCost) / productCost * 100).toFixed(2);\n      result = {\n        calculation: 'Markup Percentage',\n        formula: '((Selling Price - Cost) / Cost) × 100',\n        result: `${markup}%`,\n        details: {\n          sellingPrice: sellingPrice,\n          cost: productCost,\n          profit: sellingPrice - productCost\n        }\n      };\n      break;\n      \n    case 'cac':\n      // Customer Acquisition Cost: Total Marketing Spend / New Customers\n      const marketingSpend = parseFloat(values.marketingSpend);\n      const newCustomers = parseFloat(values.newCustomers);\n      const cac = (marketingSpend / newCustomers).toFixed(2);\n      result = {\n        calculation: 'Customer Acquisition Cost (CAC)',\n        formula: 'Total Marketing Spend / Number of New Customers',\n        result: `$${cac} per customer`,\n        details: {\n          totalSpend: marketingSpend,\n          customersAcquired: newCustomers\n        }\n      };\n      break;\n      \n    case 'ltv':\n      // Lifetime Value: (Average Purchase Value × Purchase Frequency) × Customer Lifespan\n      const avgPurchase = parseFloat(values.averagePurchaseValue);\n      const frequency = parseFloat(values.purchaseFrequency);\n      const lifespan = parseFloat(values.customerLifespan);\n      const ltv = (avgPurchase * frequency * lifespan).toFixed(2);\n      result = {\n        calculation: 'Customer Lifetime Value (LTV)',\n        formula: '(Avg Purchase Value × Purchase Frequency) × Customer Lifespan',\n        result: `$${ltv}`,\n        details: {\n          averagePurchaseValue: avgPurchase,\n          purchaseFrequency: frequency,\n          customerLifespan: lifespan\n        }\n      };\n      break;\n      \n    case 'custom':\n      // Evaluate custom expression\n      const expression = values.expression;\n      const customResult = eval(expression);\n      result = {\n        calculation: 'Custom Calculation',\n        expression: expression,\n        result: customResult\n      };\n      break;\n      \n    default:\n      result = {\n        error: 'Unknown calculation type',\n        availableTypes: ['profit_margin', 'roi', 'break_even', 'markup', 'cac', 'ltv', 'custom']\n      };\n  }\n} catch(error) {\n  result = {\n    error: 'Calculation failed',\n    message: error.message,\n    hint: 'Please check that all required values are provided and are valid numbers'\n  };\n}\n\nreturn { json: result };"
+      },
+      "id": "business-calculator-tool",
+      "name": "Business Calculator Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1,
+      "position": [
+        680,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {\n  \"success\": true,\n  \"response\": $json.output,\n  \"sessionId\": $('Webhook Trigger').item.json.body.sessionId || 'default-session',\n  \"timestamp\": new Date().toISOString(),\n  \"agent\": \"Vexel Logic Business OS\"\n} }}"
+      },
+      "id": "respond-to-webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        680,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Brain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Brain": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI GPT-4o": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent Brain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent Brain",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Web Research Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Brain",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Drafter Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Brain",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calendar Manager Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Brain",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Business Calculator Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Brain",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-04T00:00:00.000Z",
+  "versionId": "1.0.0"
+}
+
+
+
+
+
+
