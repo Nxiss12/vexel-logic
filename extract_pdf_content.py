@@ -51,3 +51,4 @@ with open(output_file, 'w', encoding='utf-8') as f:
 print(f"\n✓ All content saved to: {output_file}")
 print(f"Total PDFs processed: {len(all_content)}")
 
+

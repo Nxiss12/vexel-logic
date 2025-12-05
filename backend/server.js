@@ -24,49 +24,58 @@ const emailTransporter = nodemailer.createTransport({
     }
 });
 
-// Service Package configuration (Done-For-You Services)
+// Service Package configuration (Done-For-You Services with Subscription Model)
 const SERVICE_PACKAGES = {
     starter: {
-        name: 'Starter System',
-        price: 299700, // £2,997 in pence
-        description: '1 custom automation system built for your business',
+        name: 'Starter',
+        subtitle: 'Single-function optimization',
+        setupPrice: 499700, // £4,997 in pence
+        monthlyPrice: 49700, // £497/month in pence
+        description: '1 core intelligent automation system',
         deliverables: [
-            '1 core automation system (your choice)',
-            'Custom-built for your business',
-            'All integrations included',
-            '30-day build + deployment',
-            '60 days post-launch support',
-            'Training for your team',
-            '100% Done-For-You'
+            '1 core intelligent automation system',
+            'Revenue, Operations, or Customer Success focus',
+            'Full integration with existing infrastructure',
+            '30-day implementation timeline',
+            'Comprehensive team training program',
+            'Ongoing optimization & monitoring',
+            '99.9% uptime SLA guarantee'
         ]
     },
-    growth: {
-        name: 'Growth System',
-        price: 699700, // £6,997 in pence
-        description: '3 integrated automation systems for scaling businesses',
+    professional: {
+        name: 'Professional',
+        subtitle: 'Comprehensive workforce optimization',
+        setupPrice: 1299700, // £12,997 in pence
+        monthlyPrice: 99700, // £997/month in pence
+        description: '3 integrated intelligent automation systems',
         deliverables: [
-            '3 integrated automation systems',
-            'Advanced AI capabilities',
-            'Custom dashboard & analytics',
-            'Priority 30-day deployment',
-            '90 days premium support',
-            'Monthly optimization calls',
-            'Unlimited system updates',
-            'ROI Guarantee'
-        ]
+            '3 integrated intelligent automation systems',
+            'Cross-functional workflow optimization',
+            'Executive intelligence dashboard',
+            'Priority 30-day implementation',
+            'Dedicated success manager',
+            'Quarterly strategic optimization reviews',
+            'Advanced predictive analytics',
+            'ROI guarantee: 15hrs/employee or full refund'
+        ],
+        badge: 'RECOMMENDED FOR GROWTH-STAGE COMPANIES'
     },
     enterprise: {
-        name: 'Enterprise Solution',
-        price: 1500000, // £15,000+ in pence (starting price)
-        description: 'Full business transformation with unlimited systems',
+        name: 'Enterprise',
+        subtitle: 'Full organizational transformation',
+        setupPriceMin: 3500000, // £35,000 in pence
+        setupPriceMax: 15000000, // £150,000 in pence
+        monthlyPriceMin: 250000, // £2,500/month in pence
+        monthlyPriceMax: 750000, // £7,500/month in pence
+        description: 'Custom pricing for organizations with 20+ employees',
         deliverables: [
             'Unlimited automation systems',
-            'Dedicated automation team',
-            'Custom AI models',
-            'White-glove deployment',
-            '12 months premium support',
-            'Weekly strategy calls',
-            'Revenue guarantee included'
+            'White-glove implementation',
+            'Dedicated technical team',
+            'Custom AI models and workflows',
+            '24/7 priority support',
+            'Weekly strategic calls',
+            'Full organizational transformation'
         ]
     }
 };
@@ -140,8 +149,10 @@ app.post('/api/book-consultation', async (req, res) => {
         // Get package details
         const packageDetails = SERVICE_PACKAGES[interested_package] || {
             name: 'Custom Package',
-            price: 0,
-            description: 'Custom solution'
+            subtitle: 'Tailored solution',
+            setupPrice: 0,
+            monthlyPrice: 0,
+            description: 'Custom solution tailored to your needs'
         };
 
         // Store consultation request in database or send notification
