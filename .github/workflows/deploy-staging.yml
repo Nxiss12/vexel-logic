@@ -42,3 +42,11 @@ jobs:
         run: |
           echo "Running smoke tests against $STAGING_URL"
           ./missed-call-bot/test-smoke.sh $STAGING_URL
+
+      - name: Run k6 load test against staging
+        if: env.STAGING_URL != ''
+        env:
+          BASE_URL: ${{ secrets.STAGING_URL }}
+        run: |
+          echo "Running k6 load test against $BASE_URL"
+          docker run --rm -v "$PWD:/src" -w /src/missed-call-bot loadimpact/k6 run /src/missed-call-bot/loadtest.js
