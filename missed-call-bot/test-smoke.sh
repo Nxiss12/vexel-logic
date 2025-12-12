@@ -24,3 +24,9 @@ if [ -z "$STRIPE_WEBHOOK_SECRET" ]; then
   echo "Stripe webhook secret not set; posting a sample event to /webhook/stripe"
   curl -s -X POST "$BASE/webhook/stripe" -H "Content-Type: application/json" -d '{"id":"evt_test","type":"checkout.session.completed","data":{"object":{"customer_details":{"email":"test@example.com"},"customer":"cus_test"}}}' | jq
 fi
+
+if [ -n "${STRIPE_PRICE_ID:-}" ]; then
+  echo "Attempting to create a checkout session (requires valid STRIPE keys set on backend)"
+  TOKEN_HEADER="Authorization: Bearer $TOKEN"
+  curl -s -X POST "$BASE/api/create-checkout-session" -H "Content-Type: application/json" -H "$TOKEN_HEADER" | jq
+fi
