@@ -447,20 +447,23 @@ app.post('/api/workflow-request', async (req, res) => {
 // Admin: list workflow requests (protected)
 app.get('/api/workflow-requests', authenticate, async (req, res) => {
     try {
+        const limit = Math.min(parseInt(req.query.limit || '50', 10), 500);
+        const offset = Math.max(parseInt(req.query.offset || '0', 10), 0);
+
         if (SUPABASE_URL && SUPABASE_KEY) {
             const { data, error } = await supabase
                 .from('workflow_requests')
                 .select('*')
                 .order('timestamp', { ascending: false })
-                .limit(200);
+                .range(offset, offset + limit - 1);
             if (error) return res.status(500).json({ error: error.message });
-            return res.json({ items: data });
+            return res.json({ items: data, limit, offset });
         }
 
         // Fallback file
         const file = path.join(__dirname, 'data', 'workflow_requests.json');
         const list = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8') || '[]') : [];
-        return res.json({ items: list });
+        return res.json({ items: list.slice(offset, offset + limit), limit, offset });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: 'Server error' });
