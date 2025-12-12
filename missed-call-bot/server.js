@@ -298,8 +298,18 @@ app.get('/api/subscription', authenticate, async (req, res) => {
 // Middleware to require active subscription
 async function requireSubscription(req, res, next) {
     try {
-        const resp = await (await fetch(`${process.env.BACKEND_URL || ''}/api/subscription`, { headers: { Authorization: req.headers.authorization }, method: 'GET' })).json();
-        if (resp && resp.active) return next();
+        const email = req.user && req.user.email;
+        if (!email) return res.status(401).json({ error: 'Missing user' });
+        if (SUPABASE_URL && SUPABASE_KEY) {
+            const { data } = await supabase.from('customers').select('*').eq('email', email).limit(1);
+            const cust = data && data[0];
+            if (cust && cust.subscription_active) return next();
+        } else {
+            const file = path.join(__dirname, 'data', 'customers.json');
+            const list = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8') || '[]') : [];
+            const cust = list.find(c => c.email === email);
+            if (cust && cust.subscription_active) return next();
+        }
     } catch (e) {
         logger.warn('Subscription check failed', e);
     }
