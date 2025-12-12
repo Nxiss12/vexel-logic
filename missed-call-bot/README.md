@@ -102,7 +102,7 @@ PORT=3000
 - `POST /api/login` - Body `{ email, password }` returns `{ token }` (JWT based on `ADMIN_EMAIL` / `ADMIN_PASSWORD` env vars)
 - `POST /api/workflow-request` - Submit a new workflow request (JSON). If Supabase is configured it will insert into `workflow_requests`; otherwise it falls back to file storage in `data/workflow_requests.json`.
 - `GET /api/workflow-requests` - (Protected) List workflow requests; requires `Authorization: Bearer <token>` header.
-
+Pagination: `GET /api/workflow-requests?limit=50&offset=0` supports `limit` (max 500) and `offset` for paging through results.
 **Notes:** Set `JWT_SECRET`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` in your environment for secure admin access.
 
 ---
