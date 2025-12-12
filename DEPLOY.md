@@ -35,6 +35,10 @@ Render deployment guide
    - Configure Twilio webhooks to: `https://<your-backend>/webhook/missed-call` and `https://<your-backend>/webhook/sms-reply`
    - Configure Stripe webhook endpoint to `https://<your-backend>/webhook/stripe` and set `STRIPE_WEBHOOK_SECRET`.
 
+   - Testing Stripe webhooks (recommended):
+     - Install the Stripe CLI and run `stripe listen --forward-to https://<your-backend>/webhook/stripe`.
+     - Trigger test events, e.g. `stripe trigger checkout.session.completed` to exercise the `checkout.session.completed` flow.
+
 6) Health verification
    - After deploy, verify `/healthz`, `/api/stats` (requires login), and `/api/workflow-requests` (requires login).
 
