@@ -47,8 +47,8 @@ app.get('/api/ready', async (req, res) => {
 // Mount routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/stripe', require('./routes/stripe'));
+app.use('/api/webhooks', require('./routes/webhooks'));
 // app.use('/api/admin', require('./routes/admin'));
-// app.use('/api/webhooks', require('./routes/webhooks'));
 
 app.get('/api/test/sentry-error', () => {
   throw new Error('Test Sentry error');
