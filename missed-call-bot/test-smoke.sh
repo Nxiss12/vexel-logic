@@ -19,3 +19,8 @@ echo "3) List workflow requests (requires token)"
 curl -s -X GET "$BASE/api/workflow-requests" -H "Authorization: Bearer $TOKEN" | jq '.items | length'
 
 echo "SMOKE TESTS COMPLETED"
+
+if [ -z "$STRIPE_WEBHOOK_SECRET" ]; then
+  echo "Stripe webhook secret not set; posting a sample event to /webhook/stripe"
+  curl -s -X POST "$BASE/webhook/stripe" -H "Content-Type: application/json" -d '{"id":"evt_test","type":"checkout.session.completed","data":{"object":{"customer_details":{"email":"test@example.com"},"customer":"cus_test"}}}' | jq
+fi
