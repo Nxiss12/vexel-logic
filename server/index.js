@@ -44,8 +44,8 @@ app.get('/api/ready', async (req, res) => {
   }
 });
 
-// TODO: mount your routes here
-// app.use('/api/auth', require('./routes/auth'));
+// Mount routes
+app.use('/api/auth', require('./routes/auth'));
 // app.use('/api/admin', require('./routes/admin'));
 // app.use('/api/stripe', require('./routes/stripe'));
 // app.use('/api/webhooks', require('./routes/webhooks'));
