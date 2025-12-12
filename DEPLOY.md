@@ -26,10 +26,13 @@ Render deployment guide
    - In Render dashboard, open Service -> Environment -> Add Secret
    - Add all keys listed in `.env.example` (do not commit secrets)
 
+   - Stripe: ensure `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, and `STRIPE_PRICE_ID` are set. Create a recurring price in the Stripe Dashboard and copy its `price_...` id into `STRIPE_PRICE_ID`.
+
 4) Databases & Migrations
    - Provide `DATABASE_URL` env var connected to your managed Postgres or Supabase.
    - Run migrations in staging: `npm run migrate` (or `node db/migrate.js`).
    - Set up backups via your DB provider (e.g., Render Postgres automatic backups); ensure retention policy.
+   - To run manual backups, a helper script exists at `scripts/backup-db.sh`. You can run it in a cron job or Render Scheduled Job.
 
 5) Webhooks
    - Configure Twilio webhooks to: `https://<your-backend>/webhook/missed-call` and `https://<your-backend>/webhook/sms-reply`
