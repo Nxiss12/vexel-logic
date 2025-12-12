@@ -102,6 +102,13 @@ PORT=3000
 - `POST /api/login` - Body `{ email, password }` returns `{ token }` (JWT based on `ADMIN_EMAIL` / `ADMIN_PASSWORD` env vars)
 - `POST /api/workflow-request` - Submit a new workflow request (JSON). If Supabase is configured it will insert into `workflow_requests`; otherwise it falls back to file storage in `data/workflow_requests.json`.
 - `GET /api/workflow-requests` - (Protected) List workflow requests; requires `Authorization: Bearer <token>` header.
+
+Billing:
+- `POST /api/create-checkout-session` (protected) — creates a Stripe Checkout session. Configure `STRIPE_PRICE_ID` and `STRIPE_PUBLISHABLE_KEY` in your environment.
+- `GET /api/subscription` (protected) — check subscription status for the currently-authenticated admin email.
+
+Backups:
+- Run `npm run backup` from inside `missed-call-bot/` to execute the helper `scripts/backup-db.sh` which produces a timestamped dump in `backups/`.
 Pagination: `GET /api/workflow-requests?limit=50&offset=0` supports `limit` (max 500) and `offset` for paging through results.
 **Notes:** Set `JWT_SECRET`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` in your environment for secure admin access.
 
