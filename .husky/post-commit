@@ -1,0 +1,11 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Append commit metadata to TOMS-IMPROVEMENTS (avoid recursion by skipping docs commits)
+if git rev-parse --git-dir > /dev/null 2>&1; then
+  LAST_SUBJECT=$(git log -1 --pretty=format:%s)
+  if echo "$LAST_SUBJECT" | grep -Eq "^docs:.*TOMS-IMPROVEMENTS"; then
+    exit 0
+  fi
+  ./scripts/log-improvement.sh || true
+fi
