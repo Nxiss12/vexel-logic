@@ -9,6 +9,14 @@ If service is unhealthy
 2. Check recent deploys and roll back to previous stable release
 3. SSH into container (if available) and run `npm run migrate` and check envs
 4. Restart service
+Local deploy & release verification
+- Build and run with Docker:
+  - `docker build -t vexel-missed-call-bot .`
+  - `docker run -e NODE_ENV=production -e PORT=3000 -e ADMIN_EMAIL=admin@vexellogic.com -e ADMIN_PASSWORD=password123 -p 3000:3000 vexel-missed-call-bot`
+- Run migrations locally inside container or image:
+  - `docker run --rm -e DATABASE_URL="$DATABASE_URL" vexel-missed-call-bot npm run migrate`
+- Run smoke tests against a running endpoint:
+  - `./release.sh http://localhost:3000`
 
 Backups & Restore
 - Database backups: configure via managed DB provider
