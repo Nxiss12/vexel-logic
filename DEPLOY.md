@@ -54,3 +54,7 @@ GitHub Actions secrets
 - Add `RENDER_STAGING_SERVICE_ID` and `RENDER_PRODUCTION_SERVICE_ID` to trigger deploys from Actions
 - Add `STAGING_URL` and `PROD_URL` (used by smoke tests)
 
+CI workflow
+- A CI/CD workflow is available at `.github/workflows/ci-cd.yml` that runs on pushes to `main` and `release/auto-deploy` and performs lint/test/build/deploy to Render.
+- Required GitHub secrets for CI tests: `STRIPE_TEST_SECRET_KEY`, `TWILIO_TEST_ACCOUNT_SID`, `TWILIO_TEST_AUTH_TOKEN`, `SMOKE_TEST_USER`, `SMOKE_TEST_PASSWORD`.
+

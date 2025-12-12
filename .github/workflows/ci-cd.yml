@@ -1,0 +1,198 @@
+name: CI-CD
+
+on:
+  push:
+    branches:
+      - main
+      - release/auto-deploy
+  pull_request:
+    branches:
+      - main
+      - release/auto-deploy
+
+env:
+  DOCKER_IMAGE: ghcr.io/${{ github.repository }}
+  NODE_VERSION: '20'
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_pass
+          POSTGRES_DB: test_db
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: missed-call-bot
+
+      - name: Lint
+        run: npm run lint
+        working-directory: missed-call-bot
+
+      - name: Run DB migrations
+        run: npm run migrate:up
+        working-directory: missed-call-bot
+        env:
+          DATABASE_URL: postgresql://test_user:test_pass@localhost:5432/test_db
+
+      - name: Unit tests
+        run: npm run test:unit
+        working-directory: missed-call-bot
+        env:
+          DATABASE_URL: postgresql://test_user:test_pass@localhost:5432/test_db
+          REDIS_URL: redis://localhost:6379
+
+      - name: Integration tests
+        run: npm run test:integration
+        working-directory: missed-call-bot
+        env:
+          DATABASE_URL: postgresql://test_user:test_pass@localhost:5432/test_db
+          REDIS_URL: redis://localhost:6379
+          JWT_SECRET: test_jwt_secret
+          REFRESH_TOKEN_SECRET: test_refresh_secret
+
+      - name: E2E tests
+        run: npm run test:e2e
+        working-directory: missed-call-bot
+        env:
+          DATABASE_URL: postgresql://test_user:test_pass@localhost:5432/test_db
+          REDIS_URL: redis://localhost:6379
+          JWT_SECRET: test_jwt_secret
+          REFRESH_TOKEN_SECRET: test_refresh_secret
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_SECRET_KEY }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_TEST_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_TEST_AUTH_TOKEN }}
+
+  build-and-push:
+    needs: lint-and-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.DOCKER_IMAGE }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - uses: docker/build-push-action@v5
+        with:
+          context: ./missed-call-bot
+          file: ./missed-call-bot/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  deploy-staging:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/release/auto-deploy'
+    environment:
+      name: staging
+      url: https://app-backend-staging.onrender.com
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install deps for migrations
+        run: npm ci
+        working-directory: missed-call-bot
+
+      - name: Run migrations (staging)
+        run: npm run migrate:up
+        working-directory: missed-call-bot
+        env:
+          DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+
+      - name: Deploy to Render (staging)
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.RENDER_STAGING_SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
+          wait-for-success: true
+
+      - name: Smoke tests
+        run: ./scripts/release.sh
+        env:
+          TARGET_URL: https://app-backend-staging.onrender.com
+          SMOKE_TEST_USER: ${{ secrets.SMOKE_TEST_USER }}
+          SMOKE_TEST_PASSWORD: ${{ secrets.SMOKE_TEST_PASSWORD }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_SECRET_KEY }}
+
+  deploy-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: production
+      url: https://app-backend-production.onrender.com
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install deps for migrations
+        run: npm ci
+        working-directory: missed-call-bot
+
+      - name: Run migrations (production)
+        run: npm run migrate:up
+        working-directory: missed-call-bot
+        env:
+          DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+
+      - name: Deploy to Render (production)
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.RENDER_PRODUCTION_SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_API_KEY }}
+          wait-for-success: true
+
+      - name: Smoke tests (production)
+        run: ./scripts/release.sh
+        env:
+          TARGET_URL: https://app-backend-production.onrender.com
+          SMOKE_TEST_USER: ${{ secrets.PRODUCTION_SMOKE_TEST_USER }}
+          SMOKE_TEST_PASSWORD: ${{ secrets.PRODUCTION_SMOKE_TEST_PASSWORD }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_LIVE_SECRET_KEY }}
