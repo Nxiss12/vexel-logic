@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Workflow Requests</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+  <main class="max-w-5xl mx-auto p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h1 class="text-2xl font-bold">Workflow Requests</h1>
+      <div>
+        <input id="q" placeholder="Search by email" class="px-3 py-2 rounded bg-gray-800 border" />
+        <button id="refresh" class="ml-2 px-3 py-2 bg-indigo-600 rounded">Refresh</button>
+      </div>
+    </div>
+    <div class="mb-4">
+      <button id="prev" class="px-3 py-1 bg-white/5 rounded">Prev</button>
+      <button id="next" class="ml-2 px-3 py-1 bg-white/5 rounded">Next</button>
+      <span id="pageInfo" class="ml-4 text-gray-400"></span>
+    </div>
+    <div id="list" class="bg-gray-800 rounded p-4"></div>
+  </main>
+
+  <script>
+    const token = localStorage.getItem('vexel_token');
+    if (!token) location.href = 'login.html';
+    let page = 0; const limit = 50;
+
+    async function load() {
+      const offset = page*limit;
+      const res = await fetch(`/api/workflow-requests?limit=${limit}&offset=${offset}`, { headers: { 'Authorization': 'Bearer ' + token } });
+      const json = await res.json();
+      const items = json.items || [];
+      render(items);
+      document.getElementById('pageInfo').textContent = `Page ${page+1} • Showing ${items.length}`;
+    }
+
+    function render(items) {
+      const q = document.getElementById('q').value.toLowerCase();
+      const filtered = q ? items.filter(i => (i.email||'').toLowerCase().includes(q) || (i.workflow_name||'').toLowerCase().includes(q)) : items;
+      const container = document.getElementById('list');
+      container.innerHTML = '';
+      if (!filtered.length) { container.innerHTML = '<div class="text-gray-400">No requests</div>'; return; }
+      const table = document.createElement('table'); table.className = 'w-full';
+      const thead = document.createElement('thead'); thead.innerHTML = '<tr class="text-left text-gray-400"><th class="px-3 py-2">When</th><th class="px-3 py-2">Workflow</th><th class="px-3 py-2">Email</th><th class="px-3 py-2">Trigger</th></tr>';
+      table.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      for (const it of filtered) {
+        const tr = document.createElement('tr'); tr.className='border-t border-gray-700';
+        tr.innerHTML = `<td class="px-3 py-2 text-sm text-gray-300">${new Date(it.timestamp).toLocaleString()}</td><td class="px-3 py-2">${it.workflow_name||'—'}</td><td class="px-3 py-2">${it.email||'—'}</td><td class="px-3 py-2">${it.trigger||'—'}</td>`;
+        tbody.appendChild(tr);
+      }
+      table.appendChild(tbody);
+      container.appendChild(table);
+    }
+
+    document.getElementById('refresh').addEventListener('click', load);
+    document.getElementById('q').addEventListener('input', () => load());
+    document.getElementById('prev').addEventListener('click', () => { if (page>0) { page--; load(); }});
+    document.getElementById('next').addEventListener('click', () => { page++; load(); });
+
+    load();
+  </script>
+</body>
+</html>
