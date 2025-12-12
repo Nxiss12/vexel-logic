@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, release/auto-deploy ]
+  pull_request:
+    branches: [ main, release/auto-deploy ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: |
+          cd missed-call-bot
+          npm ci
+      - name: Secret scan
+        run: |
+          cd missed-call-bot
+          npm run secret-scan
+      - name: Run migrations (optional)
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ -n "$DATABASE_URL" ]; then cd missed-call-bot && npm run migrate; fi
+      - name: Audit dependencies
+        run: |
+          cd missed-call-bot
+          npm audit --audit-level=high || true
+      - name: Run smoke tests (if STAGING_URL set)
+        env:
+          STAGING_URL: ${{ secrets.STAGING_URL }}
+        run: |
+          if [ -n "$STAGING_URL" ]; then cd missed-call-bot && ./test-smoke.sh "$STAGING_URL"; fi
