@@ -15,6 +15,10 @@ Backups & Restore
 - To restore from dump:
   - `psql $DATABASE_URL < dump.sql`
 
+Scheduled backups:
+- Use `scripts/backup-db.sh` to create timestamped SQL dumps in the `backups/` directory.
+- On Render, create a Scheduled Job that runs `bash ./scripts/backup-db.sh` and stores artifacts in a connected volume or external storage. Alternatively, run a cron on an external runner that has `DATABASE_URL` and S3 credentials and upload dumps offsite.
+
 Rolling back a migration
 - Revert migration SQL and re-run `npm run migrate` on a safe branch
 
