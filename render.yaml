@@ -1,0 +1,209 @@
+services:
+  - type: web
+    name: app-backend-staging
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: ./
+    region: oregon
+    plan: starter
+    branch: release/auto-deploy
+    envVars:
+      - key: NODE_ENV
+        value: staging
+      - key: PORT
+        value: 3000
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: REFRESH_TOKEN_SECRET
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: STRIPE_PRO_PRICE_ID
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_PHONE_NUMBER
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
+      - key: SENTRY_ORG
+        sync: false
+      - key: SENTRY_PROJECT
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: SENDGRID_API_KEY
+        sync: false
+      - key: SENDGRID_FROM_EMAIL
+        sync: false
+      - key: SENDGRID_ADMIN_EMAIL
+        sync: false
+      - key: FRONTEND_URL
+        value: https://app-frontend-staging.onrender.com
+    healthCheckPath: /api/healthz
+    autoDeploy: true
+
+  - type: web
+    name: app-backend-production
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: ./
+    region: oregon
+    plan: standard
+    branch: main
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: REFRESH_TOKEN_SECRET
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: STRIPE_PRO_PRICE_ID
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_PHONE_NUMBER
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
+      - key: SENTRY_ORG
+        sync: false
+      - key: SENTRY_PROJECT
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: SENDGRID_API_KEY
+        sync: false
+      - key: SENDGRID_FROM_EMAIL
+        sync: false
+      - key: SENDGRID_ADMIN_EMAIL
+        sync: false
+      - key: FRONTEND_URL
+        value: https://app.yourdomain.com
+    healthCheckPath: /api/healthz
+    autoDeploy: false
+
+  - type: web
+    name: app-frontend-staging
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: ./
+    region: oregon
+    plan: starter
+    branch: release/auto-deploy
+    envVars:
+      - key: NODE_ENV
+        value: staging
+      - key: BACKEND_URL
+        value: https://app-backend-staging.onrender.com
+      - key: NEXT_PUBLIC_SENTRY_DSN
+        sync: false
+    healthCheckPath: /api/healthz
+    autoDeploy: true
+
+  - type: web
+    name: app-frontend-production
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: ./
+    region: oregon
+    plan: standard
+    branch: main
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BACKEND_URL
+        value: https://app-backend-production.onrender.com
+      - key: NEXT_PUBLIC_SENTRY_DSN
+        sync: false
+    healthCheckPath: /api/healthz
+    autoDeploy: false
+
+  - type: worker
+    name: bot-worker-staging
+    env: docker
+    dockerfilePath: ./Dockerfile.worker
+    dockerContext: ./
+    region: oregon
+    plan: starter
+    branch: release/auto-deploy
+    envVars:
+      - key: NODE_ENV
+        value: staging
+      - key: REDIS_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_PHONE_NUMBER
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
+    autoDeploy: true
+
+  - type: worker
+    name: bot-worker-production
+    env: docker
+    dockerfilePath: ./Dockerfile.worker
+    dockerContext: ./
+    region: oregon
+    plan: standard
+    branch: main
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: REDIS_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_PHONE_NUMBER
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
+    autoDeploy: false
+
+databases:
+  - name: postgres-staging
+    databaseName: app_staging
+    user: app_staging_user
+    plan: starter
+    region: oregon
+
+  - name: postgres-production
+    databaseName: app_production
+    user: app_production_user
+    plan: standard
+    region: oregon
+
+  - name: redis-staging
+    plan: starter
+    region: oregon
+    maxmemoryPolicy: allkeys-lru
+
+  - name: redis-production
+    plan: standard
+    region: oregon
+    maxmemoryPolicy: allkeys-lru
