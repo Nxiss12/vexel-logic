@@ -7,6 +7,9 @@ const twilio = require('twilio');
 const bodyParser = require('body-parser');
 const { createClient } = require('@supabase/supabase-js');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,6 +26,9 @@ const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_KEY;
+const JWT_SECRET = process.env.JWT_SECRET || 'change-me-please';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@vexellogic.com';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'password123';
 const BUSINESS_NAME = process.env.BUSINESS_NAME || 'Our Dental Practice';
 
 // Initialize Twilio & Supabase
@@ -128,7 +134,7 @@ app.post('/webhook/sms-reply', async (req, res) => {
 // ==========================================
 
 // Get all missed calls (last 30 days)
-app.get('/api/missed-calls', async (req, res) => {
+app.get('/api/missed-calls', authenticate, async (req, res) => {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
@@ -146,7 +152,7 @@ app.get('/api/missed-calls', async (req, res) => {
 });
 
 // Get customer responses
-app.get('/api/responses', async (req, res) => {
+app.get('/api/responses', authenticate, async (req, res) => {
     const { data, error } = await supabase
         .from('customer_responses')
         .select('*')
@@ -160,8 +166,108 @@ app.get('/api/responses', async (req, res) => {
     res.json({ responses: data });
 });
 
+// ==========================================
+// AUTH: SIMPLE JWT LOGIN
+// ==========================================
+
+app.post('/api/login', async (req, res) => {
+    const { email, password } = req.body || {};
+    if (!email || !password) return res.status(400).json({ error: 'Missing credentials' });
+
+    // Very small, env-driven admin auth (replace with real user store in production)
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+        const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '7d' });
+        return res.json({ token });
+    }
+
+    return res.status(401).json({ error: 'Invalid credentials' });
+});
+
+// Middleware to protect routes
+function authenticate(req, res, next) {
+    const auth = req.headers.authorization;
+    if (!auth) return res.status(401).json({ error: 'Missing token' });
+    const parts = auth.split(' ');
+    if (parts.length !== 2) return res.status(401).json({ error: 'Invalid auth header' });
+    const token = parts[1];
+    try {
+        const payload = jwt.verify(token, JWT_SECRET);
+        req.user = payload;
+        next();
+    } catch (err) {
+        return res.status(401).json({ error: 'Invalid token' });
+    }
+}
+
+// ==========================================
+// WORKFLOW REQUESTS API
+// ==========================================
+
+app.post('/api/workflow-request', async (req, res) => {
+    const payload = req.body || {};
+
+    // Try Supabase first
+    try {
+        if (SUPABASE_URL && SUPABASE_KEY) {
+            const { data, error } = await supabase
+                .from('workflow_requests')
+                .insert([{ ...payload, timestamp: new Date().toISOString() }]);
+
+            if (error) {
+                console.error('Supabase insert error:', error);
+                throw error;
+            }
+
+            return res.json({ ok: true, source: 'supabase', record: data[0] });
+        }
+    } catch (err) {
+        console.warn('Supabase not configured or insert failed; falling back to file storage');
+    }
+
+    // Fallback to simple file-based storage
+    try {
+        const dataDir = path.join(__dirname, 'data');
+        if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+        const file = path.join(dataDir, 'workflow_requests.json');
+        let list = [];
+        if (fs.existsSync(file)) {
+            list = JSON.parse(fs.readFileSync(file, 'utf8') || '[]');
+        }
+        const record = { id: list.length + 1, ...payload, timestamp: new Date().toISOString() };
+        list.unshift(record);
+        fs.writeFileSync(file, JSON.stringify(list, null, 2));
+        return res.json({ ok: true, source: 'file', record });
+    } catch (err) {
+        console.error('File storage error:', err);
+        return res.status(500).json({ error: 'Could not save workflow request' });
+    }
+});
+
+// Admin: list workflow requests (protected)
+app.get('/api/workflow-requests', authenticate, async (req, res) => {
+    try {
+        if (SUPABASE_URL && SUPABASE_KEY) {
+            const { data, error } = await supabase
+                .from('workflow_requests')
+                .select('*')
+                .order('timestamp', { ascending: false })
+                .limit(200);
+            if (error) return res.status(500).json({ error: error.message });
+            return res.json({ items: data });
+        }
+
+        // Fallback file
+        const file = path.join(__dirname, 'data', 'workflow_requests.json');
+        const list = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8') || '[]') : [];
+        return res.json({ items: list });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Server error' });
+    }
+});
+
 // Get stats
-app.get('/api/stats', async (req, res) => {
+app.get('/api/stats', authenticate, async (req, res) => {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 

@@ -42,4 +42,22 @@ GRANT ALL ON public.customer_responses TO anon, authenticated;
 GRANT USAGE, SELECT ON SEQUENCE missed_calls_id_seq TO anon, authenticated;
 GRANT USAGE, SELECT ON SEQUENCE customer_responses_id_seq TO anon, authenticated;
 
+-- Table: workflow_requests
+CREATE TABLE IF NOT EXISTS public.workflow_requests (
+    id BIGSERIAL PRIMARY KEY,
+    workflow_name TEXT NOT NULL,
+    email TEXT,
+    description TEXT,
+    trigger TEXT,
+    tools TEXT,
+    actions TEXT,
+    priority TEXT,
+    notes TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_workflow_requests_created_at ON public.workflow_requests(created_at DESC);
+GRANT ALL ON public.workflow_requests TO anon, authenticated;
+GRANT USAGE, SELECT ON SEQUENCE workflow_requests_id_seq TO anon, authenticated;
+
 

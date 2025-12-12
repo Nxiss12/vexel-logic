@@ -40,9 +40,12 @@
             </div>
             
             <!-- Live Status -->
-            <div class="flex items-center gap-2">
-                <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span class="text-sm text-green-400 font-semibold">LIVE</span>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span class="text-sm text-green-400 font-semibold">LIVE</span>
+                </div>
+                <button id="mcLogout" class="text-sm text-gray-300 hover:text-white hidden">Logout</button>
             </div>
         </div>
     </header>
@@ -127,13 +130,21 @@
         // Auto-refresh every 10 seconds
         setInterval(refreshData, 10000);
         
+        // Require login for admin dashboard
+        const token = localStorage.getItem('vexel_missed_token');
+        if (!token) {
+            window.location.href = '/missed-call-bot/public/login.html';
+        }
+
         // Load data on page load
         window.addEventListener('DOMContentLoaded', refreshData);
 
         async function refreshData() {
             try {
+                const headers = { 'Authorization': 'Bearer ' + token };
+
                 // Fetch stats
-                const statsRes = await fetch('/api/stats');
+                const statsRes = await fetch('/api/stats', { headers });
                 const stats = await statsRes.json();
                 
                 document.getElementById('total-calls').textContent = stats.totalCalls;
@@ -141,17 +152,19 @@
                 document.getElementById('recovery-rate').textContent = stats.recoveryRate;
 
                 // Fetch missed calls
-                const callsRes = await fetch('/api/missed-calls');
+                const callsRes = await fetch('/api/missed-calls', { headers });
                 const callsData = await callsRes.json();
                 renderMissedCalls(callsData.calls);
 
                 // Fetch responses
-                const responsesRes = await fetch('/api/responses');
+                const responsesRes = await fetch('/api/responses', { headers });
                 const responsesData = await responsesRes.json();
                 renderResponses(responsesData.responses);
 
             } catch (error) {
                 console.error('Error fetching data:', error);
+                // If auth fails, redirect to login
+                window.location.href = '/missed-call-bot/public/login.html';
             }
         }
 
@@ -236,6 +249,19 @@
                 minute: '2-digit' 
             });
         }
+    </script>
+
+    <script>
+        // Logout button
+        (function() {
+            const btn = document.getElementById('mcLogout');
+            if (!btn) return;
+            btn.classList.remove('hidden');
+            btn.addEventListener('click', () => {
+                localStorage.removeItem('vexel_missed_token');
+                window.location.href = '/missed-call-bot/public/login.html';
+            });
+        })();
     </script>
 
 </body>

@@ -103,6 +103,22 @@
                     <p class="text-brand-dim text-xs mt-2">Give your workflow a descriptive name</p>
                 </div>
 
+                <!-- Requester Email -->
+                <div>
+                    <label class="block text-white font-bold mb-2">
+                        <i class="fa-solid fa-envelope text-brand-accent mr-2"></i>
+                        Your Email
+                    </label>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        placeholder="your@company.com"
+                        class="w-full px-4 py-3 bg-brand-dark border border-white/10 rounded-lg text-white placeholder-brand-dim focus:border-brand-accent focus:outline-none transition-colors"
+                        required
+                    >
+                    <p class="text-brand-dim text-xs mt-2">We will email updates about your request</p>
+                </div>
+
                 <!-- What to Automate -->
                 <div>
                     <label class="block text-white font-bold mb-2">
@@ -284,21 +300,39 @@ Example: 'When I mark a job as complete in my system, I want to automatically cr
     </main>
 
     <script>
-        document.getElementById('workflowRequestForm').addEventListener('submit', function(e) {
+        // Require login: redirect to login page if no token
+        const token = localStorage.getItem('vexel_token');
+        if (!token) {
+            window.location.href = 'login.html';
+        }
+
+        document.getElementById('workflowRequestForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             // Get form data
             const formData = new FormData(this);
             const data = Object.fromEntries(formData);
-            
-            // In production, this would send to your API
-            console.log('Workflow Request:', data);
-            
-            // Show success message
-            alert('✅ Workflow request submitted!\n\nWe\'ll review your request and get back to you within 2 hours.\n\nCheck your email for updates.');
-            
-            // Redirect to dashboard
-            window.location.href = 'pro-dashboard.html';
+
+            try {
+                const res = await fetch('/api/workflow-request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const json = await res.json();
+
+                if (!res.ok) throw new Error(json.error || 'Failed to submit');
+
+                alert('✅ Workflow request submitted!\n\nWe\'ll review your request and get back to you via email.');
+                window.location.href = 'pro-dashboard.html';
+            } catch (err) {
+                console.error('Error submitting workflow request:', err);
+                alert('❌ There was a problem submitting your request. Please try again.');
+            }
         });
     </script>
 </body>

@@ -97,6 +97,16 @@ PORT=3000
 
 ---
 
+## 🔐 Admin & Workflow APIs
+
+- `POST /api/login` - Body `{ email, password }` returns `{ token }` (JWT based on `ADMIN_EMAIL` / `ADMIN_PASSWORD` env vars)
+- `POST /api/workflow-request` - Submit a new workflow request (JSON). If Supabase is configured it will insert into `workflow_requests`; otherwise it falls back to file storage in `data/workflow_requests.json`.
+- `GET /api/workflow-requests` - (Protected) List workflow requests; requires `Authorization: Bearer <token>` header.
+
+**Notes:** Set `JWT_SECRET`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` in your environment for secure admin access.
+
+---
+
 ## 🎨 Customization
 
 ### Change SMS Message
@@ -121,6 +131,41 @@ Then add email logic in the webhook handler.
 
 ## 🧪 Testing Locally
 
+### Quick API Smoke Tests (use local server URL e.g. `http://localhost:3000`)
+
+Login (get token):
+
+```bash
+curl -s -X POST http://localhost:3000/api/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@vexellogic.com","password":"password123"}' | jq
+```
+
+Submit a workflow request (anonymous or with token):
+
+```bash
+curl -s -X POST http://localhost:3000/api/workflow-request \
+  -H "Content-Type: application/json" \
+  -d '{"workflow_name":"Auto-Invoice","description":"Create invoice when job complete","trigger":"job_complete","tools":"Xero","actions":"1. Create invoice","email":"you@company.com"}' | jq
+```
+
+List workflow requests (requires token):
+
+```bash
+curl -s -X GET http://localhost:3000/api/workflow-requests \
+  -H "Authorization: Bearer <token>" | jq
+```
+
+Quick smoke test script (Linux/macOS):
+
+```bash
+# Make executable first
+chmod +x ./test-smoke.sh
+# Run against local server
+./test-smoke.sh http://localhost:3000
+```
+
+
 ### 1. Install dependencies
 ```bash
 cd missed-call-bot
@@ -137,7 +182,16 @@ cp env.template .env
 ```bash
 npm start
 ```
+### Docker (optional)
 
+Build and run the container locally:
+
+```bash
+# Build
+docker build -t vexel-missed-call-bot .
+# Run (set envs as needed)
+docker run -e TWILIO_ACCOUNT_SID=... -e TWILIO_AUTH_TOKEN=... -e SUPABASE_URL=... -e SUPABASE_KEY=... -p 3000:3000 vexel-missed-call-bot
+```
 ### 4. Test webhooks with ngrok
 ```bash
 ngrok http 3000
