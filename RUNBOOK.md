@@ -32,5 +32,21 @@ Rolling back a migration
 
 Emergency contact: ben@vexellogic.com
 
+Monitoring & Sentry
+- Configure `SENTRY_DSN` in your service envs and `SENTRY_AUTH_TOKEN` as a repository secret to allow CI to create releases and upload source maps (if used).
+- To test Sentry capture: hit `/debug-sentry` (this endpoint throws an error which should appear in Sentry). Use the Sentry UI to create alert rules (e.g., on error rate > 1% over 5m) and set email or Slack actions.
+
+Performance & Load Testing
+- A `k6` script exists at `missed-call-bot/loadtest.js`. You can run it locally with Docker:
+
+```bash
+docker run --rm -v "$PWD:/src" -w /src/missed-call-bot loadimpact/k6 run /src/missed-call-bot/loadtest.js
+```
+
+- In CI, the staging workflow runs `k6` after smoke tests when `STAGING_URL` is configured.
+
+Verification Report
+- Use `scripts/generate-verification-report.sh` to run the standard release checks and produce a `verification-report.md` summarizing results (created by CI or locally).
+
 Local troubleshooting:
 - If Node is not available locally, run the service in Docker: `docker build -t vexel-missed-call-bot . && docker run -p 3000:3000 -e NODE_ENV=production -e PORT=3000 -e ADMIN_EMAIL=admin@vexellogic.com -e ADMIN_PASSWORD=password123 vexel-missed-call-bot`
