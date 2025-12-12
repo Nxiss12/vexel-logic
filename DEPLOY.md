@@ -45,3 +45,8 @@ Render deployment guide
 6) Health verification
    - After deploy, verify `/healthz`, `/api/stats` (requires login), and `/api/workflow-requests` (requires login).
 
+GitHub Actions secrets
+- Add `RENDER_API_KEY` (service/regional API key) to the repository Secrets
+- Add `RENDER_STAGING_SERVICE_ID` and `RENDER_PRODUCTION_SERVICE_ID` to trigger deploys from Actions
+- Add `STAGING_URL` and `PROD_URL` (used by smoke tests)
+
