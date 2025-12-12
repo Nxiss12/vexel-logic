@@ -19,3 +19,6 @@ Rolling back a migration
 - Revert migration SQL and re-run `npm run migrate` on a safe branch
 
 Emergency contact: ben@vexellogic.com
+
+Local troubleshooting:
+- If Node is not available locally, run the service in Docker: `docker build -t vexel-missed-call-bot . && docker run -p 3000:3000 -e NODE_ENV=production -e PORT=3000 -e ADMIN_EMAIL=admin@vexellogic.com -e ADMIN_PASSWORD=password123 vexel-missed-call-bot`
