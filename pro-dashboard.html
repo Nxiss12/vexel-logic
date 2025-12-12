@@ -462,6 +462,20 @@
                 } catch (e) {
                     // ignore
                 }
+
+                // Check subscription status
+                try {
+                    const subRes = await fetch('/api/subscription', { headers: { 'Authorization': 'Bearer ' + token } });
+                    if (subRes.ok) {
+                        const sub = await subRes.json();
+                        if (!sub.active) {
+                            const el = document.createElement('div');
+                            el.className = 'mb-6 p-4 rounded-lg bg-yellow-500/10 border-l-4 border-yellow-400';
+                            el.innerHTML = `<strong class="text-yellow-300">Upgrade to Pro</strong> — Access to unlimited workflows. <a href="billing.html" class="underline ml-2">Upgrade</a>`;
+                            document.querySelector('main .max-w-7xl').prepend(el);
+                        }
+                    }
+                } catch (e) {}
                 // pagination controls
                 let pager = document.getElementById('workflowPager');
                 if (!pager) {

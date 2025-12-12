@@ -254,6 +254,58 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), (req, res
     res.json({ received: true });
 });
 
+// Create Checkout Session (for subscriptions)
+app.post('/api/create-checkout-session', authenticate, async (req, res) => {
+    const priceId = process.env.STRIPE_PRICE_ID;
+    if (!priceId || !stripe) return res.status(400).json({ error: 'Billing not configured' });
+
+    try {
+        const session = await stripe.checkout.sessions.create({
+            mode: 'subscription',
+            payment_method_types: ['card'],
+            line_items: [{ price: priceId, quantity: 1 }],
+            metadata: { email: req.user.email },
+            success_url: (process.env.FRONTEND_URL || '') + '/pro-dashboard.html?billing=success',
+            cancel_url: (process.env.FRONTEND_URL || '') + '/pro-dashboard.html?billing=cancel'
+        });
+        return res.json({ url: session.url });
+    } catch (e) {
+        logger.error('Failed to create checkout session', e);
+        return res.status(500).json({ error: 'Failed to create session' });
+    }
+});
+
+// Subscription status
+app.get('/api/subscription', authenticate, async (req, res) => {
+    const email = req.user.email;
+    try {
+        if (SUPABASE_URL && SUPABASE_KEY) {
+            const { data } = await supabase.from('customers').select('*').eq('email', email).limit(1);
+            const cust = data && data[0];
+            return res.json({ active: !!(cust && cust.subscription_active), customer: cust || null });
+        }
+
+        const file = path.join(__dirname, 'data', 'customers.json');
+        const list = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8') || '[]') : [];
+        const cust = list.find(c => c.email === email);
+        return res.json({ active: !!(cust && cust.subscription_active), customer: cust || null });
+    } catch (e) {
+        logger.warn('Failed to read subscription', e);
+        return res.status(500).json({ error: 'Failed to read subscription' });
+    }
+});
+
+// Middleware to require active subscription
+async function requireSubscription(req, res, next) {
+    try {
+        const resp = await (await fetch(`${process.env.BACKEND_URL || ''}/api/subscription`, { headers: { Authorization: req.headers.authorization }, method: 'GET' })).json();
+        if (resp && resp.active) return next();
+    } catch (e) {
+        logger.warn('Subscription check failed', e);
+    }
+    return res.status(402).json({ error: 'Subscription required' });
+}
+
 // Sentry test endpoint
 app.get('/debug-sentry', (req, res) => {
     throw new Error('Sentry test error');
