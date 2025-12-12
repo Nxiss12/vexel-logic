@@ -433,8 +433,11 @@
 
         async function loadDashboard() {
             try {
-                // Workflows (requires auth)
-                const res = await fetch('/api/workflow-requests', {
+                // Workflows (requires auth) with pagination
+                const limit = 20;
+                const page = parseInt(sessionStorage.getItem('workflow_page') || '0', 10);
+                const offset = page * limit;
+                const res = await fetch(`/api/workflow-requests?limit=${limit}&offset=${offset}`, {
                     headers: { 'Authorization': 'Bearer ' + token }
                 });
                 const json = await res.json();
@@ -458,6 +461,19 @@
                     }
                 } catch (e) {
                     // ignore
+                }
+                // pagination controls
+                let pager = document.getElementById('workflowPager');
+                if (!pager) {
+                    pager = document.createElement('div');
+                    pager.id = 'workflowPager';
+                    pager.className = 'mt-4 flex items-center gap-2';
+                    const prev = document.createElement('button'); prev.textContent = 'Prev'; prev.className = 'px-3 py-1 bg-white/5 rounded';
+                    const next = document.createElement('button'); next.textContent = 'Next'; next.className = 'px-3 py-1 bg-white/5 rounded';
+                    pager.appendChild(prev); pager.appendChild(next);
+                    document.querySelector('main .max-w-7xl').appendChild(pager);
+                    prev.addEventListener('click', () => { if (page>0) { sessionStorage.setItem('workflow_page', String(page-1)); loadDashboard(); } });
+                    next.addEventListener('click', () => { sessionStorage.setItem('workflow_page', String(page+1)); loadDashboard(); });
                 }
             } catch (err) {
                 console.error('Error loading dashboard:', err);
