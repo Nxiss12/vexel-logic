@@ -45,6 +45,10 @@ Render deployment guide
 6) Health verification
    - After deploy, verify `/healthz`, `/api/stats` (requires login), and `/api/workflow-requests` (requires login).
 
+Using the `render.yaml` manifest
+- A `render.yaml` manifest is included in the repository root which defines the staging and production web services, workers, and managed databases. You can import this file in Render to create services automatically: in the Render dashboard choose "Import from file" and upload `render.yaml`.
+- After importing, ensure secrets are set in each service and run the staging deploy.
+
 GitHub Actions secrets
 - Add `RENDER_API_KEY` (service/regional API key) to the repository Secrets
 - Add `RENDER_STAGING_SERVICE_ID` and `RENDER_PRODUCTION_SERVICE_ID` to trigger deploys from Actions
