@@ -37,3 +37,43 @@ jobs:
           STAGING_URL: ${{ secrets.STAGING_URL }}
         run: |
           if [ -n "$STAGING_URL" ]; then cd missed-call-bot && ./test-smoke.sh "$STAGING_URL"; fi
+
+  website-build:
+    runs-on: ubuntu-latest
+    needs: []
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install & Typecheck (logs to artifact)
+        working-directory: website
+        env:
+          LOG_DIR: ${{ github.workspace }}/logs/website
+        run: |
+          mkdir -p "$LOG_DIR"
+          set -o pipefail
+          npm ci 2>&1 | tee "$LOG_DIR/npm-ci.log"
+          if ! npm run typecheck 2>&1 | tee "$LOG_DIR/typecheck.log"; then echo "typecheck failed" > "$LOG_DIR/status.txt"; fi
+      - name: Build & Lint (logs)
+        working-directory: website
+        env:
+          LOG_DIR: ${{ github.workspace }}/logs/website
+        run: |
+          mkdir -p "$LOG_DIR"
+          if ! npm run build 2>&1 | tee "$LOG_DIR/build.log"; then echo "build failed" >> "$LOG_DIR/status.txt"; fi
+          npm run lint 2>&1 | tee "$LOG_DIR/lint.log" || true
+      - name: Upload build artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-build
+          path: website/.next
+      - name: Upload website logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-ci-logs
+          path: logs/website
